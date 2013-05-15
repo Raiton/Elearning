@@ -15,7 +15,7 @@ e
                 <p:inputText value="#{loginController.account.username}" required="true" ></p:inputText>
                 <h:outputLabel value="password"/>
                 <h:inputSecret value="#{loginController.account.password}" required="true" />
-                <h:commandButton actionListener="#{loginController.login}" value="Login" />
+                <h:commandButton action="#{loginController.login}" value="Login" />
             </p:panelGrid>
         </h:form>
 

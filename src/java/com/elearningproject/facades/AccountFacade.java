@@ -7,6 +7,8 @@ package com.elearningproject.facades;
 import com.elearningproject.entities.Account;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
 
 /**
@@ -25,6 +27,18 @@ public class AccountFacade extends AbstractFacade<Account> {
 
     public AccountFacade() {
         super(Account.class);
+    }
+    
+    public Account findbyUserName(String username) {
+        Account account;
+        try {
+            account = (Account) getEntityManager().createNamedQuery(".Account.findByUsername").setParameter("username", username).getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        } catch (NonUniqueResultException e) {
+            return null;
+        }
+        return account;
     }
     
 }

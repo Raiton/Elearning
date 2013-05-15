@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+
+
 <html lang="en"
      xmlns="http://www.w3.org/1999/xhtml"
      xmlns:f="http://java.sun.com/jsf/core"
@@ -12,12 +13,12 @@
 <p:layout fullPage="true">
 
     <p:layoutUnit position="north" size="100" header="Top" resizable="true" closable="true" collapsible="true">
-        <h:outputText value="North unit content." />
+        <ui:insert name="TopBar">topbar</ui:insert>
     </p:layoutUnit>
 
   
 
-    <p:layoutUnit position="west" size="200" header="Left" resizable="true" closable="true" collapsible="true">
+    <p:layoutUnit position="west" size="300" header="Left" resizable="true" closable="true" collapsible="true">
        <ui:insert name="Menu">menu</ui:insert>
 
     </p:layoutUnit>

@@ -8,12 +8,14 @@ import com.elearningproject.facades.AccountFacade;
 import com.elearningproject.facades.UserTableFacade;
 import com.elearningproject.entities.Account;
 import com.elearningproject.entities.UserTable;
+import java.io.IOException;
 
 import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
 /**
@@ -22,13 +24,12 @@ import javax.faces.event.ActionEvent;
  */
 @ManagedBean
 @SessionScoped
-public class LoginController implements Serializable{
-    
+public class LoginController implements Serializable {
+
     private Account account;
     private UserTable usertable;
- 
     @EJB
-    private AccountFacade accountFacade ;
+    private AccountFacade accountFacade;
     @EJB
     private UserTableFacade usertablefacade;
 
@@ -47,10 +48,9 @@ public class LoginController implements Serializable{
     public void setUsertablefacade(UserTableFacade usertablefacade) {
         this.usertablefacade = usertablefacade;
     }
-    
 
     public LoginController() {
-       account = new Account();
+        account = new Account();
     }
 
     public Account getAccount() {
@@ -68,25 +68,21 @@ public class LoginController implements Serializable{
     public void setAccountFacade(AccountFacade accountFacade) {
         this.accountFacade = accountFacade;
     }
-    
-    
-    public String login(){
+
+    public String login() throws IOException {
         List<Account> accounts = accountFacade.findAll();
         for (Account account1 : accounts) {
-            if(account1.getUsername().equals(account.getUsername()) &&  account1.getPassword().equals(account.getPassword())){
+            if (account1.getUsername().equals(account.getUsername()) && account1.getPassword().equals(account.getPassword())) {
                 System.out.print("connected");
-                account=account1;
-                
-                return "welcomePrimefaces";
-            } 
+                account = account1;
+            }
         }
-        return null;
-    
+        String result = "../dashboard/dashboarduser.xhtml?faces-redirect=true";
+        return result;
+    }
+
+    public UserTable getUserdata() {
+        UserTable inspecting = (UserTable) usertablefacade.find(account.getIdUserTable().getIdUserTable());
+        return inspecting;
+    }
 }
-        public UserTable getUserdata(){
-            UserTable inspecting=(UserTable) usertablefacade.find(account.getIdUserTable().getIdUserTable());
-       return inspecting;
-        }
-    
-}
-    
