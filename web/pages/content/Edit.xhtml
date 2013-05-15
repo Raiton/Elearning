@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditContentTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.EditContentLabel_idContent}" for="idContent" />
+                    <h:inputText id="idContent" value="#{contentController.selected.idContent}" title="#{bundle.EditContentTitle_idContent}" required="true" requiredMessage="#{bundle.EditContentRequiredMessage_idContent}"/>
+                    <h:outputLabel value="#{bundle.EditContentLabel_contentName}" for="contentName" />
+                    <h:inputText id="contentName" value="#{contentController.selected.contentName}" title="#{bundle.EditContentTitle_contentName}" />
+                    <h:outputLabel value="#{bundle.EditContentLabel_idForm}" for="idForm" />
+                    <h:selectOneMenu id="idForm" value="#{contentController.selected.idForm}" title="#{bundle.EditContentTitle_idForm}" required="true" requiredMessage="#{bundle.EditContentRequiredMessage_idForm}">
+                        <f:selectItems value="#{formController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.EditContentLabel_idChapter}" for="idChapter" />
+                    <h:selectOneMenu id="idChapter" value="#{contentController.selected.idChapter}" title="#{bundle.EditContentTitle_idChapter}" required="true" requiredMessage="#{bundle.EditContentRequiredMessage_idChapter}">
+                        <f:selectItems value="#{chapterController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <h:commandLink action="#{contentController.update}" value="#{bundle.EditContentSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundle.EditContentViewLink}"/>
+                <br />
+                <h:commandLink action="#{contentController.prepareList}" value="#{bundle.EditContentShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.EditContentIndexLink}" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

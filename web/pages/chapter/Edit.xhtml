@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditChapterTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.EditChapterLabel_idChapter}" for="idChapter" />
+                    <h:inputText id="idChapter" value="#{chapterController.selected.idChapter}" title="#{bundle.EditChapterTitle_idChapter}" required="true" requiredMessage="#{bundle.EditChapterRequiredMessage_idChapter}"/>
+                    <h:outputLabel value="#{bundle.EditChapterLabel_chapterName}" for="chapterName" />
+                    <h:inputText id="chapterName" value="#{chapterController.selected.chapterName}" title="#{bundle.EditChapterTitle_chapterName}" />
+                    <h:outputLabel value="#{bundle.EditChapterLabel_chapterRank}" for="chapterRank" />
+                    <h:inputText id="chapterRank" value="#{chapterController.selected.chapterRank}" title="#{bundle.EditChapterTitle_chapterRank}" />
+                    <h:outputLabel value="#{bundle.EditChapterLabel_idTopic}" for="idTopic" />
+                    <h:selectOneMenu id="idTopic" value="#{chapterController.selected.idTopic}" title="#{bundle.EditChapterTitle_idTopic}" required="true" requiredMessage="#{bundle.EditChapterRequiredMessage_idTopic}">
+                        <f:selectItems value="#{topicController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <h:commandLink action="#{chapterController.update}" value="#{bundle.EditChapterSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundle.EditChapterViewLink}"/>
+                <br />
+                <h:commandLink action="#{chapterController.prepareList}" value="#{bundle.EditChapterShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.EditChapterIndexLink}" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

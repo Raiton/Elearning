@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateFieldTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.CreateFieldLabel_idField}" for="idField" />
+                    <h:inputText id="idField" value="#{fieldController.selected.idField}" title="#{bundle.CreateFieldTitle_idField}" required="true" requiredMessage="#{bundle.CreateFieldRequiredMessage_idField}"/>
+                    <h:outputLabel value="#{bundle.CreateFieldLabel_fieldName}" for="fieldName" />
+                    <h:inputText id="fieldName" value="#{fieldController.selected.fieldName}" title="#{bundle.CreateFieldTitle_fieldName}" />
+                    <h:outputLabel value="#{bundle.CreateFieldLabel_fieldCreationDate}" for="fieldCreationDate" />
+                    <h:inputText id="fieldCreationDate" value="#{fieldController.selected.fieldCreationDate}" title="#{bundle.CreateFieldTitle_fieldCreationDate}" >
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:inputText>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{fieldController.create}" value="#{bundle.CreateFieldSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{fieldController.prepareList}" value="#{bundle.CreateFieldShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreateFieldIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

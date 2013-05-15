@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditExamTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.EditExamLabel_idExam}" for="idExam" />
+                    <h:inputText id="idExam" value="#{examController.selected.idExam}" title="#{bundle.EditExamTitle_idExam}" required="true" requiredMessage="#{bundle.EditExamRequiredMessage_idExam}"/>
+                    <h:outputLabel value="#{bundle.EditExamLabel_examContent}" for="examContent" />
+                    <h:inputText id="examContent" value="#{examController.selected.examContent}" title="#{bundle.EditExamTitle_examContent}" />
+                    <h:outputLabel value="#{bundle.EditExamLabel_mark}" for="mark" />
+                    <h:inputText id="mark" value="#{examController.selected.mark}" title="#{bundle.EditExamTitle_mark}" />
+                    <h:outputLabel value="#{bundle.EditExamLabel_response}" for="response" />
+                    <h:inputText id="response" value="#{examController.selected.response}" title="#{bundle.EditExamTitle_response}" />
+                    <h:outputLabel value="#{bundle.EditExamLabel_deadline}" for="deadline" />
+                    <h:inputText id="deadline" value="#{examController.selected.deadline}" title="#{bundle.EditExamTitle_deadline}" >
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.EditExamLabel_beginingDate}" for="beginingDate" />
+                    <h:inputText id="beginingDate" value="#{examController.selected.beginingDate}" title="#{bundle.EditExamTitle_beginingDate}" >
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.EditExamLabel_idUserTable}" for="idUserTable" />
+                    <h:selectOneMenu id="idUserTable" value="#{examController.selected.idUserTable}" title="#{bundle.EditExamTitle_idUserTable}" required="true" requiredMessage="#{bundle.EditExamRequiredMessage_idUserTable}">
+                        <f:selectItems value="#{userTableController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <h:commandLink action="#{examController.update}" value="#{bundle.EditExamSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundle.EditExamViewLink}"/>
+                <br />
+                <h:commandLink action="#{examController.prepareList}" value="#{bundle.EditExamShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.EditExamIndexLink}" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

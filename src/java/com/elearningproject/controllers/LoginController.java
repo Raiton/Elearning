@@ -72,15 +72,21 @@ public class LoginController implements Serializable{
     
     public String login(){
         List<Account> accounts = accountFacade.findAll();
-        System.out.println(accounts.size());
         for (Account account1 : accounts) {
             if(account1.getUsername().equals(account.getUsername()) &&  account1.getPassword().equals(account.getPassword())){
-                System.out.print("coonected");
+                System.out.print("connected");
+                account=account1;
+                
                 return "welcomePrimefaces";
             } 
         }
         return null;
-    }
-     
     
 }
+        public UserTable getUserdata(){
+            UserTable inspecting=(UserTable) usertablefacade.find(account.getIdUserTable().getIdUserTable());
+       return inspecting;
+        }
+    
+}
+    

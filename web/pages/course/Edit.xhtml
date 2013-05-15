@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditCourseTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.EditCourseLabel_idCourse}" for="idCourse" />
+                    <h:inputText id="idCourse" value="#{courseController.selected.idCourse}" title="#{bundle.EditCourseTitle_idCourse}" required="true" requiredMessage="#{bundle.EditCourseRequiredMessage_idCourse}"/>
+                    <h:outputLabel value="#{bundle.EditCourseLabel_courseName}" for="courseName" />
+                    <h:inputText id="courseName" value="#{courseController.selected.courseName}" title="#{bundle.EditCourseTitle_courseName}" />
+                    <h:outputLabel value="#{bundle.EditCourseLabel_courseCreationDate}" for="courseCreationDate" />
+                    <h:inputText id="courseCreationDate" value="#{courseController.selected.courseCreationDate}" title="#{bundle.EditCourseTitle_courseCreationDate}" >
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.EditCourseLabel_updateDate}" for="updateDate" />
+                    <h:inputText id="updateDate" value="#{courseController.selected.updateDate}" title="#{bundle.EditCourseTitle_updateDate}" >
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.EditCourseLabel_nbreWeeks}" for="nbreWeeks" />
+                    <h:inputText id="nbreWeeks" value="#{courseController.selected.nbreWeeks}" title="#{bundle.EditCourseTitle_nbreWeeks}" />
+                    <h:outputLabel value="#{bundle.EditCourseLabel_launchDate}" for="launchDate" />
+                    <h:inputText id="launchDate" value="#{courseController.selected.launchDate}" title="#{bundle.EditCourseTitle_launchDate}" >
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.EditCourseLabel_status}" for="status" />
+                    <h:inputText id="status" value="#{courseController.selected.status}" title="#{bundle.EditCourseTitle_status}" />
+                    <h:outputLabel value="#{bundle.EditCourseLabel_photo}" for="photo" />
+                    <h:inputText id="photo" value="#{courseController.selected.photo}" title="#{bundle.EditCourseTitle_photo}" />
+                    <h:outputLabel value="#{bundle.EditCourseLabel_idField}" for="idField" />
+                    <h:selectOneMenu id="idField" value="#{courseController.selected.idField}" title="#{bundle.EditCourseTitle_idField}" required="true" requiredMessage="#{bundle.EditCourseRequiredMessage_idField}">
+                        <f:selectItems value="#{fieldController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <h:commandLink action="#{courseController.update}" value="#{bundle.EditCourseSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundle.EditCourseViewLink}"/>
+                <br />
+                <h:commandLink action="#{courseController.prepareList}" value="#{bundle.EditCourseShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.EditCourseIndexLink}" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

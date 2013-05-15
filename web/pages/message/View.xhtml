@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewMessageTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewMessageLabel_idMessage}"/>
+                    <h:outputText value="#{messageController.selected.idMessage}" title="#{bundle.ViewMessageTitle_idMessage}"/>
+                    <h:outputText value="#{bundle.ViewMessageLabel_messageContent}"/>
+                    <h:outputText value="#{messageController.selected.messageContent}" title="#{bundle.ViewMessageTitle_messageContent}"/>
+                    <h:outputText value="#{bundle.ViewMessageLabel_date}"/>
+                    <h:outputText value="#{messageController.selected.date}" title="#{bundle.ViewMessageTitle_date}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+                    <h:outputText value="#{bundle.ViewMessageLabel_idUserTable}"/>
+                    <h:outputText value="#{messageController.selected.idUserTable}" title="#{bundle.ViewMessageTitle_idUserTable}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{messageController.destroyAndView}" value="#{bundle.ViewMessageDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewMessageEditLink}"/>
+                <br />
+                <h:commandLink action="#{messageController.prepareCreate}" value="#{bundle.ViewMessageCreateLink}" />
+                <br />
+                <h:commandLink action="#{messageController.prepareList}" value="#{bundle.ViewMessageShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewMessageIndexLink}"/>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>
