@@ -114,7 +114,7 @@ public class Field implements Serializable {
 
     @Override
     public String toString() {
-        return "com.elearningproject.entities.Field[ idField=" + idField + " ]";
+        return fieldName;
     }
     
 }

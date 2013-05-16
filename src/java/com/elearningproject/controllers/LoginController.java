@@ -71,13 +71,15 @@ public class LoginController implements Serializable {
 
     public String login() throws IOException {
         List<Account> accounts = accountFacade.findAll();
+        String result=null;
         for (Account account1 : accounts) {
             if (account1.getUsername().equals(account.getUsername()) && account1.getPassword().equals(account.getPassword())) {
                 System.out.print("connected");
                 account = account1;
+                  result = "../dashboard/dashboarduser.xhtml?faces-redirect=true";
+
             }
         }
-        String result = "../dashboard/dashboarduser.xhtml?faces-redirect=true";
         return result;
     }
 
