@@ -38,6 +38,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Exam.findByDeadline", query = "SELECT e FROM Exam e WHERE e.deadline = :deadline"),
     @NamedQuery(name = "Exam.findByBeginingDate", query = "SELECT e FROM Exam e WHERE e.beginingDate = :beginingDate")})
 public class Exam implements Serializable {
+    @JoinColumn(name = "id_topic", referencedColumnName = "id_topic")
+    @ManyToOne(optional = false)
+    private Topic idTopic;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -149,6 +152,14 @@ public class Exam implements Serializable {
     @Override
     public String toString() {
         return "com.elearningproject.entities.Exam[ idExam=" + idExam + " ]";
+    }
+
+    public Topic getIdTopic() {
+        return idTopic;
+    }
+
+    public void setIdTopic(Topic idTopic) {
+        this.idTopic = idTopic;
     }
     
 }

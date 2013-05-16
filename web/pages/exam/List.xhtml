@@ -68,6 +68,12 @@
                         </h:column>
                         <h:column>
                             <f:facet name="header">
+                                <h:outputText value="#{bundle.ListExamTitle_idTopic}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idTopic}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
                                 <h:outputText value="&nbsp;"/>
                             </f:facet>
                             <h:commandLink action="#{examController.prepareView}" value="#{bundle.ListExamViewLink}"/>

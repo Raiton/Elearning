@@ -37,6 +37,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Topic.findByNameTopic", query = "SELECT t FROM Topic t WHERE t.nameTopic = :nameTopic"),
     @NamedQuery(name = "Topic.findByWeekNumber", query = "SELECT t FROM Topic t WHERE t.weekNumber = :weekNumber")})
 public class Topic implements Serializable {
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTopic")
+    private List<Exam> examList;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -136,6 +138,15 @@ public class Topic implements Serializable {
     @Override
     public String toString() {
         return "com.elearningproject.entities.Topic[ idTopic=" + idTopic + " ]";
+    }
+
+    @XmlTransient
+    public List<Exam> getExamList() {
+        return examList;
+    }
+
+    public void setExamList(List<Exam> examList) {
+        this.examList = examList;
     }
     
 }

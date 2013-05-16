@@ -1,82 +1,32 @@
 /*==============================================================*/
 /* DBMS name:      PostgreSQL 8                                 */
-/* Created on:     14/05/2013 23:30:56                          */
+/* Created on:     16/05/2013 22:00:17                          */
 /*==============================================================*/
 
 
-drop index USER_HAS_ACCOUNT_FK;
-
-drop index ACCOUNT_PK;
-
 drop table ACCOUNT;
-
-drop index TOPIC_HAS_CHAPTER_FK;
-
-drop index CHAPTER_PK;
 
 drop table CHAPTER;
 
-drop index CHAPTER_CONTAINS_CONTENT_FK;
-
-drop index UNDER_THE_FORM_OF_FK;
-
-drop index CONTENT_PK;
-
 drop table CONTENT;
-
-drop index COURSE_BELONGS_FIELD_FK;
-
-drop index COURSE_PK;
 
 drop table COURSE;
 
-drop index USER_PASS_EXAM_FK;
-
-drop index EXAM_PK;
-
 drop table EXAM;
-
-drop index FIELD_PK;
 
 drop table FIELD;
 
-drop index FORM_PK;
-
 drop table FORM;
-
-drop index GROUP_TABLE_PK;
 
 drop table GROUP_TABLE;
 
-drop index USER_SEND_RECEIVE_MESSAGE_FK;
-
-drop index MESSAGE_PK;
-
 drop table MESSAGE;
-
-drop index TOPIC_INCLUDES_TEST_FK;
-
-drop index TEST_PK;
 
 drop table TEST;
 
-drop index COURSE_HAS_TOPIC_FK;
-
-drop index TOPIC_PK;
-
 drop table TOPIC;
 
-drop index USER_HAS_COURSE2_FK;
-
-drop index USER_HAS_COURSE_FK;
-
-drop index USER_HAS_COURSE_PK;
-
 drop table USER_HAS_COURSE;
-
-drop index USER_BELONGS_GROUP_FK;
-
-drop index USER_TABLE_PK;
 
 drop table USER_TABLE;
 
@@ -115,20 +65,6 @@ create table ACCOUNT (
    constraint FK_ACCOUNT_USER_HAS__USER_TAB foreign key (ID_USER_TABLE)
       references USER_TABLE (ID_USER_TABLE)
       on delete restrict on update restrict
-);
-
-/*==============================================================*/
-/* Index: ACCOUNT_PK                                            */
-/*==============================================================*/
-create unique index ACCOUNT_PK on ACCOUNT (
-ID_ACCOUNT
-);
-
-/*==============================================================*/
-/* Index: USER_HAS_ACCOUNT_FK                                   */
-/*==============================================================*/
-create  index USER_HAS_ACCOUNT_FK on ACCOUNT (
-ID_USER_TABLE
 );
 
 /*==============================================================*/
@@ -189,20 +125,6 @@ create table CHAPTER (
 );
 
 /*==============================================================*/
-/* Index: CHAPTER_PK                                            */
-/*==============================================================*/
-create unique index CHAPTER_PK on CHAPTER (
-ID_CHAPTER
-);
-
-/*==============================================================*/
-/* Index: TOPIC_HAS_CHAPTER_FK                                  */
-/*==============================================================*/
-create  index TOPIC_HAS_CHAPTER_FK on CHAPTER (
-ID_TOPIC
-);
-
-/*==============================================================*/
 /* Table: FORM                                                  */
 /*==============================================================*/
 create table FORM (
@@ -232,46 +154,12 @@ comment on table CONTENT is
 'this entity is composed by all files(txt,ppt,...)useful for courses';
 
 /*==============================================================*/
-/* Index: CONTENT_PK                                            */
-/*==============================================================*/
-create unique index CONTENT_PK on CONTENT (
-ID_CONTENT
-);
-
-/*==============================================================*/
-/* Index: UNDER_THE_FORM_OF_FK                                  */
-/*==============================================================*/
-create  index UNDER_THE_FORM_OF_FK on CONTENT (
-ID_FORM
-);
-
-/*==============================================================*/
-/* Index: CHAPTER_CONTAINS_CONTENT_FK                           */
-/*==============================================================*/
-create  index CHAPTER_CONTAINS_CONTENT_FK on CONTENT (
-ID_CHAPTER
-);
-
-/*==============================================================*/
-/* Index: COURSE_PK                                             */
-/*==============================================================*/
-create unique index COURSE_PK on COURSE (
-ID_COURSE
-);
-
-/*==============================================================*/
-/* Index: COURSE_BELONGS_FIELD_FK                               */
-/*==============================================================*/
-create  index COURSE_BELONGS_FIELD_FK on COURSE (
-ID_FIELD
-);
-
-/*==============================================================*/
 /* Table: EXAM                                                  */
 /*==============================================================*/
 create table EXAM (
    ID_EXAM              SERIAL               not null,
    ID_USER_TABLE        INT4                 not null,
+   ID_TOPIC             INT4                 not null,
    EXAM_CONTENT         TEXT                 null,
    MARK                 FLOAT8               null,
    RESPONSE             TEXT                 null,
@@ -280,46 +168,14 @@ create table EXAM (
    constraint PK_EXAM primary key (ID_EXAM),
    constraint FK_EXAM_USER_PASS_USER_TAB foreign key (ID_USER_TABLE)
       references USER_TABLE (ID_USER_TABLE)
+      on delete restrict on update restrict,
+   constraint FK_EXAM_EXAM_RELA_TOPIC foreign key (ID_TOPIC)
+      references TOPIC (ID_TOPIC)
       on delete restrict on update restrict
 );
 
 comment on table EXAM is
 'Each exam is composed by tests ';
-
-/*==============================================================*/
-/* Index: EXAM_PK                                               */
-/*==============================================================*/
-create unique index EXAM_PK on EXAM (
-ID_EXAM
-);
-
-/*==============================================================*/
-/* Index: USER_PASS_EXAM_FK                                     */
-/*==============================================================*/
-create  index USER_PASS_EXAM_FK on EXAM (
-ID_USER_TABLE
-);
-
-/*==============================================================*/
-/* Index: FIELD_PK                                              */
-/*==============================================================*/
-create unique index FIELD_PK on FIELD (
-ID_FIELD
-);
-
-/*==============================================================*/
-/* Index: FORM_PK                                               */
-/*==============================================================*/
-create unique index FORM_PK on FORM (
-ID_FORM
-);
-
-/*==============================================================*/
-/* Index: GROUP_TABLE_PK                                        */
-/*==============================================================*/
-create unique index GROUP_TABLE_PK on GROUP_TABLE (
-ID_GROUP_TABLE
-);
 
 /*==============================================================*/
 /* Table: MESSAGE                                               */
@@ -333,20 +189,6 @@ create table MESSAGE (
    constraint FK_MESSAGE_USER_SEND_USER_TAB foreign key (ID_USER_TABLE)
       references USER_TABLE (ID_USER_TABLE)
       on delete restrict on update restrict
-);
-
-/*==============================================================*/
-/* Index: MESSAGE_PK                                            */
-/*==============================================================*/
-create unique index MESSAGE_PK on MESSAGE (
-ID_MESSAGE
-);
-
-/*==============================================================*/
-/* Index: USER_SEND_RECEIVE_MESSAGE_FK                          */
-/*==============================================================*/
-create  index USER_SEND_RECEIVE_MESSAGE_FK on MESSAGE (
-ID_USER_TABLE
 );
 
 /*==============================================================*/
@@ -364,34 +206,6 @@ create table TEST (
 );
 
 /*==============================================================*/
-/* Index: TEST_PK                                               */
-/*==============================================================*/
-create unique index TEST_PK on TEST (
-ID_TEST
-);
-
-/*==============================================================*/
-/* Index: TOPIC_INCLUDES_TEST_FK                                */
-/*==============================================================*/
-create  index TOPIC_INCLUDES_TEST_FK on TEST (
-ID_TOPIC
-);
-
-/*==============================================================*/
-/* Index: TOPIC_PK                                              */
-/*==============================================================*/
-create unique index TOPIC_PK on TOPIC (
-ID_TOPIC
-);
-
-/*==============================================================*/
-/* Index: COURSE_HAS_TOPIC_FK                                   */
-/*==============================================================*/
-create  index COURSE_HAS_TOPIC_FK on TOPIC (
-ID_COURSE
-);
-
-/*==============================================================*/
 /* Table: USER_HAS_COURSE                                       */
 /*==============================================================*/
 create table USER_HAS_COURSE (
@@ -404,41 +218,5 @@ create table USER_HAS_COURSE (
    constraint FK_USER_HAS_USER_HAS__USER_TAB foreign key (ID_USER_TABLE)
       references USER_TABLE (ID_USER_TABLE)
       on delete restrict on update restrict
-);
-
-/*==============================================================*/
-/* Index: USER_HAS_COURSE_PK                                    */
-/*==============================================================*/
-create unique index USER_HAS_COURSE_PK on USER_HAS_COURSE (
-ID_COURSE,
-ID_USER_TABLE
-);
-
-/*==============================================================*/
-/* Index: USER_HAS_COURSE_FK                                    */
-/*==============================================================*/
-create  index USER_HAS_COURSE_FK on USER_HAS_COURSE (
-ID_COURSE
-);
-
-/*==============================================================*/
-/* Index: USER_HAS_COURSE2_FK                                   */
-/*==============================================================*/
-create  index USER_HAS_COURSE2_FK on USER_HAS_COURSE (
-ID_USER_TABLE
-);
-
-/*==============================================================*/
-/* Index: USER_TABLE_PK                                         */
-/*==============================================================*/
-create unique index USER_TABLE_PK on USER_TABLE (
-ID_USER_TABLE
-);
-
-/*==============================================================*/
-/* Index: USER_BELONGS_GROUP_FK                                 */
-/*==============================================================*/
-create  index USER_BELONGS_GROUP_FK on USER_TABLE (
-ID_GROUP_TABLE
 );
 

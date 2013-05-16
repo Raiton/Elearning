@@ -35,6 +35,10 @@
                     <h:selectOneMenu id="idUserTable" value="#{examController.selected.idUserTable}" title="#{bundle.CreateExamTitle_idUserTable}" required="true" requiredMessage="#{bundle.CreateExamRequiredMessage_idUserTable}">
                         <f:selectItems value="#{userTableController.itemsAvailableSelectOne}"/>
                     </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.CreateExamLabel_idTopic}" for="idTopic" />
+                    <h:selectOneMenu id="idTopic" value="#{examController.selected.idTopic}" title="#{bundle.CreateExamTitle_idTopic}" required="true" requiredMessage="#{bundle.CreateExamRequiredMessage_idTopic}">
+                        <f:selectItems value="#{topicController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
                 </h:panelGrid>
                 <br />
                 <h:commandLink action="#{examController.create}" value="#{bundle.CreateExamSaveLink}" />
