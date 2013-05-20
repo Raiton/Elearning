@@ -15,26 +15,9 @@
             </h:panelGroup>
             <h:form>
                 <h:panelGrid columns="2">
-                    <h:outputLabel value="#{bundle.CreateCourseLabel_idCourse}" for="idCourse" />
-                    <h:inputText id="idCourse" value="#{treeBean.courseController.selected.idCourse}" title="#{bundle.CreateCourseTitle_idCourse}" required="true" requiredMessage="#{bundle.CreateCourseRequiredMessage_idCourse}"/>
-                    <h:outputLabel value="#{bundle.CreateCourseLabel_courseName}" for="courseName" />
+                  <h:outputLabel value="#{bundle.CreateCourseLabel_courseName}" for="courseName" />
                     <h:inputText id="courseName" value="#{treeBean.courseController.selected.courseName}" title="#{bundle.CreateCourseTitle_courseName}" />
-                    <h:outputLabel value="#{bundle.CreateCourseLabel_courseCreationDate}" for="courseCreationDate" />
-                    <h:inputText id="courseCreationDate" value="#{treeBean.courseController.selected.courseCreationDate}" title="#{bundle.CreateCourseTitle_courseCreationDate}" >
-                        <f:convertDateTime pattern="MM/dd/yyyy" />
-                    </h:inputText>
-                    <h:outputLabel value="#{bundle.CreateCourseLabel_updateDate}" for="updateDate" />
-                    <h:inputText id="updateDate" value="#{treeBean.courseController.selected.updateDate}" title="#{bundle.CreateCourseTitle_updateDate}" >
-                        <f:convertDateTime pattern="MM/dd/yyyy" />
-                    </h:inputText>
-                    <h:outputLabel value="#{bundle.CreateCourseLabel_nbreWeeks}" for="nbreWeeks" />
-                    <h:inputText id="nbreWeeks" value="#{treeBean.courseController.selected.nbreWeeks}" title="#{bundle.CreateCourseTitle_nbreWeeks}" />
-                    <h:outputLabel value="#{bundle.CreateCourseLabel_launchDate}" for="launchDate" />
-                    <h:inputText id="launchDate" value="#{treeBean.courseController.selected.launchDate}" title="#{bundle.CreateCourseTitle_launchDate}" >
-                        <f:convertDateTime pattern="MM/dd/yyyy" />
-                    </h:inputText>
-                    <h:outputLabel value="#{bundle.CreateCourseLabel_status}" for="status" />
-                    <h:inputText id="status" value="#{treeBean.courseController.selected.status}" title="#{bundle.CreateCourseTitle_status}" />
+             
                     <h:outputLabel value="#{bundle.CreateCourseLabel_photo}" for="photo" />
                     <h:inputText id="photo" value="#{treeBean.courseController.selected.photo}" title="#{bundle.CreateCourseTitle_photo}" />
                     <h:outputLabel value="#{bundle.CreateCourseLabel_idField}" for="idField" />

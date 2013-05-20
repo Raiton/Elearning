@@ -7,9 +7,12 @@ import com.elearningproject.facades.TopicFacade;
 
 import java.io.Serializable;
 import java.util.ResourceBundle;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -18,9 +21,13 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 
+
 @ManagedBean(name = "topicController")
-@SessionScoped
+@ViewScoped
+
 public class TopicController implements Serializable {
+    
+    private static Logger logger = Logger.getLogger(TopicController.class.getName());  
 
     private Topic current;
     private DataModel items = null;
@@ -73,9 +80,9 @@ public class TopicController implements Serializable {
     }
 
     public String prepareCreate() {
-        current = new Topic();
-        selectedItemIndex = -1;
-        return "Create";
+   /*     current = new Topic();
+        selectedItemIndex = -1;*/
+        return null;
     }
 
     public String create() {
