@@ -7,12 +7,9 @@ import com.elearningproject.facades.TopicFacade;
 
 import java.io.Serializable;
 import java.util.ResourceBundle;
-import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -21,13 +18,9 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 
-
 @ManagedBean(name = "topicController")
-@ViewScoped
-
+@SessionScoped
 public class TopicController implements Serializable {
-    
-    private static Logger logger = Logger.getLogger(TopicController.class.getName());  
 
     private Topic current;
     private DataModel items = null;
@@ -80,16 +73,16 @@ public class TopicController implements Serializable {
     }
 
     public String prepareCreate() {
-   /*     current = new Topic();
-        selectedItemIndex = -1;*/
-        return null;
+        current = new Topic();
+        selectedItemIndex = -1;
+        return "Create";
     }
 
     public String create() {
         try {
             getFacade().create(current);
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("TopicCreated"));
-            return prepareCreate();
+            return null;
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
             return null;

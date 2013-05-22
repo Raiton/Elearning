@@ -16,16 +16,16 @@
             <h:form>
                 <h:panelGrid columns="2">
                    <h:outputLabel value="#{bundle.CreateTopicLabel_nameTopic}" for="nameTopic" />
-                    <h:inputText id="nameTopic" value="#{topicController.selected.nameTopic}" title="#{bundle.CreateTopicTitle_nameTopic}" />
+                   <h:inputText id="nameTopic" value="#{treeBean.selectedNode.entity.nameTopic}" title="#{bundle.CreateTopicTitle_nameTopic}" />
                     <h:outputLabel value="#{bundle.CreateTopicLabel_weekNumber}" for="weekNumber" />
-                    <h:inputText id="weekNumber" value="#{topicController.selected.weekNumber}" title="#{bundle.CreateTopicTitle_weekNumber}" />
+                    <h:inputText id="weekNumber" value="#{treeBean.selectedNode.entity.weekNumber}" title="#{bundle.CreateTopicTitle_weekNumber}" />
                     <h:outputLabel value="#{bundle.CreateTopicLabel_idCourse}" for="idCourse" />
-                    <h:selectOneMenu id="idCourse" value="#{topicController.selected.idCourse}" title="#{bundle.CreateTopicTitle_idCourse}" required="true" requiredMessage="#{bundle.CreateTopicRequiredMessage_idCourse}">
+                    <h:selectOneMenu id="idCourse" value="#{treeBean.selectedNode.entity.idCourse}" title="#{bundle.CreateTopicTitle_idCourse}" required="true" requiredMessage="#{bundle.CreateTopicRequiredMessage_idCourse}">
                         <f:selectItems value="#{courseController.itemsAvailableSelectOne}"/>
                     </h:selectOneMenu>
                 </h:panelGrid>
                 <br />
-                <h:commandLink action="#{topicController.create}" value="#{bundle.CreateTopicSaveLink}" />
+                <h:commandLink action="#{treeBean.createtopic()}" value="#{bundle.CreateTopicSaveLink}" />
                 <br />
                 <br />
                 <h:commandLink action="#{topicController.prepareList}" value="#{bundle.CreateTopicShowAllLink}" immediate="true"/>

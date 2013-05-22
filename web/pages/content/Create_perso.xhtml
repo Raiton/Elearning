@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 
     <ui:composition template="/template.xhtml">
         <ui:define name="title">
@@ -13,23 +14,33 @@
             <h:panelGroup id="messagePanel" layout="block">
                 <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
             </h:panelGroup>
+            <h:form enctype="multipart/form-data">
+
+                <p:fileUpload fileUploadListener="#{fileUploadBean.handleFileUpload}"
+                              mode="advanced" 
+                              update="messages"
+                              sizeLimit="20971520" 
+                              invalidSizeMessage="The maximum file size allowed is 20 Megabyte !"
+                              allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/>
+
+                <p:growl id="messages" showDetail="true"/>
+ 
+            </h:form>
             <h:form>
                 <h:panelGrid columns="2">
-                    <h:outputLabel value="#{bundle.CreateContentLabel_idContent}" for="idContent" />
-                    <h:inputText id="idContent" value="#{contentController.selected.idContent}" title="#{bundle.CreateContentTitle_idContent}" required="true" requiredMessage="#{bundle.CreateContentRequiredMessage_idContent}"/>
                     <h:outputLabel value="#{bundle.CreateContentLabel_contentName}" for="contentName" />
-                    <h:inputText id="contentName" value="#{contentController.selected.contentName}" title="#{bundle.CreateContentTitle_contentName}" />
+                    <h:inputText id="contentName" value="#{treeBean.selectedNode.entity.contentName}" title="#{bundle.CreateContentTitle_contentName}" />
                     <h:outputLabel value="#{bundle.CreateContentLabel_idForm}" for="idForm" />
-                    <h:selectOneMenu id="idForm" value="#{contentController.selected.idForm}" title="#{bundle.CreateContentTitle_idForm}" required="true" requiredMessage="#{bundle.CreateContentRequiredMessage_idForm}">
+                    <h:selectOneMenu id="idForm" value="#{treeBean.selectedNode.entity.idForm}" title="#{bundle.CreateContentTitle_idForm}" required="true" requiredMessage="#{bundle.CreateContentRequiredMessage_idForm}">
                         <f:selectItems value="#{formController.itemsAvailableSelectOne}"/>
                     </h:selectOneMenu>
                     <h:outputLabel value="#{bundle.CreateContentLabel_idChapter}" for="idChapter" />
-                    <h:selectOneMenu id="idChapter" value="#{contentController.selected.idChapter}" title="#{bundle.CreateContentTitle_idChapter}" required="true" requiredMessage="#{bundle.CreateContentRequiredMessage_idChapter}">
+                    <h:selectOneMenu id="idChapter" value="#{treeBean.selectedNode.entity.idChapter}" title="#{bundle.CreateContentTitle_idChapter}" required="true" requiredMessage="#{bundle.CreateContentRequiredMessage_idChapter}">
                         <f:selectItems value="#{chapterController.itemsAvailableSelectOne}"/>
                     </h:selectOneMenu>
                 </h:panelGrid>
                 <br />
-                <h:commandLink action="#{contentController.create}" value="#{bundle.CreateContentSaveLink}" />
+                <h:commandLink action="#{treeBean.createcontent()}" value="#{bundle.CreateContentSaveLink}" />
                 <br />
                 <br />
                 <h:commandLink action="#{contentController.prepareList}" value="#{bundle.CreateContentShowAllLink}" immediate="true"/>

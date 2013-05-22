@@ -203,7 +203,7 @@ public class Course implements Serializable {
 
     @Override
     public String toString() {
-        return this.courseName;
+        return courseName;
     }
     
 }

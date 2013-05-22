@@ -3,39 +3,7 @@
  * and open the template in the editor.
  */
 package com.elearningproject.personalisedclasses;
-/*
-import org.primefaces.model.DefaultTreeNode;
-import org.primefaces.model.TreeNode;
 
-
-public class PersonalisedNode extends DefaultTreeNode {
-    
-
-    private String nodetype;
-
-    public PersonalisedNode(String type, Object data, TreeNode parent) {
-        super(type, data, parent);
-    }
-
-    public PersonalisedNode(Object data, TreeNode parent, String nodetype ) {
-        super(data, parent);
-        setNodetype(nodetype);
-    }
-
-    public String getNodetype() {
-        return nodetype;
-    }
-    
-    
-    public void setNodetype(String nodetype) {
-        this.nodetype = nodetype;
-    }
-
-    public PersonalisedNode() {
-        super();
-    }
-}
-*/
 
 import java.io.Serializable;
 import org.primefaces.model.DefaultTreeNode;
@@ -52,6 +20,15 @@ import org.primefaces.model.TreeNode;
 public class PersonalisedNode extends DefaultTreeNode implements Serializable {
  
     private String nodetype;
+    private Object entity;
+
+    public Object getEntity() {
+        return entity;
+    }
+
+    public void setEntity(Object entity) {
+        this.entity = entity;
+    }
 
     public String getNodetype() {
         return nodetype;
@@ -65,8 +42,16 @@ public class PersonalisedNode extends DefaultTreeNode implements Serializable {
         
        
         super(data, parent);
-         System.out.println("im here with  "+ type);
         this.nodetype=type;
+        
+    }
+    
+      public PersonalisedNode(Object data, TreeNode parent ,String type , Object entity ) {
+        
+       
+        super(data, parent);
+        this.nodetype=type;
+        this.entity=entity;
         
     }
 
@@ -74,5 +59,6 @@ public class PersonalisedNode extends DefaultTreeNode implements Serializable {
         super(data, parent);
     }
  
+    
    
 }

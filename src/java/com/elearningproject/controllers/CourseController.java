@@ -12,7 +12,6 @@ import javax.ejb.EJB;
 import javax.ejb.Local;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -22,7 +21,7 @@ import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 
 @ManagedBean(name = "courseController")
-@ViewScoped
+@SessionScoped
 public class CourseController implements Serializable {
 
     private Course current;
@@ -71,6 +70,11 @@ public class CourseController implements Serializable {
     public String prepareList() {
         recreateModel();
         return "List";
+    }
+    
+    public String aazed(){
+        System.out.println("well well");
+        return null;
     }
 
     public String prepareView() {

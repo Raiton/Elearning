@@ -16,20 +16,20 @@
             <h:form>
                 <h:panelGrid columns="2">
                   <h:outputLabel value="#{bundle.CreateCourseLabel_courseName}" for="courseName" />
-                    <h:inputText id="courseName" value="#{treeBean.courseController.selected.courseName}" title="#{bundle.CreateCourseTitle_courseName}" />
+                  <h:inputText id="courseName" value="#{treeBean.selectedNode.entity.courseName}" title="#{bundle.CreateCourseTitle_courseName}" onchange=""/>
              
                     <h:outputLabel value="#{bundle.CreateCourseLabel_photo}" for="photo" />
-                    <h:inputText id="photo" value="#{treeBean.courseController.selected.photo}" title="#{bundle.CreateCourseTitle_photo}" />
+                    <h:inputText id="photo" value="#{treeBean.selectedNode.entity.photo}" title="#{bundle.CreateCourseTitle_photo}" onchange=""/>
                     <h:outputLabel value="#{bundle.CreateCourseLabel_idField}" for="idField" />
-                    <h:selectOneMenu id="idField" value="#{treeBean.courseController.selected.idField}" title="#{bundle.CreateCourseTitle_idField}" required="true" requiredMessage="#{bundle.CreateCourseRequiredMessage_idField}">
+                    <h:selectOneMenu id="iField" value="#{treeBean.selectedNode.entity.idField}" title="#{bundle.CreateCourseTitle_idField}" required="true" requiredMessage="#{bundle.CreateCourseRequiredMessage_idField}" onchange="">
                         <f:selectItems value="#{fieldController.itemsAvailableSelectOne}"/>
                     </h:selectOneMenu>
                 </h:panelGrid>
                 <br />
-                <h:commandLink action="#{treeBean.courseController.create}" value="#{bundle.CreateCourseSaveLink}" />
+                <h:commandLink action="#{treeBean.createcourse()}" value="#{bundle.CreateCourseSaveLink}" />
                 <br />
                 <br />
-                <h:commandLink action="#{treeBean.courseController.prepareList}" value="#{bundle.CreateCourseShowAllLink}" immediate="true"/>
+                <h:commandLink action="#{treeBean.prepareList}" value="#{bundle.CreateCourseShowAllLink}" immediate="true"/>
                 <br />
                 <br />
                 <h:link outcome="/index" value="#{bundle.CreateCourseIndexLink}"/>

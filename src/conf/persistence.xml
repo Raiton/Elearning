@@ -3,6 +3,7 @@
   <persistence-unit name="E-learning_projectPU" transaction-type="JTA">
     <jta-data-source>myconnection</jta-data-source>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
-    <properties/>
+    <properties>
+    </properties>
   </persistence-unit>
 </persistence>

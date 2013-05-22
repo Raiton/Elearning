@@ -108,7 +108,7 @@ public class Content implements Serializable {
 
     @Override
     public String toString() {
-        return "com.elearningproject.entities.Content[ idContent=" + idContent + " ]";
+        return contentName;
     }
     
 }
