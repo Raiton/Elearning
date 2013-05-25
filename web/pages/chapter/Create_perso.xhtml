@@ -19,19 +19,11 @@
                     <h:inputText id="chapterName" value="#{treeBean.selectedNode.entity.chapterName}" title="#{bundle.CreateChapterTitle_chapterName}" />
                     <h:outputLabel value="#{bundle.CreateChapterLabel_chapterRank}" for="chapterRank" />
                     <h:inputText id="chapterRank" value="#{treeBean.selectedNode.entity.chapterRank}" title="#{bundle.CreateChapterTitle_chapterRank}" />
-                    <h:outputLabel value="#{bundle.CreateChapterLabel_idTopic}" for="idTopic" />
-                    <h:selectOneMenu id="idTopic" value="#{treeBean.selectedNode.entity.idTopic}" title="#{bundle.CreateChapterTitle_idTopic}" required="true" requiredMessage="#{bundle.CreateChapterRequiredMessage_idTopic}">
-                        <f:selectItems value="#{topicController.itemsAvailableSelectOne}"/>
-                    </h:selectOneMenu>
+                
                 </h:panelGrid>
                 <br />
                 <h:commandLink action="#{treeBean.createchapter()}" value="#{bundle.CreateChapterSaveLink}" />
-                <br />
-                <br />
-                <h:commandLink action="#{chapterController.prepareList}" value="#{bundle.CreateChapterShowAllLink}" immediate="true"/>
-                <br />
-                <br />
-                <h:link outcome="/index" value="#{bundle.CreateChapterIndexLink}"/>
+       
             </h:form>
         </ui:define>
     </ui:composition>

@@ -21,6 +21,7 @@ public class PersonalisedNode extends DefaultTreeNode implements Serializable {
  
     private String nodetype;
     private Object entity;
+    private PersonalisedNode parentPerso;
 
     public Object getEntity() {
         return entity;
@@ -38,26 +39,44 @@ public class PersonalisedNode extends DefaultTreeNode implements Serializable {
         this.nodetype = nodetype;
     }
 
+    public PersonalisedNode getParentPerso() {
+        return parentPerso;
+    }
+
+    public void setParentPerso(PersonalisedNode parentPerso) {
+        this.parentPerso = parentPerso;
+    }
+    
+
     public PersonalisedNode(Object data, TreeNode parent ,String type ) {
         
        
         super(data, parent);
         this.nodetype=type;
         
+        
     }
     
-      public PersonalisedNode(Object data, TreeNode parent ,String type , Object entity ) {
+      public PersonalisedNode(Object data, TreeNode parent ,String type , Object entity, PersonalisedNode parentPerso ) {
         
        
         super(data, parent);
         this.nodetype=type;
         this.entity=entity;
-        
+        this.parentPerso=parentPerso;
     }
 
     public PersonalisedNode(Object data, TreeNode parent) {
         super(data, parent);
     }
+
+
+    
+    
+
+  
+    
+   
  
     
    

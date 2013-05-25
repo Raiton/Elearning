@@ -19,19 +19,11 @@
                    <h:inputText id="nameTopic" value="#{treeBean.selectedNode.entity.nameTopic}" title="#{bundle.CreateTopicTitle_nameTopic}" />
                     <h:outputLabel value="#{bundle.CreateTopicLabel_weekNumber}" for="weekNumber" />
                     <h:inputText id="weekNumber" value="#{treeBean.selectedNode.entity.weekNumber}" title="#{bundle.CreateTopicTitle_weekNumber}" />
-                    <h:outputLabel value="#{bundle.CreateTopicLabel_idCourse}" for="idCourse" />
-                    <h:selectOneMenu id="idCourse" value="#{treeBean.selectedNode.entity.idCourse}" title="#{bundle.CreateTopicTitle_idCourse}" required="true" requiredMessage="#{bundle.CreateTopicRequiredMessage_idCourse}">
-                        <f:selectItems value="#{courseController.itemsAvailableSelectOne}"/>
-                    </h:selectOneMenu>
+               
                 </h:panelGrid>
                 <br />
                 <h:commandLink action="#{treeBean.createtopic()}" value="#{bundle.CreateTopicSaveLink}" />
-                <br />
-                <br />
-                <h:commandLink action="#{topicController.prepareList}" value="#{bundle.CreateTopicShowAllLink}" immediate="true"/>
-                <br />
-                <br />
-                <h:link outcome="/index" value="#{bundle.CreateTopicIndexLink}"/>
+               
             </h:form>
         </ui:define>
     </ui:composition>

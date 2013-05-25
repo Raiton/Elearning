@@ -23,6 +23,7 @@ import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import org.primefaces.event.NodeSelectEvent;
 import org.primefaces.model.DefaultTreeNode;
@@ -70,7 +71,7 @@ public class TreeBean implements Serializable {
 
         root = new DefaultTreeNode("Root", null);
 
-        node0 = new PersonalisedNode("Course", root, "Course", new Course());
+        node0 = new PersonalisedNode("Course", root, "Course", new Course(), selectedNode);
 
         return root;
     }
@@ -81,12 +82,33 @@ public class TreeBean implements Serializable {
     public void addNode() {
 
         if ("Course".equals(selectedNode.getNodetype())) {
-            new PersonalisedNode("Topic", selectedNode, "Topic", new Topic());
+            if (((Course) selectedNode.getEntity()).getIdCourse() != null) {
+                new PersonalisedNode("Topic", selectedNode, "Topic", new Topic(), selectedNode);
+            } else {
+                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Selected", "Please save the course");
 
+                FacesContext.getCurrentInstance().addMessage(null, message);
+            }
         } else if ("Topic".equals(selectedNode.getNodetype())) {
-            new PersonalisedNode("Chapter", selectedNode, "Chapter", new Chapter());
+            if (((Topic) selectedNode.getEntity()).getIdCourse() != null) {
+                new PersonalisedNode("Chapter", selectedNode, "Chapter", new Chapter(), selectedNode);
+            }
+            else {
+                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Selected", "Please save the topic");
+
+                FacesContext.getCurrentInstance().addMessage(null, message);
+            }
+
+
         } else if ("Chapter".equals(selectedNode.getNodetype())) {
-            new PersonalisedNode("Content", selectedNode, "Content", new Content());
+            if (((Chapter) selectedNode.getEntity()).getIdChapter() != null) {
+                new PersonalisedNode("Content", selectedNode, "Content", new Content(), selectedNode);
+            }
+            else {
+                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Selected", "Please save the chapter");
+
+                FacesContext.getCurrentInstance().addMessage(null, message);
+            }
         }
         selectedNode.setExpanded(true);
     }
@@ -158,9 +180,9 @@ public class TreeBean implements Serializable {
     }
 
     public void coursePreparation() {
-        BigInteger bi = BigInteger.valueOf(getNumberWeeks());
+       // BigInteger bi = BigInteger.valueOf(getNumberWeeks());
         course = (Course) selectedNode.getEntity();
-        course.setNbreWeeks(bi);
+       // course.setNbreWeeks(bi);
         Date currentDate = new Date();
         course.setCourseCreationDate(currentDate);
         course.setUpdateDate(currentDate);
@@ -168,16 +190,19 @@ public class TreeBean implements Serializable {
 
     public void topicPreparation() {
         topic = (Topic) selectedNode.getEntity();
+        topic.setIdCourse(course);
 
     }
 
     public void chapterPreparation() {
         chapter = (Chapter) selectedNode.getEntity();
-
+        chapter.setIdTopic((Topic) selectedNode.getParentPerso().getEntity());
     }
 
     public void contentPreparation() {
         content = (Content) selectedNode.getEntity();
+        content.setIdChapter((Chapter) selectedNode.getParentPerso().getEntity());
+        content.setContentUrl(pageToInclude);
 
     }
 
@@ -198,9 +223,8 @@ public class TreeBean implements Serializable {
     }
 
     public String createtopic() {
-        topicPreparation();
-
         try {
+            topicPreparation();
             if (topic.getIdTopic() == null) {
                 getTopicFacade().create(topic);
             } else {
@@ -218,7 +242,7 @@ public class TreeBean implements Serializable {
     public String createchapter() {
         try {
             chapterPreparation();
-            if (chapter.getChapterName() == null) {
+            if (chapter.getIdChapter() == null) {
                 getChapterFacade().create(chapter);
             } else {
                 getChapterFacade().edit(chapter);
@@ -233,9 +257,8 @@ public class TreeBean implements Serializable {
 
     public String createcontent() {
         contentPreparation();
-
         try {
-            if (content.getContentName() == null) {
+            if (content.getIdContent() == null) {
                 getContentFacade().create(content);
             } else {
                 getContentFacade().edit(content);

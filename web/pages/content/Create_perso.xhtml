@@ -21,7 +21,7 @@
                               update="messages"
                               sizeLimit="20971520" 
                               invalidSizeMessage="The maximum file size allowed is 20 Megabyte !"
-                              allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/>
+                              allowTypes="/(\.|\/)(pdf|avi|txt|mp4|mov|mp3|wmv|png|jpe?g)$/"/>
 
                 <p:growl id="messages" showDetail="true"/>
  
@@ -34,19 +34,11 @@
                     <h:selectOneMenu id="idForm" value="#{treeBean.selectedNode.entity.idForm}" title="#{bundle.CreateContentTitle_idForm}" required="true" requiredMessage="#{bundle.CreateContentRequiredMessage_idForm}">
                         <f:selectItems value="#{formController.itemsAvailableSelectOne}"/>
                     </h:selectOneMenu>
-                    <h:outputLabel value="#{bundle.CreateContentLabel_idChapter}" for="idChapter" />
-                    <h:selectOneMenu id="idChapter" value="#{treeBean.selectedNode.entity.idChapter}" title="#{bundle.CreateContentTitle_idChapter}" required="true" requiredMessage="#{bundle.CreateContentRequiredMessage_idChapter}">
-                        <f:selectItems value="#{chapterController.itemsAvailableSelectOne}"/>
-                    </h:selectOneMenu>
+                 
                 </h:panelGrid>
                 <br />
                 <h:commandLink action="#{treeBean.createcontent()}" value="#{bundle.CreateContentSaveLink}" />
-                <br />
-                <br />
-                <h:commandLink action="#{contentController.prepareList}" value="#{bundle.CreateContentShowAllLink}" immediate="true"/>
-                <br />
-                <br />
-                <h:link outcome="/index" value="#{bundle.CreateContentIndexLink}"/>
+     
             </h:form>
         </ui:define>
     </ui:composition>

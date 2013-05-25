@@ -37,6 +37,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "UserTable.findByName", query = "SELECT u FROM UserTable u WHERE u.name = :name"),
     @NamedQuery(name = "UserTable.findByEMail", query = "SELECT u FROM UserTable u WHERE u.eMail = :eMail")})
 public class UserTable implements Serializable {
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userTable")
+    private List<UserHasCourse> userHasCourseList;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -160,6 +162,15 @@ public class UserTable implements Serializable {
     @Override
     public String toString() {
         return "com.elearningproject.entities.UserTable[ idUserTable=" + idUserTable + " ]";
+    }
+
+    @XmlTransient
+    public List<UserHasCourse> getUserHasCourseList() {
+        return userHasCourseList;
+    }
+
+    public void setUserHasCourseList(List<UserHasCourse> userHasCourseList) {
+        this.userHasCourseList = userHasCourseList;
     }
     
 }

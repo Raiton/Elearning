@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 
     <ui:composition template="/template.xhtml">
         <ui:define name="title">
@@ -13,13 +14,26 @@
             <h:panelGroup id="messagePanel" layout="block">
                 <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
             </h:panelGroup>
+         <h:form enctype="multipart/form-data">
+
+             <p:fileUpload fileUploadListener="#{fileUploadBean.handleFileUploadPhoto}"
+                              mode="advanced" 
+                              update="messages"
+                              sizeLimit="5242880" 
+                              invalidSizeMessage="The maximum file size allowed is 5 Megabyte !"
+                              allowTypes="/(\.|\/)(png|jpe?g)$/"/>
+
+                <p:growl id="messages" showDetail="true"/>
+ 
+            </h:form>
             <h:form>
                 <h:panelGrid columns="2">
-                  <h:outputLabel value="#{bundle.CreateCourseLabel_courseName}" for="courseName" />
-                  <h:inputText id="courseName" value="#{treeBean.selectedNode.entity.courseName}" title="#{bundle.CreateCourseTitle_courseName}" onchange=""/>
-             
-                    <h:outputLabel value="#{bundle.CreateCourseLabel_photo}" for="photo" />
-                    <h:inputText id="photo" value="#{treeBean.selectedNode.entity.photo}" title="#{bundle.CreateCourseTitle_photo}" onchange=""/>
+                    <h:outputLabel value="#{bundle.CreateCourseLabel_courseName}" for="courseName" />
+                    <h:inputText id="courseName" value="#{treeBean.selectedNode.entity.courseName}" title="#{bundle.CreateCourseTitle_courseName}" onchange=""/>
+
+                    <h:outputLabel value="#{bundle.CreateCourseLabel_nbreWeeks}" for="nbreWeeks" />
+                    <h:inputText id="nbreWeeks" value="#{treeBean.selectedNode.entity.nbreWeeks}" title="#{bundle.CreateCourseTitle_nbreWeeks}" />
+                    
                     <h:outputLabel value="#{bundle.CreateCourseLabel_idField}" for="idField" />
                     <h:selectOneMenu id="iField" value="#{treeBean.selectedNode.entity.idField}" title="#{bundle.CreateCourseTitle_idField}" required="true" requiredMessage="#{bundle.CreateCourseRequiredMessage_idField}" onchange="">
                         <f:selectItems value="#{fieldController.itemsAvailableSelectOne}"/>
@@ -27,12 +41,7 @@
                 </h:panelGrid>
                 <br />
                 <h:commandLink action="#{treeBean.createcourse()}" value="#{bundle.CreateCourseSaveLink}" />
-                <br />
-                <br />
-                <h:commandLink action="#{treeBean.prepareList}" value="#{bundle.CreateCourseShowAllLink}" immediate="true"/>
-                <br />
-                <br />
-                <h:link outcome="/index" value="#{bundle.CreateCourseIndexLink}"/>
+
             </h:form>
         </ui:define>
     </ui:composition>

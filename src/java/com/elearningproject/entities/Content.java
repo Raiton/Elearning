@@ -29,8 +29,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Content.findAll", query = "SELECT c FROM Content c"),
     @NamedQuery(name = "Content.findByIdContent", query = "SELECT c FROM Content c WHERE c.idContent = :idContent"),
+    @NamedQuery(name = "Content.findBycontentUrl", query = "SELECT c FROM Content c WHERE c.contentUrl = :contentUrl"),
     @NamedQuery(name = "Content.findByContentName", query = "SELECT c FROM Content c WHERE c.contentName = :contentName")})
 public class Content implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,6 +42,9 @@ public class Content implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "content_name")
     private String contentName;
+    @Size(max = 2147483647)
+    @Column(name = "content_url")
+    private String contentUrl;
     @JoinColumn(name = "id_form", referencedColumnName = "id_form")
     @ManyToOne(optional = false)
     private Form idForm;
@@ -78,6 +83,14 @@ public class Content implements Serializable {
         this.idForm = idForm;
     }
 
+    public String getContentUrl() {
+        return contentUrl;
+    }
+
+    public void setContentUrl(String contentUrl) {
+        this.contentUrl = contentUrl;
+    }
+
     public Chapter getIdChapter() {
         return idChapter;
     }
@@ -110,5 +123,4 @@ public class Content implements Serializable {
     public String toString() {
         return contentName;
     }
-    
 }
