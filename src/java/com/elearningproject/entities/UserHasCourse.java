@@ -5,9 +5,12 @@
 package com.elearningproject.entities;
 
 import java.io.Serializable;
+import javax.persistence.Basic;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -24,39 +27,26 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "UserHasCourse.findAll", query = "SELECT u FROM UserHasCourse u"),
-    @NamedQuery(name = "UserHasCourse.findByIdUserTable", query = "SELECT u FROM UserHasCourse u WHERE u.userHasCoursePK.idUserTable = :idUserTable"),
-    @NamedQuery(name = "UserHasCourse.findByIdCourse", query = "SELECT u FROM UserHasCourse u WHERE u.userHasCoursePK.idCourse = :idCourse"),
     @NamedQuery(name = "UserHasCourse.findByIdUserHasCourse", query = "SELECT u FROM UserHasCourse u WHERE u.idUserHasCourse = :idUserHasCourse")})
 public class UserHasCourse implements Serializable {
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected UserHasCoursePK userHasCoursePK;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
     @Column(name = "id_user_has_course")
     private Integer idUserHasCourse;
-    @JoinColumn(name = "id_user_table", referencedColumnName = "id_user_table", insertable = false, updatable = false)
+    @JoinColumn(name = "id_user_table", referencedColumnName = "id_user_table")
     @ManyToOne(optional = false)
-    private UserTable userTable;
-    @JoinColumn(name = "id_course", referencedColumnName = "id_course", insertable = false, updatable = false)
+    private UserTable idUserTable;
+    @JoinColumn(name = "id_course", referencedColumnName = "id_course")
     @ManyToOne(optional = false)
-    private Course course;
+    private Course idCourse;
 
     public UserHasCourse() {
     }
 
-    public UserHasCourse(UserHasCoursePK userHasCoursePK) {
-        this.userHasCoursePK = userHasCoursePK;
-    }
-
-    public UserHasCourse(int idUserTable, int idCourse) {
-        this.userHasCoursePK = new UserHasCoursePK(idUserTable, idCourse);
-    }
-
-    public UserHasCoursePK getUserHasCoursePK() {
-        return userHasCoursePK;
-    }
-
-    public void setUserHasCoursePK(UserHasCoursePK userHasCoursePK) {
-        this.userHasCoursePK = userHasCoursePK;
+    public UserHasCourse(Integer idUserHasCourse) {
+        this.idUserHasCourse = idUserHasCourse;
     }
 
     public Integer getIdUserHasCourse() {
@@ -67,26 +57,26 @@ public class UserHasCourse implements Serializable {
         this.idUserHasCourse = idUserHasCourse;
     }
 
-    public UserTable getUserTable() {
-        return userTable;
+    public UserTable getIdUserTable() {
+        return idUserTable;
     }
 
-    public void setUserTable(UserTable userTable) {
-        this.userTable = userTable;
+    public void setIdUserTable(UserTable idUserTable) {
+        this.idUserTable = idUserTable;
     }
 
-    public Course getCourse() {
-        return course;
+    public Course getIdCourse() {
+        return idCourse;
     }
 
-    public void setCourse(Course course) {
-        this.course = course;
+    public void setIdCourse(Course idCourse) {
+        this.idCourse = idCourse;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (userHasCoursePK != null ? userHasCoursePK.hashCode() : 0);
+        hash += (idUserHasCourse != null ? idUserHasCourse.hashCode() : 0);
         return hash;
     }
 
@@ -97,7 +87,7 @@ public class UserHasCourse implements Serializable {
             return false;
         }
         UserHasCourse other = (UserHasCourse) object;
-        if ((this.userHasCoursePK == null && other.userHasCoursePK != null) || (this.userHasCoursePK != null && !this.userHasCoursePK.equals(other.userHasCoursePK))) {
+        if ((this.idUserHasCourse == null && other.idUserHasCourse != null) || (this.idUserHasCourse != null && !this.idUserHasCourse.equals(other.idUserHasCourse))) {
             return false;
         }
         return true;
@@ -105,7 +95,7 @@ public class UserHasCourse implements Serializable {
 
     @Override
     public String toString() {
-        return "com.elearningproject.entities.UserHasCourse[ userHasCoursePK=" + userHasCoursePK + " ]";
+        return "com.elearningproject.entities.UserHasCourse[ idUserHasCourse=" + idUserHasCourse + " ]";
     }
     
 }

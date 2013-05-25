@@ -28,12 +28,6 @@
                         </h:column>
                         <h:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListCourseTitle_courseName}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.courseName}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
                                 <h:outputText value="#{bundle.ListCourseTitle_courseCreationDate}"/>
                             </f:facet>
                             <h:outputText value="#{item.courseCreationDate}">
@@ -42,17 +36,9 @@
                         </h:column>
                         <h:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListCourseTitle_updateDate}"/>
+                                <h:outputText value="#{bundle.ListCourseTitle_courseName}"/>
                             </f:facet>
-                            <h:outputText value="#{item.updateDate}">
-                                <f:convertDateTime pattern="MM/dd/yyyy" />
-                            </h:outputText>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListCourseTitle_nbreWeeks}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.nbreWeeks}"/>
+                            <h:outputText value="#{item.courseName}"/>
                         </h:column>
                         <h:column>
                             <f:facet name="header">
@@ -64,15 +50,29 @@
                         </h:column>
                         <h:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListCourseTitle_status}"/>
+                                <h:outputText value="#{bundle.ListCourseTitle_nbreWeeks}"/>
                             </f:facet>
-                            <h:outputText value="#{item.status}"/>
+                            <h:outputText value="#{item.nbreWeeks}"/>
                         </h:column>
                         <h:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListCourseTitle_photo}"/>
                             </f:facet>
                             <h:outputText value="#{item.photo}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCourseTitle_status}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.status}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCourseTitle_updateDate}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.updateDate}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
                         </h:column>
                         <h:column>
                             <f:facet name="header">

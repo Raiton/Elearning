@@ -17,14 +17,14 @@
                 <h:panelGrid columns="2">
                     <h:outputLabel value="#{bundle.CreateMessageLabel_idMessage}" for="idMessage" />
                     <h:inputText id="idMessage" value="#{messageController.selected.idMessage}" title="#{bundle.CreateMessageTitle_idMessage}" required="true" requiredMessage="#{bundle.CreateMessageRequiredMessage_idMessage}"/>
-                    <h:outputLabel value="#{bundle.CreateMessageLabel_messageContent}" for="messageContent" />
-                    <h:inputText id="messageContent" value="#{messageController.selected.messageContent}" title="#{bundle.CreateMessageTitle_messageContent}" />
                     <h:outputLabel value="#{bundle.CreateMessageLabel_date}" for="date" />
                     <h:inputText id="date" value="#{messageController.selected.date}" title="#{bundle.CreateMessageTitle_date}" >
                         <f:convertDateTime pattern="MM/dd/yyyy" />
                     </h:inputText>
+                    <h:outputLabel value="#{bundle.CreateMessageLabel_messageContent}" for="messageContent" />
+                    <h:inputText id="messageContent" value="#{messageController.selected.messageContent}" title="#{bundle.CreateMessageTitle_messageContent}" />
                     <h:outputLabel value="#{bundle.CreateMessageLabel_idUserTable}" for="idUserTable" />
-                    <h:selectOneMenu id="idUserTable" value="#{messageController.selected.idUserTable}" title="#{bundle.CreateMessageTitle_idUserTable}" required="true" requiredMessage="#{bundle.CreateMessageRequiredMessage_idUserTable}">
+                    <h:selectOneMenu id="idUserTable" value="#{messageController.selected.idUserTable}" title="#{bundle.CreateMessageTitle_idUserTable}" >
                         <f:selectItems value="#{userTableController.itemsAvailableSelectOne}"/>
                     </h:selectOneMenu>
                 </h:panelGrid>

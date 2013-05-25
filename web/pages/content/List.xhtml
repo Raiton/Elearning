@@ -34,6 +34,12 @@
                         </h:column>
                         <h:column>
                             <f:facet name="header">
+                                <h:outputText value="#{bundle.ListContentTitle_contentUrl}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.contentUrl}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
                                 <h:outputText value="#{bundle.ListContentTitle_idForm}"/>
                             </f:facet>
                             <h:outputText value="#{item.idForm}"/>

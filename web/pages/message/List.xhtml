@@ -28,17 +28,17 @@
                         </h:column>
                         <h:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListMessageTitle_messageContent}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.messageContent}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
                                 <h:outputText value="#{bundle.ListMessageTitle_date}"/>
                             </f:facet>
                             <h:outputText value="#{item.date}">
                                 <f:convertDateTime pattern="MM/dd/yyyy" />
                             </h:outputText>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListMessageTitle_messageContent}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.messageContent}"/>
                         </h:column>
                         <h:column>
                             <f:facet name="header">

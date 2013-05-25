@@ -22,7 +22,7 @@
                     <h:outputLabel value="#{bundle.CreateChapterLabel_chapterRank}" for="chapterRank" />
                     <h:inputText id="chapterRank" value="#{chapterController.selected.chapterRank}" title="#{bundle.CreateChapterTitle_chapterRank}" />
                     <h:outputLabel value="#{bundle.CreateChapterLabel_idTopic}" for="idTopic" />
-                    <h:selectOneMenu id="idTopic" value="#{chapterController.selected.idTopic}" title="#{bundle.CreateChapterTitle_idTopic}" required="true" requiredMessage="#{bundle.CreateChapterRequiredMessage_idTopic}">
+                    <h:selectOneMenu id="idTopic" value="#{chapterController.selected.idTopic}" title="#{bundle.CreateChapterTitle_idTopic}" >
                         <f:selectItems value="#{topicController.itemsAvailableSelectOne}"/>
                     </h:selectOneMenu>
                 </h:panelGrid>

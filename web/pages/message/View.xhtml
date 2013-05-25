@@ -17,12 +17,12 @@
                 <h:panelGrid columns="2">
                     <h:outputText value="#{bundle.ViewMessageLabel_idMessage}"/>
                     <h:outputText value="#{messageController.selected.idMessage}" title="#{bundle.ViewMessageTitle_idMessage}"/>
-                    <h:outputText value="#{bundle.ViewMessageLabel_messageContent}"/>
-                    <h:outputText value="#{messageController.selected.messageContent}" title="#{bundle.ViewMessageTitle_messageContent}"/>
                     <h:outputText value="#{bundle.ViewMessageLabel_date}"/>
                     <h:outputText value="#{messageController.selected.date}" title="#{bundle.ViewMessageTitle_date}">
                         <f:convertDateTime pattern="MM/dd/yyyy" />
                     </h:outputText>
+                    <h:outputText value="#{bundle.ViewMessageLabel_messageContent}"/>
+                    <h:outputText value="#{messageController.selected.messageContent}" title="#{bundle.ViewMessageTitle_messageContent}"/>
                     <h:outputText value="#{bundle.ViewMessageLabel_idUserTable}"/>
                     <h:outputText value="#{messageController.selected.idUserTable}" title="#{bundle.ViewMessageTitle_idUserTable}"/>
                 </h:panelGrid>

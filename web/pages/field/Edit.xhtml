@@ -17,12 +17,12 @@
                 <h:panelGrid columns="2">
                     <h:outputLabel value="#{bundle.EditFieldLabel_idField}" for="idField" />
                     <h:inputText id="idField" value="#{fieldController.selected.idField}" title="#{bundle.EditFieldTitle_idField}" required="true" requiredMessage="#{bundle.EditFieldRequiredMessage_idField}"/>
-                    <h:outputLabel value="#{bundle.EditFieldLabel_fieldName}" for="fieldName" />
-                    <h:inputText id="fieldName" value="#{fieldController.selected.fieldName}" title="#{bundle.EditFieldTitle_fieldName}" />
                     <h:outputLabel value="#{bundle.EditFieldLabel_fieldCreationDate}" for="fieldCreationDate" />
                     <h:inputText id="fieldCreationDate" value="#{fieldController.selected.fieldCreationDate}" title="#{bundle.EditFieldTitle_fieldCreationDate}" >
                         <f:convertDateTime pattern="MM/dd/yyyy" />
                     </h:inputText>
+                    <h:outputLabel value="#{bundle.EditFieldLabel_fieldName}" for="fieldName" />
+                    <h:inputText id="fieldName" value="#{fieldController.selected.fieldName}" title="#{bundle.EditFieldTitle_fieldName}" />
                 </h:panelGrid>
                 <h:commandLink action="#{fieldController.update}" value="#{bundle.EditFieldSaveLink}"/>
                 <br />

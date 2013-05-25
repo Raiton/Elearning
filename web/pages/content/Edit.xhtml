@@ -19,12 +19,14 @@
                     <h:inputText id="idContent" value="#{contentController.selected.idContent}" title="#{bundle.EditContentTitle_idContent}" required="true" requiredMessage="#{bundle.EditContentRequiredMessage_idContent}"/>
                     <h:outputLabel value="#{bundle.EditContentLabel_contentName}" for="contentName" />
                     <h:inputText id="contentName" value="#{contentController.selected.contentName}" title="#{bundle.EditContentTitle_contentName}" />
+                    <h:outputLabel value="#{bundle.EditContentLabel_contentUrl}" for="contentUrl" />
+                    <h:inputText id="contentUrl" value="#{contentController.selected.contentUrl}" title="#{bundle.EditContentTitle_contentUrl}" />
                     <h:outputLabel value="#{bundle.EditContentLabel_idForm}" for="idForm" />
-                    <h:selectOneMenu id="idForm" value="#{contentController.selected.idForm}" title="#{bundle.EditContentTitle_idForm}" required="true" requiredMessage="#{bundle.EditContentRequiredMessage_idForm}">
+                    <h:selectOneMenu id="idForm" value="#{contentController.selected.idForm}" title="#{bundle.EditContentTitle_idForm}" >
                         <f:selectItems value="#{formController.itemsAvailableSelectOne}"/>
                     </h:selectOneMenu>
                     <h:outputLabel value="#{bundle.EditContentLabel_idChapter}" for="idChapter" />
-                    <h:selectOneMenu id="idChapter" value="#{contentController.selected.idChapter}" title="#{bundle.EditContentTitle_idChapter}" required="true" requiredMessage="#{bundle.EditContentRequiredMessage_idChapter}">
+                    <h:selectOneMenu id="idChapter" value="#{contentController.selected.idChapter}" title="#{bundle.EditContentTitle_idChapter}" >
                         <f:selectItems value="#{chapterController.itemsAvailableSelectOne}"/>
                     </h:selectOneMenu>
                 </h:panelGrid>

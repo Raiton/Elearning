@@ -17,26 +17,26 @@
                 <h:panelGrid columns="2">
                     <h:outputLabel value="#{bundle.EditExamLabel_idExam}" for="idExam" />
                     <h:inputText id="idExam" value="#{examController.selected.idExam}" title="#{bundle.EditExamTitle_idExam}" required="true" requiredMessage="#{bundle.EditExamRequiredMessage_idExam}"/>
+                    <h:outputLabel value="#{bundle.EditExamLabel_beginingDate}" for="beginingDate" />
+                    <h:inputText id="beginingDate" value="#{examController.selected.beginingDate}" title="#{bundle.EditExamTitle_beginingDate}" >
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.EditExamLabel_deadline}" for="deadline" />
+                    <h:inputText id="deadline" value="#{examController.selected.deadline}" title="#{bundle.EditExamTitle_deadline}" >
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:inputText>
                     <h:outputLabel value="#{bundle.EditExamLabel_examContent}" for="examContent" />
                     <h:inputText id="examContent" value="#{examController.selected.examContent}" title="#{bundle.EditExamTitle_examContent}" />
                     <h:outputLabel value="#{bundle.EditExamLabel_mark}" for="mark" />
                     <h:inputText id="mark" value="#{examController.selected.mark}" title="#{bundle.EditExamTitle_mark}" />
                     <h:outputLabel value="#{bundle.EditExamLabel_response}" for="response" />
                     <h:inputText id="response" value="#{examController.selected.response}" title="#{bundle.EditExamTitle_response}" />
-                    <h:outputLabel value="#{bundle.EditExamLabel_deadline}" for="deadline" />
-                    <h:inputText id="deadline" value="#{examController.selected.deadline}" title="#{bundle.EditExamTitle_deadline}" >
-                        <f:convertDateTime pattern="MM/dd/yyyy" />
-                    </h:inputText>
-                    <h:outputLabel value="#{bundle.EditExamLabel_beginingDate}" for="beginingDate" />
-                    <h:inputText id="beginingDate" value="#{examController.selected.beginingDate}" title="#{bundle.EditExamTitle_beginingDate}" >
-                        <f:convertDateTime pattern="MM/dd/yyyy" />
-                    </h:inputText>
                     <h:outputLabel value="#{bundle.EditExamLabel_idUserTable}" for="idUserTable" />
-                    <h:selectOneMenu id="idUserTable" value="#{examController.selected.idUserTable}" title="#{bundle.EditExamTitle_idUserTable}" required="true" requiredMessage="#{bundle.EditExamRequiredMessage_idUserTable}">
+                    <h:selectOneMenu id="idUserTable" value="#{examController.selected.idUserTable}" title="#{bundle.EditExamTitle_idUserTable}" >
                         <f:selectItems value="#{userTableController.itemsAvailableSelectOne}"/>
                     </h:selectOneMenu>
                     <h:outputLabel value="#{bundle.EditExamLabel_idTopic}" for="idTopic" />
-                    <h:selectOneMenu id="idTopic" value="#{examController.selected.idTopic}" title="#{bundle.EditExamTitle_idTopic}" required="true" requiredMessage="#{bundle.EditExamRequiredMessage_idTopic}">
+                    <h:selectOneMenu id="idTopic" value="#{examController.selected.idTopic}" title="#{bundle.EditExamTitle_idTopic}" >
                         <f:selectItems value="#{topicController.itemsAvailableSelectOne}"/>
                     </h:selectOneMenu>
                 </h:panelGrid>

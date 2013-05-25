@@ -32,39 +32,39 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Exam.findAll", query = "SELECT e FROM Exam e"),
     @NamedQuery(name = "Exam.findByIdExam", query = "SELECT e FROM Exam e WHERE e.idExam = :idExam"),
+    @NamedQuery(name = "Exam.findByBeginingDate", query = "SELECT e FROM Exam e WHERE e.beginingDate = :beginingDate"),
+    @NamedQuery(name = "Exam.findByDeadline", query = "SELECT e FROM Exam e WHERE e.deadline = :deadline"),
     @NamedQuery(name = "Exam.findByExamContent", query = "SELECT e FROM Exam e WHERE e.examContent = :examContent"),
     @NamedQuery(name = "Exam.findByMark", query = "SELECT e FROM Exam e WHERE e.mark = :mark"),
-    @NamedQuery(name = "Exam.findByResponse", query = "SELECT e FROM Exam e WHERE e.response = :response"),
-    @NamedQuery(name = "Exam.findByDeadline", query = "SELECT e FROM Exam e WHERE e.deadline = :deadline"),
-    @NamedQuery(name = "Exam.findByBeginingDate", query = "SELECT e FROM Exam e WHERE e.beginingDate = :beginingDate")})
+    @NamedQuery(name = "Exam.findByResponse", query = "SELECT e FROM Exam e WHERE e.response = :response")})
 public class Exam implements Serializable {
-    @JoinColumn(name = "id_topic", referencedColumnName = "id_topic")
-    @ManyToOne(optional = false)
-    private Topic idTopic;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id_exam")
     private Integer idExam;
-    @Size(max = 2147483647)
+    @Column(name = "begining_date")
+    @Temporal(TemporalType.DATE)
+    private Date beginingDate;
+    @Column(name = "deadline")
+    @Temporal(TemporalType.DATE)
+    private Date deadline;
+    @Size(max = 255)
     @Column(name = "exam_content")
     private String examContent;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "mark")
     private Double mark;
-    @Size(max = 2147483647)
+    @Size(max = 255)
     @Column(name = "response")
     private String response;
-    @Column(name = "deadline")
-    @Temporal(TemporalType.DATE)
-    private Date deadline;
-    @Column(name = "begining_date")
-    @Temporal(TemporalType.DATE)
-    private Date beginingDate;
     @JoinColumn(name = "id_user_table", referencedColumnName = "id_user_table")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private UserTable idUserTable;
+    @JoinColumn(name = "id_topic", referencedColumnName = "id_topic")
+    @ManyToOne
+    private Topic idTopic;
 
     public Exam() {
     }
@@ -79,6 +79,22 @@ public class Exam implements Serializable {
 
     public void setIdExam(Integer idExam) {
         this.idExam = idExam;
+    }
+
+    public Date getBeginingDate() {
+        return beginingDate;
+    }
+
+    public void setBeginingDate(Date beginingDate) {
+        this.beginingDate = beginingDate;
+    }
+
+    public Date getDeadline() {
+        return deadline;
+    }
+
+    public void setDeadline(Date deadline) {
+        this.deadline = deadline;
     }
 
     public String getExamContent() {
@@ -105,28 +121,20 @@ public class Exam implements Serializable {
         this.response = response;
     }
 
-    public Date getDeadline() {
-        return deadline;
-    }
-
-    public void setDeadline(Date deadline) {
-        this.deadline = deadline;
-    }
-
-    public Date getBeginingDate() {
-        return beginingDate;
-    }
-
-    public void setBeginingDate(Date beginingDate) {
-        this.beginingDate = beginingDate;
-    }
-
     public UserTable getIdUserTable() {
         return idUserTable;
     }
 
     public void setIdUserTable(UserTable idUserTable) {
         this.idUserTable = idUserTable;
+    }
+
+    public Topic getIdTopic() {
+        return idTopic;
+    }
+
+    public void setIdTopic(Topic idTopic) {
+        this.idTopic = idTopic;
     }
 
     @Override
@@ -152,14 +160,6 @@ public class Exam implements Serializable {
     @Override
     public String toString() {
         return "com.elearningproject.entities.Exam[ idExam=" + idExam + " ]";
-    }
-
-    public Topic getIdTopic() {
-        return idTopic;
-    }
-
-    public void setIdTopic(Topic idTopic) {
-        this.idTopic = idTopic;
     }
     
 }

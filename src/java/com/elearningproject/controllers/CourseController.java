@@ -6,10 +6,8 @@ import com.elearningproject.controllers.util.PaginationHelper;
 import com.elearningproject.facades.CourseFacade;
 
 import java.io.Serializable;
-import java.math.BigInteger;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
-import javax.ejb.Local;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
@@ -26,14 +24,10 @@ public class CourseController implements Serializable {
 
     private Course current;
     private DataModel items = null;
-    
     @EJB
-    public com.elearningproject.facades.CourseFacade ejbFacade;
-
-  
+    private com.elearningproject.facades.CourseFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
-
 
     public CourseController() {
     }
@@ -71,11 +65,6 @@ public class CourseController implements Serializable {
         recreateModel();
         return "List";
     }
-    
-    public String aazed(){
-        System.out.println("well well");
-        return null;
-    }
 
     public String prepareView() {
         current = (Course) getItems().getRowData();
@@ -87,13 +76,6 @@ public class CourseController implements Serializable {
         current = new Course();
         selectedItemIndex = -1;
         return "Create";
-    }
-    
-    public void setNumberWeeks(int myInteger){
-        BigInteger bi = BigInteger.valueOf(myInteger);
-        if (current!=null){
-        current.setNbreWeeks(bi);
-    }
     }
 
     public String create() {

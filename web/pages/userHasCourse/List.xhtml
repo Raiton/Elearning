@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListUserHasCourseTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:form styleClass="jsfcrud_list_form">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                <h:outputText escape="false" value="#{bundle.ListUserHasCourseEmpty}" rendered="#{userHasCourseController.items.rowCount == 0}"/>
+                <h:panelGroup rendered="#{userHasCourseController.items.rowCount > 0}">
+                    <h:outputText value="#{userHasCourseController.pagination.pageFirstItem + 1}..#{userHasCourseController.pagination.pageLastItem + 1}/#{userHasCourseController.pagination.itemsCount}"/>&nbsp;
+                    <h:commandLink action="#{userHasCourseController.previous}" value="#{bundle.Previous} #{userHasCourseController.pagination.pageSize}" rendered="#{userHasCourseController.pagination.hasPreviousPage}"/>&nbsp;
+                    <h:commandLink action="#{userHasCourseController.next}" value="#{bundle.Next} #{userHasCourseController.pagination.pageSize}" rendered="#{userHasCourseController.pagination.hasNextPage}"/>&nbsp;
+                    <h:dataTable value="#{userHasCourseController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListUserHasCourseTitle_idUserHasCourse}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idUserHasCourse}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListUserHasCourseTitle_idUserTable}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idUserTable}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListUserHasCourseTitle_idCourse}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idCourse}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="&nbsp;"/>
+                            </f:facet>
+                            <h:commandLink action="#{userHasCourseController.prepareView}" value="#{bundle.ListUserHasCourseViewLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{userHasCourseController.prepareEdit}" value="#{bundle.ListUserHasCourseEditLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{userHasCourseController.destroy}" value="#{bundle.ListUserHasCourseDestroyLink}"/>
+                        </h:column>
+                    </h:dataTable>
+                </h:panelGroup>
+                <br />
+                <h:commandLink action="#{userHasCourseController.prepareCreate}" value="#{bundle.ListUserHasCourseCreateLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ListUserHasCourseIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

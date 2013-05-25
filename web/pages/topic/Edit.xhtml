@@ -22,7 +22,7 @@
                     <h:outputLabel value="#{bundle.EditTopicLabel_weekNumber}" for="weekNumber" />
                     <h:inputText id="weekNumber" value="#{topicController.selected.weekNumber}" title="#{bundle.EditTopicTitle_weekNumber}" />
                     <h:outputLabel value="#{bundle.EditTopicLabel_idCourse}" for="idCourse" />
-                    <h:selectOneMenu id="idCourse" value="#{topicController.selected.idCourse}" title="#{bundle.EditTopicTitle_idCourse}" required="true" requiredMessage="#{bundle.EditTopicRequiredMessage_idCourse}">
+                    <h:selectOneMenu id="idCourse" value="#{topicController.selected.idCourse}" title="#{bundle.EditTopicTitle_idCourse}" >
                         <f:selectItems value="#{courseController.itemsAvailableSelectOne}"/>
                     </h:selectOneMenu>
                 </h:panelGrid>

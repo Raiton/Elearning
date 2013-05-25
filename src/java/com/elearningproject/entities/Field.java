@@ -8,7 +8,6 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -34,8 +33,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Field.findAll", query = "SELECT f FROM Field f"),
     @NamedQuery(name = "Field.findByIdField", query = "SELECT f FROM Field f WHERE f.idField = :idField"),
-    @NamedQuery(name = "Field.findByFieldName", query = "SELECT f FROM Field f WHERE f.fieldName = :fieldName"),
-    @NamedQuery(name = "Field.findByFieldCreationDate", query = "SELECT f FROM Field f WHERE f.fieldCreationDate = :fieldCreationDate")})
+    @NamedQuery(name = "Field.findByFieldCreationDate", query = "SELECT f FROM Field f WHERE f.fieldCreationDate = :fieldCreationDate"),
+    @NamedQuery(name = "Field.findByFieldName", query = "SELECT f FROM Field f WHERE f.fieldName = :fieldName")})
 public class Field implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -43,13 +42,13 @@ public class Field implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_field")
     private Integer idField;
-    @Size(max = 2147483647)
-    @Column(name = "field_name")
-    private String fieldName;
     @Column(name = "field_creation_date")
     @Temporal(TemporalType.DATE)
     private Date fieldCreationDate;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idField")
+    @Size(max = 255)
+    @Column(name = "field_name")
+    private String fieldName;
+    @OneToMany(mappedBy = "idField")
     private List<Course> courseList;
 
     public Field() {
@@ -67,20 +66,20 @@ public class Field implements Serializable {
         this.idField = idField;
     }
 
-    public String getFieldName() {
-        return fieldName;
-    }
-
-    public void setFieldName(String fieldName) {
-        this.fieldName = fieldName;
-    }
-
     public Date getFieldCreationDate() {
         return fieldCreationDate;
     }
 
     public void setFieldCreationDate(Date fieldCreationDate) {
         this.fieldCreationDate = fieldCreationDate;
+    }
+
+    public String getFieldName() {
+        return fieldName;
+    }
+
+    public void setFieldName(String fieldName) {
+        this.fieldName = fieldName;
     }
 
     @XmlTransient
@@ -114,7 +113,7 @@ public class Field implements Serializable {
 
     @Override
     public String toString() {
-        return fieldName;
+        return "com.elearningproject.entities.Field[ idField=" + idField + " ]";
     }
     
 }

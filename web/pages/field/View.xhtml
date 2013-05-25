@@ -17,12 +17,12 @@
                 <h:panelGrid columns="2">
                     <h:outputText value="#{bundle.ViewFieldLabel_idField}"/>
                     <h:outputText value="#{fieldController.selected.idField}" title="#{bundle.ViewFieldTitle_idField}"/>
-                    <h:outputText value="#{bundle.ViewFieldLabel_fieldName}"/>
-                    <h:outputText value="#{fieldController.selected.fieldName}" title="#{bundle.ViewFieldTitle_fieldName}"/>
                     <h:outputText value="#{bundle.ViewFieldLabel_fieldCreationDate}"/>
                     <h:outputText value="#{fieldController.selected.fieldCreationDate}" title="#{bundle.ViewFieldTitle_fieldCreationDate}">
                         <f:convertDateTime pattern="MM/dd/yyyy" />
                     </h:outputText>
+                    <h:outputText value="#{bundle.ViewFieldLabel_fieldName}"/>
+                    <h:outputText value="#{fieldController.selected.fieldName}" title="#{bundle.ViewFieldTitle_fieldName}"/>
                 </h:panelGrid>
                 <br />
                 <h:commandLink action="#{fieldController.destroyAndView}" value="#{bundle.ViewFieldDestroyLink}"/>

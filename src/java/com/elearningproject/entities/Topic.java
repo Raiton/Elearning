@@ -8,7 +8,6 @@ import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -37,26 +36,26 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Topic.findByNameTopic", query = "SELECT t FROM Topic t WHERE t.nameTopic = :nameTopic"),
     @NamedQuery(name = "Topic.findByWeekNumber", query = "SELECT t FROM Topic t WHERE t.weekNumber = :weekNumber")})
 public class Topic implements Serializable {
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTopic")
-    private List<Exam> examList;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id_topic")
     private Integer idTopic;
-    @Size(max = 2147483647)
+    @Size(max = 255)
     @Column(name = "name_topic")
     private String nameTopic;
     @Column(name = "week_number")
     private BigInteger weekNumber;
     @JoinColumn(name = "id_course", referencedColumnName = "id_course")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Course idCourse;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTopic")
-    private List<Chapter> chapterList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTopic")
+    @OneToMany(mappedBy = "idTopic")
     private List<Test> testList;
+    @OneToMany(mappedBy = "idTopic")
+    private List<Chapter> chapterList;
+    @OneToMany(mappedBy = "idTopic")
+    private List<Exam> examList;
 
     public Topic() {
     }
@@ -98,6 +97,15 @@ public class Topic implements Serializable {
     }
 
     @XmlTransient
+    public List<Test> getTestList() {
+        return testList;
+    }
+
+    public void setTestList(List<Test> testList) {
+        this.testList = testList;
+    }
+
+    @XmlTransient
     public List<Chapter> getChapterList() {
         return chapterList;
     }
@@ -107,12 +115,12 @@ public class Topic implements Serializable {
     }
 
     @XmlTransient
-    public List<Test> getTestList() {
-        return testList;
+    public List<Exam> getExamList() {
+        return examList;
     }
 
-    public void setTestList(List<Test> testList) {
-        this.testList = testList;
+    public void setExamList(List<Exam> examList) {
+        this.examList = examList;
     }
 
     @Override
@@ -137,16 +145,7 @@ public class Topic implements Serializable {
 
     @Override
     public String toString() {
-        return nameTopic;
-    }
-
-    @XmlTransient
-    public List<Exam> getExamList() {
-        return examList;
-    }
-
-    public void setExamList(List<Exam> examList) {
-        this.examList = examList;
+        return "com.elearningproject.entities.Topic[ idTopic=" + idTopic + " ]";
     }
     
 }

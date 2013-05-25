@@ -17,12 +17,12 @@
                 <h:panelGrid columns="2">
                     <h:outputLabel value="#{bundle.CreateAccountLabel_idAccount}" for="idAccount" />
                     <h:inputText id="idAccount" value="#{accountController.selected.idAccount}" title="#{bundle.CreateAccountTitle_idAccount}" required="true" requiredMessage="#{bundle.CreateAccountRequiredMessage_idAccount}"/>
-                    <h:outputLabel value="#{bundle.CreateAccountLabel_username}" for="username" />
-                    <h:inputText id="username" value="#{accountController.selected.username}" title="#{bundle.CreateAccountTitle_username}" />
                     <h:outputLabel value="#{bundle.CreateAccountLabel_password}" for="password" />
                     <h:inputText id="password" value="#{accountController.selected.password}" title="#{bundle.CreateAccountTitle_password}" />
+                    <h:outputLabel value="#{bundle.CreateAccountLabel_username}" for="username" />
+                    <h:inputText id="username" value="#{accountController.selected.username}" title="#{bundle.CreateAccountTitle_username}" />
                     <h:outputLabel value="#{bundle.CreateAccountLabel_idUserTable}" for="idUserTable" />
-                    <h:selectOneMenu id="idUserTable" value="#{accountController.selected.idUserTable}" title="#{bundle.CreateAccountTitle_idUserTable}" required="true" requiredMessage="#{bundle.CreateAccountRequiredMessage_idUserTable}">
+                    <h:selectOneMenu id="idUserTable" value="#{accountController.selected.idUserTable}" title="#{bundle.CreateAccountTitle_idUserTable}" >
                         <f:selectItems value="#{userTableController.itemsAvailableSelectOne}"/>
                     </h:selectOneMenu>
                 </h:panelGrid>

@@ -7,7 +7,6 @@ package com.elearningproject.entities;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -39,10 +38,10 @@ public class Form implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_form")
     private Integer idForm;
-    @Size(max = 2147483647)
+    @Size(max = 255)
     @Column(name = "form_name")
     private String formName;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idForm")
+    @OneToMany(mappedBy = "idForm")
     private List<Content> contentList;
 
     public Form() {
@@ -99,7 +98,7 @@ public class Form implements Serializable {
 
     @Override
     public String toString() {
-        return formName;
+        return "com.elearningproject.entities.Form[ idForm=" + idForm + " ]";
     }
     
 }

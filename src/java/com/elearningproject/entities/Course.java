@@ -16,8 +16,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -39,52 +37,47 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Course.findAll", query = "SELECT c FROM Course c"),
     @NamedQuery(name = "Course.findByIdCourse", query = "SELECT c FROM Course c WHERE c.idCourse = :idCourse"),
-    @NamedQuery(name = "Course.findByCourseName", query = "SELECT c FROM Course c WHERE c.courseName = :courseName"),
     @NamedQuery(name = "Course.findByCourseCreationDate", query = "SELECT c FROM Course c WHERE c.courseCreationDate = :courseCreationDate"),
-    @NamedQuery(name = "Course.findByUpdateDate", query = "SELECT c FROM Course c WHERE c.updateDate = :updateDate"),
-    @NamedQuery(name = "Course.findByNbreWeeks", query = "SELECT c FROM Course c WHERE c.nbreWeeks = :nbreWeeks"),
+    @NamedQuery(name = "Course.findByCourseName", query = "SELECT c FROM Course c WHERE c.courseName = :courseName"),
     @NamedQuery(name = "Course.findByLaunchDate", query = "SELECT c FROM Course c WHERE c.launchDate = :launchDate"),
+    @NamedQuery(name = "Course.findByNbreWeeks", query = "SELECT c FROM Course c WHERE c.nbreWeeks = :nbreWeeks"),
+    @NamedQuery(name = "Course.findByPhoto", query = "SELECT c FROM Course c WHERE c.photo = :photo"),
     @NamedQuery(name = "Course.findByStatus", query = "SELECT c FROM Course c WHERE c.status = :status"),
-    @NamedQuery(name = "Course.findByPhoto", query = "SELECT c FROM Course c WHERE c.photo = :photo")})
+    @NamedQuery(name = "Course.findByUpdateDate", query = "SELECT c FROM Course c WHERE c.updateDate = :updateDate")})
 public class Course implements Serializable {
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "course")
-    private List<UserHasCourse> userHasCourseList;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id_course")
     private Integer idCourse;
-    @Size(max = 2147483647)
-    @Column(name = "course_name")
-    private String courseName;
     @Column(name = "course_creation_date")
     @Temporal(TemporalType.DATE)
     private Date courseCreationDate;
-    @Column(name = "update_date")
-    @Temporal(TemporalType.DATE)
-    private Date updateDate;
-    @Column(name = "nbre_weeks")
-    private BigInteger nbreWeeks;
+    @Size(max = 255)
+    @Column(name = "course_name")
+    private String courseName;
     @Column(name = "launch_date")
     @Temporal(TemporalType.DATE)
     private Date launchDate;
-    @Size(max = 2147483647)
-    @Column(name = "status")
-    private String status;
-    @Size(max = 2147483647)
+    @Column(name = "nbre_weeks")
+    private BigInteger nbreWeeks;
+    @Size(max = 255)
     @Column(name = "photo")
     private String photo;
-    @JoinTable(name = "user_has_course", joinColumns = {
-        @JoinColumn(name = "id_course", referencedColumnName = "id_course")}, inverseJoinColumns = {
-        @JoinColumn(name = "id_user_table", referencedColumnName = "id_user_table")})
-    @ManyToMany
-    private List<UserTable> userTableList;
-    @JoinColumn(name = "id_field", referencedColumnName = "id_field")
-    @ManyToOne(optional = false)
-    private Field idField;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCourse")
+    @Size(max = 255)
+    @Column(name = "status")
+    private String status;
+    @Column(name = "update_date")
+    @Temporal(TemporalType.DATE)
+    private Date updateDate;
+    @OneToMany(mappedBy = "idCourse")
     private List<Topic> topicList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCourse")
+    private List<UserHasCourse> userHasCourseList;
+    @JoinColumn(name = "id_field", referencedColumnName = "id_field")
+    @ManyToOne
+    private Field idField;
 
     public Course() {
     }
@@ -101,14 +94,6 @@ public class Course implements Serializable {
         this.idCourse = idCourse;
     }
 
-    public String getCourseName() {
-        return courseName;
-    }
-
-    public void setCourseName(String courseName) {
-        this.courseName = courseName;
-    }
-
     public Date getCourseCreationDate() {
         return courseCreationDate;
     }
@@ -117,20 +102,12 @@ public class Course implements Serializable {
         this.courseCreationDate = courseCreationDate;
     }
 
-    public Date getUpdateDate() {
-        return updateDate;
+    public String getCourseName() {
+        return courseName;
     }
 
-    public void setUpdateDate(Date updateDate) {
-        this.updateDate = updateDate;
-    }
-
-    public BigInteger getNbreWeeks() {
-        return nbreWeeks;
-    }
-
-    public void setNbreWeeks(BigInteger nbreWeeks) {
-        this.nbreWeeks = nbreWeeks;
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
     }
 
     public Date getLaunchDate() {
@@ -141,12 +118,12 @@ public class Course implements Serializable {
         this.launchDate = launchDate;
     }
 
-    public String getStatus() {
-        return status;
+    public BigInteger getNbreWeeks() {
+        return nbreWeeks;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setNbreWeeks(BigInteger nbreWeeks) {
+        this.nbreWeeks = nbreWeeks;
     }
 
     public String getPhoto() {
@@ -157,21 +134,20 @@ public class Course implements Serializable {
         this.photo = photo;
     }
 
-    @XmlTransient
-    public List<UserTable> getUserTableList() {
-        return userTableList;
+    public String getStatus() {
+        return status;
     }
 
-    public void setUserTableList(List<UserTable> userTableList) {
-        this.userTableList = userTableList;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
-    public Field getIdField() {
-        return idField;
+    public Date getUpdateDate() {
+        return updateDate;
     }
 
-    public void setIdField(Field idField) {
-        this.idField = idField;
+    public void setUpdateDate(Date updateDate) {
+        this.updateDate = updateDate;
     }
 
     @XmlTransient
@@ -181,6 +157,23 @@ public class Course implements Serializable {
 
     public void setTopicList(List<Topic> topicList) {
         this.topicList = topicList;
+    }
+
+    @XmlTransient
+    public List<UserHasCourse> getUserHasCourseList() {
+        return userHasCourseList;
+    }
+
+    public void setUserHasCourseList(List<UserHasCourse> userHasCourseList) {
+        this.userHasCourseList = userHasCourseList;
+    }
+
+    public Field getIdField() {
+        return idField;
+    }
+
+    public void setIdField(Field idField) {
+        this.idField = idField;
     }
 
     @Override
@@ -205,16 +198,7 @@ public class Course implements Serializable {
 
     @Override
     public String toString() {
-        return courseName;
-    }
-
-    @XmlTransient
-    public List<UserHasCourse> getUserHasCourseList() {
-        return userHasCourseList;
-    }
-
-    public void setUserHasCourseList(List<UserHasCourse> userHasCourseList) {
-        this.userHasCourseList = userHasCourseList;
+        return "com.elearningproject.entities.Course[ idCourse=" + idCourse + " ]";
     }
     
 }

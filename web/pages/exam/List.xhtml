@@ -28,6 +28,22 @@
                         </h:column>
                         <h:column>
                             <f:facet name="header">
+                                <h:outputText value="#{bundle.ListExamTitle_beginingDate}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.beginingDate}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListExamTitle_deadline}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.deadline}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
                                 <h:outputText value="#{bundle.ListExamTitle_examContent}"/>
                             </f:facet>
                             <h:outputText value="#{item.examContent}"/>
@@ -43,22 +59,6 @@
                                 <h:outputText value="#{bundle.ListExamTitle_response}"/>
                             </f:facet>
                             <h:outputText value="#{item.response}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListExamTitle_deadline}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.deadline}">
-                                <f:convertDateTime pattern="MM/dd/yyyy" />
-                            </h:outputText>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListExamTitle_beginingDate}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.beginingDate}">
-                                <f:convertDateTime pattern="MM/dd/yyyy" />
-                            </h:outputText>
                         </h:column>
                         <h:column>
                             <f:facet name="header">

@@ -29,8 +29,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Account.findAll", query = "SELECT a FROM Account a"),
     @NamedQuery(name = "Account.findByIdAccount", query = "SELECT a FROM Account a WHERE a.idAccount = :idAccount"),
-    @NamedQuery(name = "Account.findByUsername", query = "SELECT a FROM Account a WHERE a.username = :username"),
-    @NamedQuery(name = "Account.findByPassword", query = "SELECT a FROM Account a WHERE a.password = :password")})
+    @NamedQuery(name = "Account.findByPassword", query = "SELECT a FROM Account a WHERE a.password = :password"),
+    @NamedQuery(name = "Account.findByUsername", query = "SELECT a FROM Account a WHERE a.username = :username")})
 public class Account implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -38,14 +38,14 @@ public class Account implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_account")
     private Integer idAccount;
-    @Size(max = 2147483647)
-    @Column(name = "username")
-    private String username;
-    @Size(max = 2147483647)
+    @Size(max = 255)
     @Column(name = "password")
     private String password;
+    @Size(max = 255)
+    @Column(name = "username")
+    private String username;
     @JoinColumn(name = "id_user_table", referencedColumnName = "id_user_table")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private UserTable idUserTable;
 
     public Account() {
@@ -63,20 +63,20 @@ public class Account implements Serializable {
         this.idAccount = idAccount;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     public String getPassword() {
         return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public UserTable getIdUserTable() {

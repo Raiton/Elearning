@@ -17,20 +17,20 @@
                 <h:panelGrid columns="2">
                     <h:outputText value="#{bundle.ViewExamLabel_idExam}"/>
                     <h:outputText value="#{examController.selected.idExam}" title="#{bundle.ViewExamTitle_idExam}"/>
+                    <h:outputText value="#{bundle.ViewExamLabel_beginingDate}"/>
+                    <h:outputText value="#{examController.selected.beginingDate}" title="#{bundle.ViewExamTitle_beginingDate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+                    <h:outputText value="#{bundle.ViewExamLabel_deadline}"/>
+                    <h:outputText value="#{examController.selected.deadline}" title="#{bundle.ViewExamTitle_deadline}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
                     <h:outputText value="#{bundle.ViewExamLabel_examContent}"/>
                     <h:outputText value="#{examController.selected.examContent}" title="#{bundle.ViewExamTitle_examContent}"/>
                     <h:outputText value="#{bundle.ViewExamLabel_mark}"/>
                     <h:outputText value="#{examController.selected.mark}" title="#{bundle.ViewExamTitle_mark}"/>
                     <h:outputText value="#{bundle.ViewExamLabel_response}"/>
                     <h:outputText value="#{examController.selected.response}" title="#{bundle.ViewExamTitle_response}"/>
-                    <h:outputText value="#{bundle.ViewExamLabel_deadline}"/>
-                    <h:outputText value="#{examController.selected.deadline}" title="#{bundle.ViewExamTitle_deadline}">
-                        <f:convertDateTime pattern="MM/dd/yyyy" />
-                    </h:outputText>
-                    <h:outputText value="#{bundle.ViewExamLabel_beginingDate}"/>
-                    <h:outputText value="#{examController.selected.beginingDate}" title="#{bundle.ViewExamTitle_beginingDate}">
-                        <f:convertDateTime pattern="MM/dd/yyyy" />
-                    </h:outputText>
                     <h:outputText value="#{bundle.ViewExamLabel_idUserTable}"/>
                     <h:outputText value="#{examController.selected.idUserTable}" title="#{bundle.ViewExamTitle_idUserTable}"/>
                     <h:outputText value="#{bundle.ViewExamLabel_idTopic}"/>

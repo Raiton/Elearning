@@ -29,8 +29,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Test.findAll", query = "SELECT t FROM Test t"),
     @NamedQuery(name = "Test.findByIdTest", query = "SELECT t FROM Test t WHERE t.idTest = :idTest"),
-    @NamedQuery(name = "Test.findByTestName", query = "SELECT t FROM Test t WHERE t.testName = :testName"),
-    @NamedQuery(name = "Test.findByTestContent", query = "SELECT t FROM Test t WHERE t.testContent = :testContent")})
+    @NamedQuery(name = "Test.findByTestContent", query = "SELECT t FROM Test t WHERE t.testContent = :testContent"),
+    @NamedQuery(name = "Test.findByTestName", query = "SELECT t FROM Test t WHERE t.testName = :testName")})
 public class Test implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -38,14 +38,14 @@ public class Test implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_test")
     private Integer idTest;
-    @Size(max = 2147483647)
-    @Column(name = "test_name")
-    private String testName;
-    @Size(max = 2147483647)
+    @Size(max = 255)
     @Column(name = "test_content")
     private String testContent;
+    @Size(max = 255)
+    @Column(name = "test_name")
+    private String testName;
     @JoinColumn(name = "id_topic", referencedColumnName = "id_topic")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Topic idTopic;
 
     public Test() {
@@ -63,20 +63,20 @@ public class Test implements Serializable {
         this.idTest = idTest;
     }
 
-    public String getTestName() {
-        return testName;
-    }
-
-    public void setTestName(String testName) {
-        this.testName = testName;
-    }
-
     public String getTestContent() {
         return testContent;
     }
 
     public void setTestContent(String testContent) {
         this.testContent = testContent;
+    }
+
+    public String getTestName() {
+        return testName;
+    }
+
+    public void setTestName(String testName) {
+        this.testName = testName;
     }
 
     public Topic getIdTopic() {

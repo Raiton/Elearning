@@ -32,8 +32,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Message.findAll", query = "SELECT m FROM Message m"),
     @NamedQuery(name = "Message.findByIdMessage", query = "SELECT m FROM Message m WHERE m.idMessage = :idMessage"),
-    @NamedQuery(name = "Message.findByMessageContent", query = "SELECT m FROM Message m WHERE m.messageContent = :messageContent"),
-    @NamedQuery(name = "Message.findByDate", query = "SELECT m FROM Message m WHERE m.date = :date")})
+    @NamedQuery(name = "Message.findByDate", query = "SELECT m FROM Message m WHERE m.date = :date"),
+    @NamedQuery(name = "Message.findByMessageContent", query = "SELECT m FROM Message m WHERE m.messageContent = :messageContent")})
 public class Message implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -41,14 +41,14 @@ public class Message implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_message")
     private Integer idMessage;
-    @Size(max = 2147483647)
-    @Column(name = "message_content")
-    private String messageContent;
     @Column(name = "date")
     @Temporal(TemporalType.DATE)
     private Date date;
+    @Size(max = 255)
+    @Column(name = "message_content")
+    private String messageContent;
     @JoinColumn(name = "id_user_table", referencedColumnName = "id_user_table")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private UserTable idUserTable;
 
     public Message() {
@@ -66,20 +66,20 @@ public class Message implements Serializable {
         this.idMessage = idMessage;
     }
 
-    public String getMessageContent() {
-        return messageContent;
-    }
-
-    public void setMessageContent(String messageContent) {
-        this.messageContent = messageContent;
-    }
-
     public Date getDate() {
         return date;
     }
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public String getMessageContent() {
+        return messageContent;
+    }
+
+    public void setMessageContent(String messageContent) {
+        this.messageContent = messageContent;
     }
 
     public UserTable getIdUserTable() {

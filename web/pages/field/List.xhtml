@@ -28,17 +28,17 @@
                         </h:column>
                         <h:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListFieldTitle_fieldName}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.fieldName}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
                                 <h:outputText value="#{bundle.ListFieldTitle_fieldCreationDate}"/>
                             </f:facet>
                             <h:outputText value="#{item.fieldCreationDate}">
                                 <f:convertDateTime pattern="MM/dd/yyyy" />
                             </h:outputText>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListFieldTitle_fieldName}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.fieldName}"/>
                         </h:column>
                         <h:column>
                             <f:facet name="header">

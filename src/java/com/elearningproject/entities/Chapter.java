@@ -8,7 +8,6 @@ import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -43,15 +42,15 @@ public class Chapter implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_chapter")
     private Integer idChapter;
-    @Size(max = 2147483647)
+    @Size(max = 255)
     @Column(name = "chapter_name")
     private String chapterName;
     @Column(name = "chapter_rank")
     private BigInteger chapterRank;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idChapter")
+    @OneToMany(mappedBy = "idChapter")
     private List<Content> contentList;
     @JoinColumn(name = "id_topic", referencedColumnName = "id_topic")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Topic idTopic;
 
     public Chapter() {
@@ -124,7 +123,7 @@ public class Chapter implements Serializable {
 
     @Override
     public String toString() {
-        return chapterName;
+        return "com.elearningproject.entities.Chapter[ idChapter=" + idChapter + " ]";
     }
     
 }

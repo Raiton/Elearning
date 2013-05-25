@@ -29,27 +29,26 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Content.findAll", query = "SELECT c FROM Content c"),
     @NamedQuery(name = "Content.findByIdContent", query = "SELECT c FROM Content c WHERE c.idContent = :idContent"),
-    @NamedQuery(name = "Content.findBycontentUrl", query = "SELECT c FROM Content c WHERE c.contentUrl = :contentUrl"),
-    @NamedQuery(name = "Content.findByContentName", query = "SELECT c FROM Content c WHERE c.contentName = :contentName")})
+    @NamedQuery(name = "Content.findByContentName", query = "SELECT c FROM Content c WHERE c.contentName = :contentName"),
+    @NamedQuery(name = "Content.findByContentUrl", query = "SELECT c FROM Content c WHERE c.contentUrl = :contentUrl")})
 public class Content implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id_content")
     private Integer idContent;
-    @Size(max = 2147483647)
+    @Size(max = 255)
     @Column(name = "content_name")
     private String contentName;
-    @Size(max = 2147483647)
+    @Size(max = 255)
     @Column(name = "content_url")
     private String contentUrl;
     @JoinColumn(name = "id_form", referencedColumnName = "id_form")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Form idForm;
     @JoinColumn(name = "id_chapter", referencedColumnName = "id_chapter")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Chapter idChapter;
 
     public Content() {
@@ -75,20 +74,20 @@ public class Content implements Serializable {
         this.contentName = contentName;
     }
 
-    public Form getIdForm() {
-        return idForm;
-    }
-
-    public void setIdForm(Form idForm) {
-        this.idForm = idForm;
-    }
-
     public String getContentUrl() {
         return contentUrl;
     }
 
     public void setContentUrl(String contentUrl) {
         this.contentUrl = contentUrl;
+    }
+
+    public Form getIdForm() {
+        return idForm;
+    }
+
+    public void setIdForm(Form idForm) {
+        this.idForm = idForm;
     }
 
     public Chapter getIdChapter() {
@@ -121,6 +120,7 @@ public class Content implements Serializable {
 
     @Override
     public String toString() {
-        return contentName;
+        return "com.elearningproject.entities.Content[ idContent=" + idContent + " ]";
     }
+    
 }

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditUserHasCourseTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.EditUserHasCourseLabel_idUserHasCourse}" for="idUserHasCourse" />
+                    <h:inputText id="idUserHasCourse" value="#{userHasCourseController.selected.idUserHasCourse}" title="#{bundle.EditUserHasCourseTitle_idUserHasCourse}" required="true" requiredMessage="#{bundle.EditUserHasCourseRequiredMessage_idUserHasCourse}"/>
+                    <h:outputLabel value="#{bundle.EditUserHasCourseLabel_idUserTable}" for="idUserTable" />
+                    <h:selectOneMenu id="idUserTable" value="#{userHasCourseController.selected.idUserTable}" title="#{bundle.EditUserHasCourseTitle_idUserTable}" required="true" requiredMessage="#{bundle.EditUserHasCourseRequiredMessage_idUserTable}">
+                        <f:selectItems value="#{userTableController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.EditUserHasCourseLabel_idCourse}" for="idCourse" />
+                    <h:selectOneMenu id="idCourse" value="#{userHasCourseController.selected.idCourse}" title="#{bundle.EditUserHasCourseTitle_idCourse}" required="true" requiredMessage="#{bundle.EditUserHasCourseRequiredMessage_idCourse}">
+                        <f:selectItems value="#{courseController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <h:commandLink action="#{userHasCourseController.update}" value="#{bundle.EditUserHasCourseSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundle.EditUserHasCourseViewLink}"/>
+                <br />
+                <h:commandLink action="#{userHasCourseController.prepareList}" value="#{bundle.EditUserHasCourseShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.EditUserHasCourseIndexLink}" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

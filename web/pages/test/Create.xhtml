@@ -17,12 +17,12 @@
                 <h:panelGrid columns="2">
                     <h:outputLabel value="#{bundle.CreateTestLabel_idTest}" for="idTest" />
                     <h:inputText id="idTest" value="#{testController.selected.idTest}" title="#{bundle.CreateTestTitle_idTest}" required="true" requiredMessage="#{bundle.CreateTestRequiredMessage_idTest}"/>
-                    <h:outputLabel value="#{bundle.CreateTestLabel_testName}" for="testName" />
-                    <h:inputText id="testName" value="#{testController.selected.testName}" title="#{bundle.CreateTestTitle_testName}" />
                     <h:outputLabel value="#{bundle.CreateTestLabel_testContent}" for="testContent" />
                     <h:inputText id="testContent" value="#{testController.selected.testContent}" title="#{bundle.CreateTestTitle_testContent}" />
+                    <h:outputLabel value="#{bundle.CreateTestLabel_testName}" for="testName" />
+                    <h:inputText id="testName" value="#{testController.selected.testName}" title="#{bundle.CreateTestTitle_testName}" />
                     <h:outputLabel value="#{bundle.CreateTestLabel_idTopic}" for="idTopic" />
-                    <h:selectOneMenu id="idTopic" value="#{testController.selected.idTopic}" title="#{bundle.CreateTestTitle_idTopic}" required="true" requiredMessage="#{bundle.CreateTestRequiredMessage_idTopic}">
+                    <h:selectOneMenu id="idTopic" value="#{testController.selected.idTopic}" title="#{bundle.CreateTestTitle_idTopic}" >
                         <f:selectItems value="#{topicController.itemsAvailableSelectOne}"/>
                     </h:selectOneMenu>
                 </h:panelGrid>

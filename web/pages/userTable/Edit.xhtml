@@ -17,12 +17,12 @@
                 <h:panelGrid columns="2">
                     <h:outputLabel value="#{bundle.EditUserTableLabel_idUserTable}" for="idUserTable" />
                     <h:inputText id="idUserTable" value="#{userTableController.selected.idUserTable}" title="#{bundle.EditUserTableTitle_idUserTable}" required="true" requiredMessage="#{bundle.EditUserTableRequiredMessage_idUserTable}"/>
-                    <h:outputLabel value="#{bundle.EditUserTableLabel_name}" for="name" />
-                    <h:inputText id="name" value="#{userTableController.selected.name}" title="#{bundle.EditUserTableTitle_name}" />
                     <h:outputLabel value="#{bundle.EditUserTableLabel_EMail}" for="EMail" />
                     <h:inputText id="EMail" value="#{userTableController.selected.EMail}" title="#{bundle.EditUserTableTitle_EMail}" />
+                    <h:outputLabel value="#{bundle.EditUserTableLabel_name}" for="name" />
+                    <h:inputText id="name" value="#{userTableController.selected.name}" title="#{bundle.EditUserTableTitle_name}" />
                     <h:outputLabel value="#{bundle.EditUserTableLabel_idGroupTable}" for="idGroupTable" />
-                    <h:selectOneMenu id="idGroupTable" value="#{userTableController.selected.idGroupTable}" title="#{bundle.EditUserTableTitle_idGroupTable}" required="true" requiredMessage="#{bundle.EditUserTableRequiredMessage_idGroupTable}">
+                    <h:selectOneMenu id="idGroupTable" value="#{userTableController.selected.idGroupTable}" title="#{bundle.EditUserTableTitle_idGroupTable}" >
                         <f:selectItems value="#{groupTableController.itemsAvailableSelectOne}"/>
                     </h:selectOneMenu>
                 </h:panelGrid>
