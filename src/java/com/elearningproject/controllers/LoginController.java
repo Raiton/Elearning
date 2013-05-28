@@ -76,6 +76,7 @@ public class LoginController implements Serializable {
             if (account1.getUsername().equals(account.getUsername()) && account1.getPassword().equals(account.getPassword())) {
                 System.out.print("connected");
                 account = account1;
+                usertable=account1.getIdUserTable();
                   result = "../dashboard/dashboarduser.xhtml?faces-redirect=true;";
 
             }

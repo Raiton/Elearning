@@ -1,29 +1,41 @@
 
 <!DOCTYPE html  [
-<!ENTITY nbsp "&#160;">]>
+    <!ENTITY nbsp "&#160;">]>
     <ui:composition template="/layout_dashboard.xhtml"
-     xmlns="http://www.w3.org/1999/xhtml"
-     xmlns:f="http://java.sun.com/jsf/core"
-     xmlns:h="http://java.sun.com/jsf/html"
-     xmlns:ui="http://java.sun.com/jsf/facelets"
-     xmlns:p="http://primefaces.org/ui">
-     <ui:define name="Content">
-     </ui:define>
-    
-      <ui:define name="Menu">
-        <h:outputText  value="Name"/>        
-                 <h:outputText  value=" #{loginController.userdata.name}"  />
-                  <br/>
-                 <h:outputText  value="Email"/>        
-     <h:outputText  value=" #{loginController.userdata.EMail}"  />
-    </ui:define>
-    <ui:define name="TopBar">
-        <h:panelGroup style="display:block; text-align:right">
-        <h:outputLink>Find Courses</h:outputLink>
-         </h:panelGroup> 
-    </ui:define>
-    
-       <ui:define name="Content">
-            contenu
-    </ui:define>
-</ui:composition>
+                    xmlns="http://www.w3.org/1999/xhtml"
+                    xmlns:f="http://java.sun.com/jsf/core"
+                    xmlns:h="http://java.sun.com/jsf/html"
+                    xmlns:ui="http://java.sun.com/jsf/facelets"
+                    xmlns:p="http://primefaces.org/ui">
+        <ui:define name="Content">
+        </ui:define>
+
+        <ui:define name="Menu">
+            <h:outputText  value="Name"/>        
+            <h:outputText  value=" #{loginController.userdata.name}"  />
+            <br/>
+            <h:outputText  value="Email"/>        
+            <h:outputText  value=" #{loginController.userdata.EMail}"  />
+        </ui:define>
+        <ui:define name="TopBar">
+            <h:panelGroup style="display:block; text-align:right">
+                <h:outputLink>Find Courses</h:outputLink>
+            </h:panelGroup> 
+        </ui:define>
+
+        <ui:define name="Content">
+            <h:form>
+                <ui:repeat value="#{dashboardTutor.listcourse}" var="course">
+                    <p:fieldset legend="#{course.courseName}">
+                        <h:panelGrid columns="3" cellpadding="10" >
+                            <p:graphicImage  width="200" height="150"  library="ContentFile" name="#{course.photo}"/>
+                            <h:outputText value="#{course.courseName}"/>
+                            <p:commandButton value="Unsubscribe"/>
+                        </h:panelGrid>
+
+                    </p:fieldset>
+                    <br/>
+                </ui:repeat>
+            </h:form>
+        </ui:define>
+    </ui:composition>

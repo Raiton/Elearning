@@ -1,52 +1,55 @@
 
 <!DOCTYPE html  [
-<!ENTITY nbsp "&#160;">]>
+    <!ENTITY nbsp "&#160;">]>
     <ui:composition template="/layout_dashboard.xhtml"
-     xmlns="http://www.w3.org/1999/xhtml"
-     xmlns:f="http://java.sun.com/jsf/core"
-     xmlns:h="http://java.sun.com/jsf/html"
-     xmlns:ui="http://java.sun.com/jsf/facelets"
-     xmlns:p="http://primefaces.org/ui">
-     <ui:define name="Content">
-     </ui:define>
-    
-      <ui:define name="Menu">
-        <h:outputText  value="Name"/>        
-                 <h:outputText  value="#{loginController.userdata.name}"  />
-                  <br/>
-                 <h:outputText  value="Email"/>        
-     <h:outputText  value=" #{loginController.userdata.EMail}"  />
-    </ui:define>
-    <ui:define name="TopBar">
-        <h:panelGroup style="display:block; text-align:right">
-            <h:form>
-            <p:commandButton action="/pages/course/aa.xhtml?faces-redirect=true" type="submit" value="Find Courses"/> 
+                    xmlns="http://www.w3.org/1999/xhtml"
+                    xmlns:f="http://java.sun.com/jsf/core"
+                    xmlns:h="http://java.sun.com/jsf/html"
+                    xmlns:ui="http://java.sun.com/jsf/facelets"
+                    xmlns:p="http://primefaces.org/ui">
+        <ui:define name="Content">
+        </ui:define>
+        <ui:define name="Menu">
+            <h:outputText  value="Name"/>        
+            <h:outputText  value="#{loginController.userdata.name}"  />
+            <br/>
+            <h:outputText  value="Email"/>        
+            <h:outputText  value=" #{loginController.userdata.EMail}"  />
+        </ui:define>
+        <ui:define name="TopBar">
+            <h:panelGroup style="display:block; text-align:right">
+                <h:form>
+                    <p:commandButton action="/pages/course/aa.xhtml?faces-redirect=true" type="submit" value="Add Course"/> 
+                </h:form>
+            </h:panelGroup> 
+        </ui:define>
+
+        <ui:define name="Content">
+            <h:form id="form">
+                
+
+                <p:dataGrid var="course" value="#{dashboardTutor.listcourse}" columns="3"
+                            rows="12" paginator="true"
+                            paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                            rowsPerPageTemplate="9,12,15">
+
+                    <p:panel header="#{course.courseName}" style="text-align:center;">
+                        <h:panelGrid columns="1" style="width:100% ;text-align: center">
+                            <p:graphicImage  width="200" height="150"  library="ContentFile" name="#{course.photo}"/>
+
+                            <h:outputText value="#{course.courseCreationDate}" />
+                            <h:outputText id="course_status" value="#{course.status}" />
+                           
+                            <p:commandButton value="Publish" action="#{dashboardTutor.publish(course)}" update="messages,course_status" rendered="#{dashboardTutor.isNotPublished(course)}"/>
+                            <p:commandButton value="Edit" action="#{dashboardTutor.gotoEditCourse(course)}" />
+                <p:growl id="messages" showDetail="true"/>
+
+                        </h:panelGrid>
+                    </p:panel>
+
+                </p:dataGrid>
+
+
             </h:form>
-        </h:panelGroup> 
-    </ui:define>
-    
-       <ui:define name="Content">
-         <h:form id="form">
-
-	<p:dataGrid var="car" value="#{tableBean.cars}" columns="3"
-		rows="12" paginator="true"
-		paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-		rowsPerPageTemplate="9,12,15">
-
-        <p:panel header="#{car.model}" style="text-align:center">
-            <h:panelGrid columns="1" style="width:100%">
-                <p:graphicImage value="/images/cars/#{car.manufacturer}.jpg"/> 
-
-                <h:outputText value="#{car.year}" />
-
-              
-            </h:panelGrid>
-        </p:panel>
-
-	</p:dataGrid>
-	
-	
-
-</h:form>
-    </ui:define>
-</ui:composition>
+        </ui:define>
+    </ui:composition>

@@ -66,6 +66,13 @@ public class PersonalisedNode extends DefaultTreeNode implements Serializable {
         this.parentPerso=parentPerso;
     }
 
+          public PersonalisedNode(Object data, TreeNode parent ,String type , Object entity ) {
+        
+       
+        super(data, parent);
+        this.nodetype=type;
+        this.entity=entity;
+    }
     public PersonalisedNode(Object data, TreeNode parent) {
         super(data, parent);
     }

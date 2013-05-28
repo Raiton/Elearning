@@ -1,0 +1,48 @@
+
+<!DOCTYPE html  [
+    <!ENTITY nbsp "&#160;">]>
+    <ui:composition template="/layout_dashboard.xhtml"
+                    xmlns="http://www.w3.org/1999/xhtml"
+                    xmlns:f="http://java.sun.com/jsf/core"
+                    xmlns:h="http://java.sun.com/jsf/html"
+                    xmlns:ui="http://java.sun.com/jsf/facelets"
+                    xmlns:p="http://primefaces.org/ui">
+
+        <ui:param name="onload" value="#{treeBeanModified.onload()}"/>
+
+
+        <ui:define name="Menu" >
+
+            <h:form id="form">
+                <p:growl id="messages1" showDetail="true" />
+
+                <p:contextMenu for="treeSingle">
+                    <p:menuitem value="Add" update="treeSingle,messages1" actionListener="#{treeBeanModified.addNode}" icon="ui-icon-search" />
+                    <p:menuitem value="View" update="messages1" actionListener="#{treeBeanModified.displaySelectedSingle}" icon="ui-icon-search" />
+                </p:contextMenu>
+                <p:tree id="treeSingle" value="#{treeBeanModified.root}" var="node" 
+                        selectionMode="single"
+                        selection="#{treeBeanModified.selectedNode}"
+                        dynamic="true" >
+                    <p:ajax event="select" update=":test" listener="#{treeBeanModified.onNodeSelect}"/>  
+
+                    <p:treeNode>
+                        <h:outputText value="#{node}"/>
+                    </p:treeNode>
+                </p:tree>
+            </h:form>
+
+        </ui:define>
+        <ui:define name="TopBar">
+
+        </ui:define>
+
+
+
+        <ui:define name="Content"> 
+            <h:panelGroup id="test" layout="block">
+                <ui:include src="#{treeBeanModified.pageToInclude}Create_perso1.xhtml" />
+
+            </h:panelGroup>
+        </ui:define>
+    </ui:composition>

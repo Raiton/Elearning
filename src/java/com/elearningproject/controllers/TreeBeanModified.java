@@ -29,6 +29,7 @@ import org.primefaces.model.DefaultTreeNode;
 import org.primefaces.model.TreeNode;
 import com.elearningproject.facades.UserHasCourseFacade;
 import com.elearningproject.personalisedclasses.ManagedBeanRetriever;
+import javax.faces.event.ActionListener;
 
 /**
  *
@@ -36,7 +37,7 @@ import com.elearningproject.personalisedclasses.ManagedBeanRetriever;
  */
 @ManagedBean
 @SessionScoped
-public class TreeBean implements Serializable {
+public class TreeBeanModified implements Serializable {
 
     private TreeNode root;
     private PersonalisedNode node0;
@@ -46,6 +47,7 @@ public class TreeBean implements Serializable {
     private Topic topic;
     private Chapter chapter;
     private Content content;
+    private PersonalisedNode lastOneExpanded;
     @EJB
     private CourseFacade coursefacade;
     @EJB
@@ -65,38 +67,70 @@ public class TreeBean implements Serializable {
         this.pageToInclude = pageToInclude;
     }
 
-    @PostConstruct
+    public void onload() {
+        DashboardTutor dashboardTutor = (DashboardTutor) ManagedBeanRetriever.getManagedBean("dashboardTutor");
+        course = dashboardTutor.getSelectedCourse();
+        
+        
+        if (root == null) {
+            initialize();
+        }
+    }
+
     public void initialize() {
         root = buildTree();
-        setSelectedNode(node0);
-        node0.setSelected(true);
+        if (selectedNode == null) {
+            selectedNode = node0;
+           
+        }
+        selectedNode.setSelected(true);
+
+
     }
 
     public TreeNode buildTree() {
 
         root = new DefaultTreeNode("Root", null);
+        node0 = new PersonalisedNode(course.getCourseName(), root, "Course", course);
+        node0.setExpanded(true);
+        for (Topic child : course.getTopicList()) {
+            PersonalisedNode tnChild = new PersonalisedNode(child.getNameTopic(), node0, "Topic", child, node0);
+            buildTreeRecursively(tnChild);
 
-        node0 = new PersonalisedNode("Course", root, "Course", new Course(), selectedNode);
-
-        ((Course) node0.getEntity()).setPhoto("default.jpg");
+        }
 
         return root;
     }
 
-    public TreeBean() {
+    void buildTreeRecursively(PersonalisedNode personalisedNode) {
+        personalisedNode.setExpanded(true);
+
+        if (personalisedNode.getNodetype() == "Topic") {
+            Topic topic = (Topic) (personalisedNode.getEntity());
+            for (Chapter child : topic.getChapterList()) {
+                PersonalisedNode tnChild = new PersonalisedNode(child.getChapterName(), personalisedNode, "Chapter", child, personalisedNode);
+                lastOneExpanded = tnChild;
+                buildTreeRecursively(tnChild);
+            }
+        } else if (personalisedNode.getNodetype() == "Chapter") {
+            Chapter chapter = (Chapter) (personalisedNode.getEntity());
+            for (Content child : chapter.getContentList()) {
+                PersonalisedNode tnChild = new PersonalisedNode(child.getContentName(), personalisedNode, "Content", child, personalisedNode);
+                lastOneExpanded = tnChild;
+            }
+        }
+    }
+
+    public TreeBeanModified() {
     }
 
     public void addNode() {
 
         if ("Course".equals(selectedNode.getNodetype())) {
-            if (getNumberWeeks() < course.getNbreWeeks().intValue()) {
-                //  if (((Course) selectedNode.getEntity()).getIdCourse() != null) {
-                new PersonalisedNode("Topic", selectedNode, "Topic", new Topic(), selectedNode);
-            } else {
-                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Selected", "Maximum number of topics reached");
-
-                FacesContext.getCurrentInstance().addMessage(null, message);
-            }
+              if (getNumberWeeks() < course.getNbreWeeks().intValue()) {
+            //  if (((Course) selectedNode.getEntity()).getIdCourse() != null) {
+            new PersonalisedNode("Topic", selectedNode, "Topic", new Topic(), selectedNode);
+              }
             /*   } else {
              FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Selected", "Please save the course");
 
@@ -114,12 +148,12 @@ public class TreeBean implements Serializable {
 
         } else if ("Chapter".equals(selectedNode.getNodetype())) {
             //   if (((Chapter) selectedNode.getEntity()).getIdChapter() != null) {
-            new PersonalisedNode("Content", selectedNode, "Content", new Content(), selectedNode);
+            PersonalisedNode temp = new PersonalisedNode("Content", selectedNode, "Content", new Content(), selectedNode);
+            ((Content) temp.getEntity()).setContentUrl("default.jpg");
             /* } else {
-             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Selected", "Please save the chapter");
-
-             FacesContext.getCurrentInstance().addMessage(null, message);
-             }*/
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Selected", "Please save the chapter");
+            FacesContext.getCurrentInstance().addMessage(null, message);
+            }*/
         }
         selectedNode.setExpanded(true);
     }
@@ -141,16 +175,6 @@ public class TreeBean implements Serializable {
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Selected", selectedNode.getData().toString());
 
             FacesContext.getCurrentInstance().addMessage(null, message);
-        }
-    }
-
-    public void deleteNode() {
-        if (!"Course".equals(selectedNode.getNodetype())) {
-            selectedNode.getChildren().clear();
-            // selectedNode.getParent().getChildren().remove(selectedNode);
-            selectedNode.setParent(null);
-
-            selectedNode = null;
         }
     }
 
@@ -224,7 +248,6 @@ public class TreeBean implements Serializable {
     public void contentPreparation() {
         content = (Content) selectedNode.getEntity();
         content.setIdChapter((Chapter) selectedNode.getParentPerso().getEntity());
-        content.setContentUrl(pageToInclude);
 
 
     }
@@ -242,14 +265,16 @@ public class TreeBean implements Serializable {
 
             } else {
                 getCourseFacade().edit(course);
+                Date currentDate = new Date();
+                course.setUpdateDate(currentDate);
+                selectedNode.setData(course.getCourseName());
+
             }
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("CourseCreated"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("CourseUpdated"));
             return null;
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
             return null;
-        } finally {
-            selectedNode.setData(course.getCourseName());
         }
     }
 
@@ -260,15 +285,16 @@ public class TreeBean implements Serializable {
                 getTopicFacade().create(topic);
             } else {
                 getTopicFacade().edit(topic);
+                selectedNode.setData(topic.getNameTopic());
+
             }
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("CourseCreated"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("TopicUpdated"));
             return null;
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
             return null;
-        } finally {
-            selectedNode.setData(topic.getIdTopic());
         }
+
     }
 
     public String createchapter() {
@@ -278,14 +304,13 @@ public class TreeBean implements Serializable {
                 getChapterFacade().create(chapter);
             } else {
                 getChapterFacade().edit(chapter);
+                selectedNode.setData(chapter.getChapterName());
             }
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ChapterCreated"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ChapterUpdated"));
             return null;
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
             return null;
-        } finally {
-            selectedNode.setData(chapter.getChapterName());
         }
     }
 
@@ -296,20 +321,21 @@ public class TreeBean implements Serializable {
                 getContentFacade().create(content);
             } else {
                 getContentFacade().edit(content);
+                selectedNode.setData(content.getContentName());
+
             }
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ContentCreated"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ContentUpdated"));
             return null;
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
             return null;
-        } finally {
-            selectedNode.setData(content.getContentName());
         }
+
     }
 
     public String clear() {
 
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("treeBean");
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("treeBeanModified");
         return "aa.xhtml?faces-redirect=true";
     }
 }
