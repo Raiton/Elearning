@@ -43,7 +43,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Course.findByNbreWeeks", query = "SELECT c FROM Course c WHERE c.nbreWeeks = :nbreWeeks"),
     @NamedQuery(name = "Course.findByPhoto", query = "SELECT c FROM Course c WHERE c.photo = :photo"),
     @NamedQuery(name = "Course.findByStatus", query = "SELECT c FROM Course c WHERE c.status = :status"),
-    @NamedQuery(name = "Course.findByUpdateDate", query = "SELECT c FROM Course c WHERE c.updateDate = :updateDate")})
+    @NamedQuery(name = "Course.findByUpdateDate", query = "SELECT c FROM Course c WHERE c.updateDate = :updateDate"),
+    @NamedQuery(name = "Course.findByIdField", query = "SELECT c FROM Course c WHERE c.idField.idField = :idField AND c.status = :published")})
+
 public class Course implements Serializable {
     @Column(name = "course_description")
     private String courseDescription;

@@ -5,8 +5,11 @@
 package com.elearningproject.facades;
 
 import com.elearningproject.entities.Course;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
 
 /**
@@ -15,6 +18,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class CourseFacade extends AbstractFacade<Course> {
+
     @PersistenceContext(unitName = "E-learning_projectPU")
     private EntityManager em;
 
@@ -26,5 +30,16 @@ public class CourseFacade extends AbstractFacade<Course> {
     public CourseFacade() {
         super(Course.class);
     }
-    
+
+    public List<Course> findByIdField(int idField) {
+        List<Course> listCourse = null;
+        try {
+            listCourse = getEntityManager().createNamedQuery("Course.findByIdField").setParameter("idField", idField).setParameter("published","Published").getResultList();
+        } catch (NoResultException e) {
+            return null;
+        } catch (NonUniqueResultException e) {
+            return null;
+        }
+        return listCourse;
+    }
 }

@@ -1,0 +1,66 @@
+<!DOCTYPE html  [
+    <!ENTITY nbsp "&#160;">]>
+    <ui:composition template="/layout_dashboard.xhtml"
+                    xmlns="http://www.w3.org/1999/xhtml"
+                    xmlns:f="http://java.sun.com/jsf/core"
+                    xmlns:h="http://java.sun.com/jsf/html"
+                    xmlns:ui="http://java.sun.com/jsf/facelets"
+                    xmlns:p="http://primefaces.org/ui">
+        <ui:param name="onload" value="#{loginController.security('listecours')}"/>
+        <f:metadata>
+            <f:viewParam name="fieldid" value="#{listecoursController.idField}"
+                         />
+        </f:metadata>
+        <ui:define name="Content">
+        </ui:define>
+        <ui:define name="Menu">
+            <p:panel header="#{loginController.account.username}">
+                <h:outputText  value="Name: "/>        
+                <h:outputText  value="#{loginController.userdata.name}"  />
+                <br/>
+                <h:outputText  value="Email:"/>        
+                <h:outputText  value=" #{loginController.userdata.EMail}"  />
+                <br/>
+                <br/>
+                <div style="text-align: center">
+                    <p:commandButton action="#{loginController.logout()}" value="Logout"/>
+                </div>
+            </p:panel>
+        </ui:define>
+        <ui:define name="TopBar">
+            <ul>
+                <li><a href="../home.xhtml">Homepage</a></li>
+                <li class="current_page_item"><a href="../field/listefield.xhtml">Courses</a></li>
+
+                <li><a href="../dashboard/dashboarduser.xhtml">Dashboard</a></li>
+
+            </ul>
+
+        </ui:define>
+
+        <ui:define name="Content">
+            <h:form id="form">  
+                <div style="margin-top: 30px">
+
+                    <p:dataGrid var="course" value="#{listecoursController.listCourseByIdField}" columns="3"  
+                                rows="12" paginator="true"  
+                                paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                                rowsPerPageTemplate="9,12,15">  
+
+                        <p:panel header="#{course.courseName}" style="text-align:center">  
+                            <h:panelGrid columns="1" style="width:100%;text-align: center">  
+                                <p:graphicImage  width="200" height="150"  library="ContentFile" name="#{course.photo}"/>
+
+                                <h:outputText value="#{course.launchDate}" />  
+                                <p:commandButton value="#{listecoursController.nameSubscribe(course)}" action="#{listecoursController.subscribe(course)}"/>
+
+                            </h:panelGrid>  
+                        </p:panel>  
+
+                    </p:dataGrid>  
+                </div>
+
+
+            </h:form> 
+        </ui:define>
+    </ui:composition>

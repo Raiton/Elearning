@@ -28,8 +28,8 @@
         <ui:define name="TopBar">
             <ul>
                 <li><a href="../home.xhtml">Homepage</a></li>
-                <li><a href="../field/listefield.xhtml">Courses</a></li>
-                <li  class="current_page_item"><a href="">Dashboard</a></li>
+                <li class="current_page_item"><a href="#">Courses</a></li>
+                <li><a href="../dashboard/dashboarduser.xhtml">Dashboard</a></li>
             </ul>
             <h:panelGroup style="display:block; text-align:right">
                 <h:outputLink>Find Courses</h:outputLink>
@@ -37,25 +37,33 @@
         </ui:define>
 
         <ui:define name="Content">
-            <h:form>
-                <div style="margin-top: 10px">
+            <h:form id="form">  
+                <div style="margin-top: 30px">
 
-                    <ui:repeat value="#{dashboardUser.listcourse}" var="course">
-                        <p:fieldset legend="#{course.courseName}">
-                            <h:panelGrid columns="2" cellpadding="10" >
-                                <h:link outcome="#{dashboardUser.redirect_toward_user_course()}">
-                                    <p:graphicImage  width="200" height="150"  library="ContentFile" name="#{course.photo}"/>
-                                    <f:param name="courseid" value="#{course.idCourse}"/>
+                    <p:dataGrid var="field" value="#{listefieldController.getListField()}" columns="3"  
+                                rows="12" paginator="true"  
+                                paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                                rowsPerPageTemplate="9,12,15">  
+
+                        <p:panel header="#{field.fieldName}" style="text-align:center">  
+                            <h:panelGrid columns="1" style="width:100%">     
+
+                                <h:outputText value="#{field.fieldCreationDate}" />  
+
+
+                                <h:link outcome="#{listefieldController.redirect()}" value="Details" >
+                                    <f:param name="fieldid" value="#{field.idField}" />
                                 </h:link>
-                                <h:outputText value="#{course.courseDescription}"/>
-                                <p:commandButton  value="Unsubscribe" action="#{dashboardUser.unsubscribe(course)}" style="margin-left: 40px"/>
-                            </h:panelGrid>
 
-                        </p:fieldset>
-                        <br/>
-                    </ui:repeat>
+                            </h:panelGrid>  
+                        </p:panel>  
+
+                    </p:dataGrid>  
+
+
                 </div>
-            </h:form>
+            </h:form> 
 
         </ui:define>
     </ui:composition>
+

@@ -117,7 +117,7 @@ public class LoginController implements Serializable {
             }
             else if ("tutor".equals(this.usertable.getIdGroupTable().getGroupName()))
             {
-                if (("dashboarduser".equals(page)) ||("coursedashboard".equals(page)) ){
+                if (("dashboarduser".equals(page)) ||("coursedashboard".equals(page))||("listecours".equals(page)) ){
                 FacesContext.getCurrentInstance().getExternalContext().redirect("dashboardtutor.xhtml");
                 }
             }
