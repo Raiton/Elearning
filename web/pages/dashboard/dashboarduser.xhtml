@@ -47,7 +47,7 @@
                                     <p:graphicImage  width="200" height="150"  library="ContentFile" name="#{course.photo}"/>
                                     <f:param name="courseid" value="#{course.idCourse}"/>
                                 </h:link>
-                                <h:outputText value="#{course.courseName}"/>
+                                <h:outputText value="#{course.courseDescription}"/>
                                 <p:commandButton  value="Unsubscribe" action="#{dashboardUser.unsubscribe(course)}" style="margin-left: 40px"/>
                             </h:panelGrid>
 

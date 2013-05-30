@@ -18,21 +18,24 @@
 
             <h:form>
                 <h:panelGrid columns="2">
-                    <h:outputLabel value="#{bundle.CreateCourseLabel_courseName}" for="courseName" />
-                    <h:inputText id="courseName" value="#{treeBeanModified.selectedNode.entity.courseName}" title="#{bundle.CreateCourseTitle_courseName}" onchange=""/>
+                    <p:outputLabel value="#{bundle.CreateCourseLabel_courseName}" for="courseName" />
+                    <p:inputText id="courseName" value="#{treeBeanModified.selectedNode.entity.courseName}" title="#{bundle.CreateCourseTitle_courseName}" onchange=""/>
 
-                    <h:outputLabel value="#{bundle.CreateCourseLabel_nbreWeeks}" for="nbreWeeks" />
-                    <h:inputText id="nbreWeeks" value="#{treeBeanModified.selectedNode.entity.nbreWeeks}" title="#{bundle.CreateCourseTitle_nbreWeeks}" />
+                    <p:outputLabel value="Course Description" for="courseDescription" />
+                    <p:inputTextarea rows="7" cols="33" id="courseDescription" value="#{treeBeanModified.selectedNode.entity.courseDescription}" title="Course Description" onchange=""/>
+
+                    <p:outputLabel value="#{bundle.CreateCourseLabel_nbreWeeks}" for="nbreWeeks" />
+                    <p:inputText id="nbreWeeks" value="#{treeBeanModified.selectedNode.entity.nbreWeeks}" title="#{bundle.CreateCourseTitle_nbreWeeks}" />
 
                     <h:outputLabel value="#{bundle.CreateCourseLabel_idField}" for="idField" />
-                    <h:selectOneMenu id="iField" value="#{treeBeanModified.selectedNode.entity.idField}" title="#{bundle.CreateCourseTitle_idField}" required="true" requiredMessage="#{bundle.CreateCourseRequiredMessage_idField}" onchange="">
+                    <p:selectOneMenu  id="iField" value="#{treeBeanModified.selectedNode.entity.idField}"  required="true" requiredMessage="#{bundle.CreateCourseRequiredMessage_idField}" onchange="">
                         <f:selectItems value="#{fieldController.itemsAvailableSelectOne}"/>
-                    </h:selectOneMenu>
+                    </p:selectOneMenu>
                 </h:panelGrid>
                 <br />
-                                <p:growl id="messages" showDetail="true"/>
+                <p:growl id="messages" showDetail="true"/>
 
-                <h:commandLink action="#{treeBean.createcontent()}" value="#{bundle.CreateContentSaveLink}" />
+                <h:commandLink action="#{treeBeanModified.createcourse()}" value="#{bundle.CreateCourseSaveLink}" />
 
             </h:form>
             <h:form enctype="multipart/form-data">

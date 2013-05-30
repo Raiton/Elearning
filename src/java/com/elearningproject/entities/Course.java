@@ -45,6 +45,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Course.findByStatus", query = "SELECT c FROM Course c WHERE c.status = :status"),
     @NamedQuery(name = "Course.findByUpdateDate", query = "SELECT c FROM Course c WHERE c.updateDate = :updateDate")})
 public class Course implements Serializable {
+    @Column(name = "course_description")
+    private String courseDescription;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -199,6 +201,14 @@ public class Course implements Serializable {
     @Override
     public String toString() {
         return "com.elearningproject.entities.Course[ idCourse=" + idCourse + " ]";
+    }
+
+    public String getCourseDescription() {
+        return courseDescription;
+    }
+
+    public void setCourseDescription(String courseDescription) {
+        this.courseDescription = courseDescription;
     }
     
 }
