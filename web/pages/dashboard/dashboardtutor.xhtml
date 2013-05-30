@@ -7,48 +7,62 @@
                     xmlns:h="http://java.sun.com/jsf/html"
                     xmlns:ui="http://java.sun.com/jsf/facelets"
                     xmlns:p="http://primefaces.org/ui">
+        <ui:param name="onload" value="#{loginController.security('dashboardtutor')}"/>
+
         <ui:define name="Content">
         </ui:define>
         <ui:define name="Menu">
-            <h:outputText  value="Name"/>        
-            <h:outputText  value="#{loginController.userdata.name}"  />
-            <br/>
-            <h:outputText  value="Email"/>        
-            <h:outputText  value=" #{loginController.userdata.EMail}"  />
+            <p:panel header="#{loginController.account.username}">
+                <h:outputText  value="Name: "/>        
+                <h:outputText  value="#{loginController.userdata.name}"  />
+                <br/>
+                <h:outputText  value="Email:"/>        
+                <h:outputText  value=" #{loginController.userdata.EMail}"  />
+                <br/>
+                <br/>
+                <div style="text-align: center">
+                    <p:commandButton action="#{loginController.logout()}" value="Logout"/>
+                </div>
+            </p:panel>
         </ui:define>
         <ui:define name="TopBar">
-            <h:panelGroup style="display:block; text-align:right">
-                <h:form>
-                    <p:commandButton action="/pages/course/aa.xhtml?faces-redirect=true" type="submit" value="Add Course"/> 
-                </h:form>
-            </h:panelGroup> 
+            <ul>
+                <li><a href="../home.xhtml">Homepage</a></li>
+                <li  class="current_page_item"><a href="">Dashboard</a></li>
+                <li><h:form><h:commandLink value="Add Course" action="#{treeBean.clear()}"/></h:form>
+                </li>
+
+            </ul>
+
         </ui:define>
 
         <ui:define name="Content">
             <h:form id="form">
-                
+                <div style="margin-top: 30px">
 
-                <p:dataGrid var="course" value="#{dashboardTutor.listcourse}" columns="3"
-                            rows="12" paginator="true"
-                            paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                            rowsPerPageTemplate="9,12,15">
+                    <p:dataGrid var="course" value="#{dashboardTutor.listcourse}" columns="3"
+                                rows="12" paginator="true"
+                                paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                rowsPerPageTemplate="9,12,15"
+                                >
 
-                    <p:panel header="#{course.courseName}" style="text-align:center;">
-                        <h:panelGrid columns="1" style="width:100% ;text-align: center">
-                            <p:graphicImage  width="200" height="150"  library="ContentFile" name="#{course.photo}"/>
+                        <p:panel header="#{course.courseName}" style="text-align:center;">
+                            <h:panelGrid columns="1" style="width:100% ;text-align: center">
+                                <p:graphicImage  width="200" height="150"  library="ContentFile" name="#{course.photo}"/>
 
-                            <h:outputText value="#{course.courseCreationDate}" />
-                            <h:outputText id="course_status" value="#{course.status}" />
-                           
-                            <p:commandButton value="Publish" action="#{dashboardTutor.publish(course)}" update="messages,course_status" rendered="#{dashboardTutor.isNotPublished(course)}"/>
-                            <p:commandButton value="Edit" action="#{dashboardTutor.gotoEditCourse(course)}" />
-                <p:growl id="messages" showDetail="true"/>
+                                <h:outputText value="#{course.courseCreationDate}" />
+                                <h:outputText id="course_status" value="#{course.status}" />
 
-                        </h:panelGrid>
-                    </p:panel>
+                                <p:commandButton id="publish_button" value="Publish" action="#{dashboardTutor.publish(course)}" update="messages,course_status,publish_button"  rendered="#{dashboardTutor.isNotPublished(course)}"/>
 
-                </p:dataGrid>
+                                <p:commandButton value="Edit" action="#{dashboardTutor.gotoEditCourse(course)}" />
+                                <p:growl id="messages" showDetail="true"/>
 
+                            </h:panelGrid>
+                        </p:panel>
+
+                    </p:dataGrid>
+                </div>
 
             </h:form>
         </ui:define>

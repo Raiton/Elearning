@@ -34,15 +34,23 @@
 
         </ui:define>
         <ui:define name="TopBar">
+            <ul>
+                <li><a href="../home.xhtml">Homepage</a></li>
+                <li><a href="../dashboard/dashboardtutor.xhtml">Dashboard</a></li>
+                <li><h:form><h:commandLink value="Add Course" action="/pages/course/aa.xhtml?faces-redirect=true"/></h:form>
+                </li>                <li class="current_page_item"><a href="">Modify Course</a></li>
 
+
+            </ul>
         </ui:define>
 
 
 
         <ui:define name="Content"> 
-            <h:panelGroup id="test" layout="block">
-                <ui:include src="#{treeBeanModified.pageToInclude}Create_perso1.xhtml" />
-
+            <h:panelGroup id="test" layout="block" style="width: 680px; float: right; padding-top: 30px" >
+                <p:panel>
+                    <ui:include src="#{treeBeanModified.pageToInclude}Create_perso1.xhtml" />
+                </p:panel>
             </h:panelGroup>
         </ui:define>
     </ui:composition>

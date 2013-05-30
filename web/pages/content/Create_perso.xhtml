@@ -24,7 +24,7 @@
                               allowTypes="/(\.|\/)(pdf|avi|txt|mp4|mov|mp3|wmv|png|jpe?g)$/"/>
 
                 <p:growl id="messages" showDetail="true"/>
- 
+
             </h:form>
             <h:form>
                 <h:panelGrid columns="2">
@@ -34,11 +34,11 @@
                     <h:selectOneMenu id="idForm" value="#{treeBean.selectedNode.entity.idForm}" title="#{bundle.CreateContentTitle_idForm}" required="true" requiredMessage="#{bundle.CreateContentRequiredMessage_idForm}">
                         <f:selectItems value="#{formController.itemsAvailableSelectOne}"/>
                     </h:selectOneMenu>
-                 
+
                 </h:panelGrid>
                 <br />
                 <h:commandLink action="#{treeBean.createcontent()}" value="#{bundle.CreateContentSaveLink}" />
-     
+
             </h:form>
         </ui:define>
     </ui:composition>

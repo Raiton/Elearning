@@ -1,36 +1,52 @@
 
 
 <html lang="en"
-     xmlns="http://www.w3.org/1999/xhtml"
-     xmlns:f="http://java.sun.com/jsf/core"
-     xmlns:h="http://java.sun.com/jsf/html"
-     xmlns:ui="http://java.sun.com/jsf/facelets"
-     xmlns:p="http://primefaces.org/ui">
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
     <h:head>
         <title>Title</title>
+
     </h:head>
     <h:body onload="#{onload}">
-       
-<p:layout fullPage="true">
+        <h:outputStylesheet name="css/style_perso.css" />
 
-    <p:layoutUnit position="north" size="100" header="Top" resizable="true" closable="true" collapsible="true">
-        <ui:insert name="TopBar">topbar</ui:insert>
-    </p:layoutUnit>
+        <div id="wrapper">
+            <div id="header-wrapper">
+                <div id="header" class="container">
 
-  
+                    <div id="menu">
+                        <ui:insert name="TopBar">topbar</ui:insert>
 
-    <p:layoutUnit position="west" size="300" header="Left" resizable="true" closable="true" collapsible="true">
-       <ui:insert name="Menu">menu</ui:insert>
+                    </div>
 
-    </p:layoutUnit>
+                </div>
 
-   
+            </div>
+            <!-- end #header -->
 
-    <p:layoutUnit position="center">
-              <ui:insert name="Content">content</ui:insert>
+            <div id="page">
+                <div id="content">
+                    <ui:insert name="Content">content</ui:insert>
 
-    </p:layoutUnit>
+                    <div style="clear: both;"></div>
+                </div>
+                <!-- end #content -->
+                <div id="sidebar">
+                    <ui:insert name="Menu">menu</ui:insert>
 
-</p:layout>
+                </div>
+                <!-- end #sidebar -->
+                <div style="clear: both;"></div>
+            </div>
+            <!-- end #page --> 
+        </div>
+        <div id="footer">
+            <p>Copyright (c) 2013 Ecole Polytechnique de Tunisie  Authors : Mohamed Rafik Megdiche, Houcem Chammakhi, Mariam Nefzi</p>
+        </div>
+        <!-- end #footer -->
     </h:body>
 </html>

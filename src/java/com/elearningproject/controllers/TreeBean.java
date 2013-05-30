@@ -90,7 +90,7 @@ public class TreeBean implements Serializable {
 
         if ("Course".equals(selectedNode.getNodetype())) {
             if (getNumberWeeks() < course.getNbreWeeks().intValue()) {
-                //  if (((Course) selectedNode.getEntity()).getIdCourse() != null) {
+                // if (((Course) selectedNode.getEntity()).getIdCourse() != null) {
                 new PersonalisedNode("Topic", selectedNode, "Topic", new Topic(), selectedNode);
             } else {
                 FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Selected", "Maximum number of topics reached");
@@ -310,6 +310,6 @@ public class TreeBean implements Serializable {
     public String clear() {
 
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("treeBean");
-        return "aa.xhtml?faces-redirect=true";
+        return "../course/aa.xhtml?faces-redirect=true";
     }
 }

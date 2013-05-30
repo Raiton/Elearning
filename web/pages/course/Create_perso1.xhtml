@@ -14,6 +14,27 @@
             <h:panelGroup id="messagePanel" layout="block">
                 <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
             </h:panelGroup>
+
+
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.CreateCourseLabel_courseName}" for="courseName" />
+                    <h:inputText id="courseName" value="#{treeBeanModified.selectedNode.entity.courseName}" title="#{bundle.CreateCourseTitle_courseName}" onchange=""/>
+
+                    <h:outputLabel value="#{bundle.CreateCourseLabel_nbreWeeks}" for="nbreWeeks" />
+                    <h:inputText id="nbreWeeks" value="#{treeBeanModified.selectedNode.entity.nbreWeeks}" title="#{bundle.CreateCourseTitle_nbreWeeks}" />
+
+                    <h:outputLabel value="#{bundle.CreateCourseLabel_idField}" for="idField" />
+                    <h:selectOneMenu id="iField" value="#{treeBeanModified.selectedNode.entity.idField}" title="#{bundle.CreateCourseTitle_idField}" required="true" requiredMessage="#{bundle.CreateCourseRequiredMessage_idField}" onchange="">
+                        <f:selectItems value="#{fieldController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <br />
+                                <p:growl id="messages" showDetail="true"/>
+
+                <h:commandLink action="#{treeBean.createcontent()}" value="#{bundle.CreateContentSaveLink}" />
+
+            </h:form>
             <h:form enctype="multipart/form-data">
 
                 <p:fileUpload fileUploadListener="#{fileUploadBean.handleFileUploadPhotoModified}"
@@ -30,24 +51,6 @@
                 <p:growl id="messages" showDetail="true"/>
                 <p:graphicImage id="myimage" width="200" height="150"  library="ContentFile" name="#{treeBeanModified.selectedNode.entity.photo}"/>
 
-
-            </h:form>
-
-            <h:form>
-                <h:panelGrid columns="2">
-                    <h:outputLabel value="#{bundle.CreateCourseLabel_courseName}" for="courseName" />
-                    <h:inputText id="courseName" value="#{treeBeanModified.selectedNode.entity.courseName}" title="#{bundle.CreateCourseTitle_courseName}" onchange=""/>
-
-                    <h:outputLabel value="#{bundle.CreateCourseLabel_nbreWeeks}" for="nbreWeeks" />
-                    <h:inputText id="nbreWeeks" value="#{treeBeanModified.selectedNode.entity.nbreWeeks}" title="#{bundle.CreateCourseTitle_nbreWeeks}" />
-
-                    <h:outputLabel value="#{bundle.CreateCourseLabel_idField}" for="idField" />
-                    <h:selectOneMenu id="iField" value="#{treeBeanModified.selectedNode.entity.idField}" title="#{bundle.CreateCourseTitle_idField}" required="true" requiredMessage="#{bundle.CreateCourseRequiredMessage_idField}" onchange="">
-                        <f:selectItems value="#{fieldController.itemsAvailableSelectOne}"/>
-                    </h:selectOneMenu>
-                </h:panelGrid>
-                <br />
-                <h:commandLink action="#{treeBeanModified.createcourse()}" value="#{bundle.CreateCourseSaveLink}" />
 
             </h:form>
         </ui:define>

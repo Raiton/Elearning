@@ -40,4 +40,9 @@ public class UserHasCourseFacade extends AbstractFacade<UserHasCourse> {
         }
         return resultcourse;
     }
+    
+    public UserHasCourse findCourseByIdCourseAndIdUserTable(Course idCourse, UserTable userTable){
+        UserHasCourse result = (UserHasCourse) getEntityManager().createNamedQuery("UserHasCourse.findByIdCourseAndIdUser").setParameter("idCourse", idCourse).setParameter("idUserTable", userTable).getSingleResult();
+        return result;   
+    }
 }

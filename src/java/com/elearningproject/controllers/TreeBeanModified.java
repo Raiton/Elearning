@@ -254,7 +254,6 @@ public class TreeBeanModified implements Serializable {
 
     public String createcourse() {
         try {
-            coursePreparation();
             if (course.getIdCourse() == null) {
                 getCourseFacade().create(course);
                 UserHasCourse userHasCourse = new UserHasCourse();
@@ -336,6 +335,6 @@ public class TreeBeanModified implements Serializable {
     public String clear() {
 
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("treeBeanModified");
-        return "aa.xhtml?faces-redirect=true";
+        return "aa.xhtml?faces-redirect=true;";
     }
 }

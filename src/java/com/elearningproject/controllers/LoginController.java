@@ -8,6 +8,7 @@ import com.elearningproject.facades.AccountFacade;
 import com.elearningproject.facades.UserTableFacade;
 import com.elearningproject.entities.Account;
 import com.elearningproject.entities.UserTable;
+import com.elearningproject.personalisedclasses.ManagedBeanRetriever;
 import java.io.IOException;
 
 import java.io.Serializable;
@@ -16,7 +17,6 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
 
 /**
  *
@@ -71,22 +71,58 @@ public class LoginController implements Serializable {
 
     public String login() throws IOException {
         List<Account> accounts = accountFacade.findAll();
-        String result=null;
+        String result = null;
         for (Account account1 : accounts) {
             if (account1.getUsername().equals(account.getUsername()) && account1.getPassword().equals(account.getPassword())) {
-                System.out.print("connected");
                 account = account1;
-                usertable=account1.getIdUserTable();
-                  result = "../dashboard/dashboarduser.xhtml?faces-redirect=true;";
+                usertable = account1.getIdUserTable();
+                if ("user".equals(usertable.getIdGroupTable().getGroupName())) {
+                    result = "../dashboard/dashboarduser.xhtml?faces-redirect=true";
+                } else if ("tutor".equals(usertable.getIdGroupTable().getGroupName())) {
+                    result = "../dashboard/dashboardtutor.xhtml?faces-redirect=true;";
+                }
+
 
             }
         }
         return result;
     }
 
+    public String logout() {
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        return "../login/login.xhtml?faces-redirect=true";
+    }
+
     public UserTable getUserdata() {
-        UserTable inspecting = (UserTable) usertablefacade.find(account.getIdUserTable().getIdUserTable());
+        UserTable inspecting = null;
+        try {
+            inspecting = (UserTable) usertablefacade.find(account.getIdUserTable().getIdUserTable());
+
+
+        } catch (Exception e) {
+        }
         return inspecting;
-        
+
+    }
+
+    public void security(String page) throws IOException {
+        if (usertable == null) {
+            FacesContext.getCurrentInstance().getExternalContext().redirect("../login/login.xhtml");
+        } else {
+            FacesContext fc = FacesContext.getCurrentInstance();
+            if ("user".equals(this.usertable.getIdGroupTable().getGroupName())) {
+                if ("dashboardtutor".equals(page)){
+                FacesContext.getCurrentInstance().getExternalContext().redirect("dashboarduser.xhtml");
+                }
+            }
+            else if ("tutor".equals(this.usertable.getIdGroupTable().getGroupName()))
+            {
+                if ("dashboarduser".equals(page)){
+                FacesContext.getCurrentInstance().getExternalContext().redirect("dashboardtutor.xhtml");
+                }
+            }
+
+        }
+
     }
 }

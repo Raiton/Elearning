@@ -5,6 +5,7 @@
 package com.elearningproject.controllers;
 
 import com.elearningproject.entities.Course;
+import com.elearningproject.entities.UserHasCourse;
 import com.elearningproject.facades.CourseFacade;
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
@@ -16,7 +17,6 @@ import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import org.primefaces.context.RequestContext;
 
 /**
  *
@@ -24,7 +24,7 @@ import org.primefaces.context.RequestContext;
  */
 @ManagedBean
 @SessionScoped
-public class DashboardTutor implements Serializable {
+public class DashboardUser implements Serializable {
 
     @EJB
     private UserHasCourseFacade userHasCourseFacade;
@@ -68,37 +68,18 @@ public class DashboardTutor implements Serializable {
         this.selectedCourse = selectedCourse;
     }
 
-    public DashboardTutor() {
+    public DashboardUser() {
     }
 
     public String redirect() {
         return "dashboarduser.xhtml?faces-redirect=true";
     }
 
-    public String gotoEditCourse(Course course) {
-        this.selectedCourse = course;
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("treeBeanModified");
+    public String unsubscribe(Course course) {
+         LoginController loginController = (LoginController) ManagedBeanRetriever.getManagedBean("loginController");
+        UserHasCourse userHasCourse = getUserHasCourseFacade().findCourseByIdCourseAndIdUserTable(course, loginController.getUsertable());
+       getUserHasCourseFacade().remove(userHasCourse);
+        return "dashboarduser.xhtml?faces-redirect=true";
 
-        return "../course/bb.xhtml?faces-redirect=true";
-
-    }
-
-    public void publish(Course course) {
-        this.selectedCourse = course;
-        selectedCourse.setStatus("Published");
-        Date currentDate = new Date();
-        selectedCourse.setLaunchDate(currentDate);
-        getCourseFacade().edit(selectedCourse);
-        RequestContext.getCurrentInstance().update("form:publish_button");
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, selectedCourse.getCourseName(), "Your course has been published");
-
-        FacesContext.getCurrentInstance().addMessage(null, message);
-    }
-    public boolean isNotPublished(Course course){
-        boolean result = true;
-        if ("Published".equals(course.getStatus())){
-            result=false;
-        }
-        return result;
     }
 }

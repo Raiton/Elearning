@@ -23,13 +23,15 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author raiton
  */
 @Entity
-@Table(name = "user_has_course")
-@XmlRootElement
-@NamedQueries({
+        @Table(name = "user_has_course")
+        @XmlRootElement
+        @NamedQueries({
     @NamedQuery(name = "UserHasCourse.findAll", query = "SELECT u FROM UserHasCourse u"),
     @NamedQuery(name = "UserHasCourse.findByIdUser", query = "SELECT u FROM UserHasCourse u where u.idUserTable= :idUserTable"),
+    @NamedQuery(name = "UserHasCourse.findByIdCourseAndIdUser", query = "SELECT u FROM UserHasCourse u WHERE u.idCourse = :idCourse AND u.idUserTable = :idUserTable"),
     @NamedQuery(name = "UserHasCourse.findByIdUserHasCourse", query = "SELECT u FROM UserHasCourse u WHERE u.idUserHasCourse = :idUserHasCourse")})
 public class UserHasCourse implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -98,5 +100,4 @@ public class UserHasCourse implements Serializable {
     public String toString() {
         return "com.elearningproject.entities.UserHasCourse[ idUserHasCourse=" + idUserHasCourse + " ]";
     }
-    
 }
