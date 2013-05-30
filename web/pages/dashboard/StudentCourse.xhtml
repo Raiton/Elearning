@@ -8,9 +8,7 @@
                     xmlns:ui="http://java.sun.com/jsf/facelets"
                     xmlns:p="http://primefaces.org/ui">
         <f:metadata>
-            <f:viewParam name="courseid" value="#{studentCourseController.courseIdPassed}"
-                         required="true" requiredMessage="Invalid page access. Please use a link from within the system."
-                         />
+            <f:viewParam name="courseid" value="#{studentCourseController.courseIdPassed}"/>
         </f:metadata>
         <ui:param name="onload" value="#{studentCourseController.fullCourse()}"/>
         <ui:define name="Menu">
