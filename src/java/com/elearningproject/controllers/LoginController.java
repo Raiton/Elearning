@@ -111,13 +111,13 @@ public class LoginController implements Serializable {
         } else {
             FacesContext fc = FacesContext.getCurrentInstance();
             if ("user".equals(this.usertable.getIdGroupTable().getGroupName())) {
-                if ("dashboardtutor".equals(page)){
+                if (("dashboardtutor".equals(page)) || ("addcourse".equals(page)) || ("editcourse".equals(page))){
                 FacesContext.getCurrentInstance().getExternalContext().redirect("dashboarduser.xhtml");
                 }
             }
             else if ("tutor".equals(this.usertable.getIdGroupTable().getGroupName()))
             {
-                if ("dashboarduser".equals(page)){
+                if (("dashboarduser".equals(page)) ||("coursedashboard".equals(page)) ){
                 FacesContext.getCurrentInstance().getExternalContext().redirect("dashboardtutor.xhtml");
                 }
             }

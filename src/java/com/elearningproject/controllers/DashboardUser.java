@@ -76,10 +76,14 @@ public class DashboardUser implements Serializable {
     }
 
     public String unsubscribe(Course course) {
-         LoginController loginController = (LoginController) ManagedBeanRetriever.getManagedBean("loginController");
+        LoginController loginController = (LoginController) ManagedBeanRetriever.getManagedBean("loginController");
         UserHasCourse userHasCourse = getUserHasCourseFacade().findCourseByIdCourseAndIdUserTable(course, loginController.getUsertable());
-       getUserHasCourseFacade().remove(userHasCourse);
+        getUserHasCourseFacade().remove(userHasCourse);
         return "dashboarduser.xhtml?faces-redirect=true";
 
+    }
+
+    public String redirect_toward_user_course() {
+        return "StudentCourse.xhtml?faces-redirect=true&includeViewParams=true";
     }
 }

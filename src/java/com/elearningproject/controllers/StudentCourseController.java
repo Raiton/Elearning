@@ -15,6 +15,8 @@ import com.elearningproject.facades.ContentFacade;
 import com.elearningproject.facades.CourseFacade;
 import com.elearningproject.facades.ExamFacade;
 import com.elearningproject.facades.TopicFacade;
+import com.elearningproject.personalisedclasses.ManagedBeanRetriever;
+import java.io.IOException;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -23,22 +25,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
-import javax.faces.component.UIOutput;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ActionListener;
-import javax.faces.event.AjaxBehaviorEvent;
-import javax.faces.event.ValueChangeEvent;
-import javax.security.auth.message.callback.PrivateKeyCallback.Request;
-import javax.servlet.http.Cookie;
-import javax.ws.rs.core.Response;
-
-import org.primefaces.component.menuitem.MenuItem;
-import org.primefaces.component.submenu.Submenu;
-import org.primefaces.model.DefaultMenuModel;
 import org.primefaces.model.MenuModel;
 
 /**
@@ -50,107 +39,129 @@ import org.primefaces.model.MenuModel;
 public class StudentCourseController implements Serializable {
 
     private UserTable user = new UserTable();
+
     public UserTable getUser() {
         return user;
     }
+
     public void setUser(UserTable user) {
         this.user = user;
     }
-    
     private Course course = new Course();
+
     public Course getCourse() {
         return course;
     }
+
     public void setCourse(Course course) {
         this.course = course;
     }
-    
     private Topic selectedTopic = new Topic();
+
     public Topic getSelectedTopic() {
         return selectedTopic;
     }
+
     public void setSelectedTopic(Topic selectedTopic) {
         this.selectedTopic = selectedTopic;
     }
-    
     private Chapter selectedChapter;
+
     public Chapter getSelectedChapter() {
         return selectedChapter;
     }
+
     public void setSelectedChapter(Chapter selectedChapter) {
         this.selectedChapter = selectedChapter;
     }
-    
     private Content selectedContent;
+
     public Content getSelectedContent() {
         return selectedContent;
     }
+
     public void setSelectedContent(Content selectedContent) {
         this.selectedContent = selectedContent;
     }
-    
     private List<Topic> listTopicByCourse = null;
+
     public List<Topic> getListTopicByCourse() {
         return listTopicByCourse;
     }
+
     public void setListTopicByCourse(List<Topic> listTopicByCourse) {
         this.listTopicByCourse = listTopicByCourse;
     }
-
     private List<Exam> listExamByCourse = null;
+
     public List<Exam> getListExamByCourse() {
         return listExamByCourse;
     }
+
     public void setListExamByCourse(List<Exam> listExamByCourse) {
         this.listExamByCourse = listExamByCourse;
     }
-
     private MenuModel model;
+
     public MenuModel getModel() {
         return model;
     }
+    private String courseIdPassed;
 
+    public String getCourseIdPassed() {
+        return courseIdPassed;
+    }
+
+    public void setCourseIdPassed(String courseIdPassed) {
+        this.courseIdPassed = courseIdPassed;
+    }
     @EJB
     private CourseFacade courseFacade;
+
     public CourseFacade getCourseFacade() {
         return courseFacade;
     }
+
     public void setCourseFacade(CourseFacade courseFacade) {
         this.courseFacade = courseFacade;
     }
-
     @EJB
     private TopicFacade topicFacade;
+
     public TopicFacade getTopicFacade() {
         return topicFacade;
     }
+
     public void setTopicFacade(TopicFacade topicFacade) {
         this.topicFacade = topicFacade;
     }
-
     @EJB
     private ExamFacade examFacade;
+
     public ExamFacade getExamFacade() {
         return examFacade;
     }
+
     public void setExamFacade(ExamFacade examFacade) {
         this.examFacade = examFacade;
     }
-
     @EJB
     private ChapterFacade chapterFacade;
+
     public ChapterFacade getChapterFacade() {
         return chapterFacade;
     }
+
     public void setChapterFacade(ChapterFacade chapterFacade) {
         this.chapterFacade = chapterFacade;
     }
-
     @EJB
     private ContentFacade contentFacade;
+
     public ContentFacade getContentFacade() {
         return contentFacade;
     }
+
     public void setContentFacade(ContentFacade contentFacade) {
         this.contentFacade = contentFacade;
     }
@@ -208,28 +219,34 @@ public class StudentCourseController implements Serializable {
             result = null;
         }
         return result;
-    }   
-        
-    public String fullCourse() {
-        course = courseFacade.find(32);
-        selectedContent = contentFacade.find(7);
-        System.out.println(selectedContent.getContentUrl());
+    }
 
-        listTopicByCourse = topicByCourse(course);
+    public void fullCourse() throws IOException {
+        LoginController loginController = (LoginController) ManagedBeanRetriever.getManagedBean("loginController");
+        loginController.security("coursedashboard");
+        try {
+            course = courseFacade.find(Integer.parseInt(courseIdPassed));
+            selectedContent = contentFacade.find(7);
 
-        selectedTopic = listTopicByCourse.get(0);
+            listTopicByCourse = topicByCourse(course);
+
+            selectedTopic = listTopicByCourse.get(0);
 
 //        listExamByTopic = examFacade.findByIdTopic(4);
-        //listExamByTopic = examByTopic(topic);
+            //listExamByTopic = examByTopic(topic);
 
-        listExamByCourse = examByCourse(course);
+            listExamByCourse = examByCourse(course);
 
-        //menuBean();
-        
-        System.out.println("Hello World !!!");
-        return "Finished";
+
+
+
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().getExternalContext().redirect("dashboarduser.xhtml");
+
+        }
+
     }
-       
+
     public void resetSelected() {
         selectedChapter = new Chapter();
         selectedContent = contentFacade.find(7);
@@ -246,32 +263,29 @@ public class StudentCourseController implements Serializable {
         return dt;
 
     }
-    
-     
-
 }
 
 /*
  * public void menuBean() {
-        model = new DefaultMenuModel();
+ model = new DefaultMenuModel();
 
-        for (Chapter iChapter : chapterByTopic(selectedTopic)) {
-            Submenu submenu = new Submenu();
-            submenu.setLabel(iChapter.getChapterName());           
-            try {
-                for (Content iContent : contentByChapter(iChapter)) {
-                    MenuItem item = new MenuItem();
-                    item.setValue(iContent.getContentName());
-                    item.setOnclick(item.getTitle());
-                    submenu.getChildren().add(item);
+ for (Chapter iChapter : chapterByTopic(selectedTopic)) {
+ Submenu submenu = new Submenu();
+ submenu.setLabel(iChapter.getChapterName());           
+ try {
+ for (Content iContent : contentByChapter(iChapter)) {
+ MenuItem item = new MenuItem();
+ item.setValue(iContent.getContentName());
+ item.setOnclick(item.getTitle());
+ submenu.getChildren().add(item);
 
-                }
-            } catch (NullPointerException e) {
-                MenuItem item = new MenuItem();
-                item.setValue("No Content Available");
-            }
-            model.addSubmenu(submenu);
-        }
+ }
+ } catch (NullPointerException e) {
+ MenuItem item = new MenuItem();
+ item.setValue("No Content Available");
+ }
+ model.addSubmenu(submenu);
+ }
 
-    }
+ }
  */

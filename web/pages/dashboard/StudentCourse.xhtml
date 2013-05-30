@@ -1,141 +1,155 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html lang="en"
-      xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:c="http://java.sun.com/jsp/jstl/core">
 
-    <h:head>
-        <title>I NEED A TITLE</title>
-    </h:head>
-
-    <h:body onload="#{studentCourseController.fullCourse()}">
-
-        <p:tabView id="tabView" orientation="top"  effect="fade" effectDuration="normal" >
-            <!--
-                    orientation = "top", "bottom", "right", "left"
-                    effect = "fade", "slide", "blind", "clip", "drop", "explode", "fold", "puff", "scale" 
-            -->
-            <p:tab title="Home" disabled="false">
-                <h:panelGrid columns="3" cellpadding="20">
-                    <p:graphicImage value="#{studentCourseController.course.photo}"/>
-                    <p:panelGrid id="Info" columns="2" >
-                        <h:outputText value="Nom du cours" />
-                        <h:outputText value="#{studentCourseController.course.courseName}" />
-                        <h:outputText value="Date de lancement" />
-                        <h:outputText value="#{studentCourseController.course.launchDate}" />
-                        <h:outputText value="Statut" />
-                        <h:outputText value="#{studentCourseController.course.status}" />
-                    </p:panelGrid>
-                    <p:dataList id="deadlines" value="#{studentCourseController.listExamByCourse}" var="exam" type="definition">
-                        <p:panelGrid columns="2">
-                            <h:outputText value="Exam: #{exam.idTopic.nameTopic}" />
-                            <h:outputText value="Deadline: #{exam.deadline}" />
+<!DOCTYPE html  [
+    <!ENTITY nbsp "&#160;">]>
+    <ui:composition template="/layout_dashboard.xhtml"
+                    xmlns="http://www.w3.org/1999/xhtml"
+                    xmlns:f="http://java.sun.com/jsf/core"
+                    xmlns:h="http://java.sun.com/jsf/html"
+                    xmlns:ui="http://java.sun.com/jsf/facelets"
+                    xmlns:p="http://primefaces.org/ui">
+        <f:metadata>
+            <f:viewParam name="courseid" value="#{studentCourseController.courseIdPassed}"
+                         required="true" requiredMessage="Invalid page access. Please use a link from within the system."
+                         />
+        </f:metadata>
+        <ui:param name="onload" value="#{studentCourseController.fullCourse()}"/>
+        <ui:define name="Menu">
+            <p:panel header="#{loginController.account.username}">
+                <h:outputText  value="Name: "/>        
+                <h:outputText  value="#{loginController.userdata.name}"  />
+                <br/>
+                <h:outputText  value="Email:"/>        
+                <h:outputText  value=" #{loginController.userdata.EMail}"  />
+                <br/>
+                <br/>
+                <div style="text-align: center">
+                    <p:commandButton action="#{loginController.logout()}" value="Logout"/>
+                </div>
+            </p:panel>
+        </ui:define>
+        <ui:define name="Content">
+            <p:tabView id="tabView" orientation="top"  effect="fade" effectDuration="normal" >
+                <!--
+                        orientation = "top", "bottom", "right", "left"
+                        effect = "fade", "slide", "blind", "clip", "drop", "explode", "fold", "puff", "scale" 
+                -->
+                <p:tab title="Home" disabled="false">
+                    <h:panelGrid columns="3" cellpadding="20">
+                        <p:graphicImage value="#{studentCourseController.course.photo}"/>
+                        <p:panelGrid id="Info" columns="2" >
+                            <h:outputText value="Nom du cours" />
+                            <h:outputText value="#{studentCourseController.course.courseName}" />
+                            <h:outputText value="Date de lancement" />
+                            <h:outputText value="#{studentCourseController.course.launchDate}" />
+                            <h:outputText value="Statut" />
+                            <h:outputText value="#{studentCourseController.course.status}" />
                         </p:panelGrid>
-                    </p:dataList>        
-                </h:panelGrid>
-            </p:tab>
-
-            <p:tab title="Courseware" disabled="false" >
-               
-
-
-                <h:form >
-                    <h:panelGrid columns="3" cellpadding="10">
-
-
-                        <p:selectOneListbox id="topiclist" value="#{studentCourseController.selectedTopic}" >
-                            <f:selectItems value="#{studentCourseController.listTopicByCourse}" />
-                            <p:ajax onstart="#{studentCourseController.resetSelected()}" update="topiclist,chapterlist,contentlist"/>
-                        </p:selectOneListbox>
-
-                        <p:selectOneListbox id="chapterlist" value="#{studentCourseController.selectedChapter}" >
-                            <f:selectItems value="#{studentCourseController.chapterByTopic(studentCourseController.selectedTopic)}"/>
-                            <p:ajax update="contentlist"/>
-                        </p:selectOneListbox>
-
-                        <p:selectOneListbox id="contentlist" value="#{studentCourseController.selectedContent}">
-                            <f:selectItems value="#{studentCourseController.contentByChapter(studentCourseController.selectedChapter)}"/>
-                            <p:ajax update="FileDialog test" oncomplete="fileDialog.show();" />
-                        </p:selectOneListbox>
-
-
-                        <h:outputText id="test" value="/resources/Testing Files/#{studentCourseController.selectedContent.contentName}"/>
-
-                        <p:dialog id="FileDialog" header="Car Detail" showEffect="fade" hideEffect="fade" modal="true"  
-                                  widgetVar="fileDialog" style="text-align: center;"  >  
-                            <p:ajax event="close" update="FileDialog" />
-                            <p:outputPanel style="text-align:center; width:1000px; height:500px; " layout="block">  
-                                <p:media value="/resources/Testing Files/#{studentCourseController.selectedContent.contentUrl}"  width="100%" height="100%">  
-                                    <f:param name="autoPlay" value="false" />
-                                </p:media>
-
-                            </p:outputPanel>  
-
-                        </p:dialog> 
-
-
-
+                        <p:dataList id="deadlines" value="#{studentCourseController.listExamByCourse}" var="exam" type="definition">
+                            <p:panelGrid columns="2">
+                                <h:outputText value="Exam: #{exam.idTopic.nameTopic}" />
+                                <h:outputText value="Deadline: #{exam.deadline}" />
+                            </p:panelGrid>
+                        </p:dataList>        
                     </h:panelGrid>
-                </h:form>
-            </p:tab>
+                </p:tab>
 
-            <!--
-                        <p:tab title="Syllabus" disabled="false">
-                            <h:form>
-            
-                                <p:dataTable id="salesTable" var="itopic" value="#{studentCourseController.listTopicByCourse}">  
-            
-                                    <p:columnGroup type="header">  
-                                        <p:row>  
-                                            <p:column rowspan="2" headerText="Topic" />  
-                                            <p:column rowspan="2" headerText="Chapter" />
-                                            <p:column rowspan="2" headerText="Start Date" />
-                                            <p:column rowspan="2" headerText="Due Date" />
-                                        </p:row>  
-            
-            
-                                    </p:columnGroup>  
-            
-                                    <p:column>  
-            #{itopic.nameTopic}  
-        </p:column>  
-
-        <p:column >
-
-            <div class="datalist-noborder">
-                <p:dataList value="#{studentCourseController.chapterByTopic(itopic)}" var="ichapiter" >  
-            #{ichapiter.chapterName}  
-        </p:dataList>
-    </div>
-
-</p:column>  
-
-<p:column>  
-            #{studentCourseController.updateDate(itopic.idCourse.launchDate , itopic.weekNumber )}  
-        </p:column>  
-
-        <p:column>  
-            #{itopic.examList.get(0).deadline}  
-        </p:column> 
-    </p:dataTable>
-
-</h:form>
-</p:tab>
-            -->
-        </p:tabView>
-
-        <style type="text/css">
-            .datalist-noborder .ui-widget-content {
-                border: none;
-                background-color: transparent;
-            }
-        </style>
+                <p:tab title="Courseware" disabled="false" >
 
 
 
-    </h:body>
-</html>
+                    <h:form >
+                        <h:panelGrid columns="3" cellpadding="10">
+
+
+                            <p:selectOneListbox id="topiclist" value="#{studentCourseController.selectedTopic}" >
+                                <f:selectItems value="#{studentCourseController.listTopicByCourse}" />
+                                <p:ajax onstart="#{studentCourseController.resetSelected()}" update="topiclist,chapterlist,contentlist"/>
+                            </p:selectOneListbox>
+
+                            <p:selectOneListbox id="chapterlist" value="#{studentCourseController.selectedChapter}" >
+                                <f:selectItems value="#{studentCourseController.chapterByTopic(studentCourseController.selectedTopic)}"/>
+                                <p:ajax update="contentlist"/>
+                            </p:selectOneListbox>
+
+                            <p:selectOneListbox id="contentlist" value="#{studentCourseController.selectedContent}">
+                                <f:selectItems value="#{studentCourseController.contentByChapter(studentCourseController.selectedChapter)}"/>
+                                <p:ajax update="FileDialog test" oncomplete="fileDialog.show();" />
+                            </p:selectOneListbox>
+
+
+                            <h:outputText id="test" value="/resources/Testing Files/#{studentCourseController.selectedContent.contentName}"/>
+
+                            <p:dialog id="FileDialog" header="Car Detail" showEffect="fade" hideEffect="fade" modal="true"  
+                                      widgetVar="fileDialog" style="text-align: center;"  >  
+                                <p:ajax event="close" update="FileDialog" />
+                                <p:outputPanel style="text-align:center; width:1000px; height:500px; " layout="block">  
+                                    <p:media value="/resources/Testing Files/#{studentCourseController.selectedContent.contentUrl}"  width="100%" height="100%">  
+                                        <f:param name="autoPlay" value="false" />
+                                    </p:media>
+
+                                </p:outputPanel>  
+
+                            </p:dialog> 
+
+
+
+                        </h:panelGrid>
+                    </h:form>
+                </p:tab>
+
+                <!--
+                            <p:tab title="Syllabus" disabled="false">
+                                <h:form>
+                
+                                    <p:dataTable id="salesTable" var="itopic" value="#{studentCourseController.listTopicByCourse}">  
+                
+                                        <p:columnGroup type="header">  
+                                            <p:row>  
+                                                <p:column rowspan="2" headerText="Topic" />  
+                                                <p:column rowspan="2" headerText="Chapter" />
+                                                <p:column rowspan="2" headerText="Start Date" />
+                                                <p:column rowspan="2" headerText="Due Date" />
+                                            </p:row>  
+                
+                
+                                        </p:columnGroup>  
+                
+                                        <p:column>  
+                #{itopic.nameTopic}  
+            </p:column>  
+    
+            <p:column >
+    
+                <div class="datalist-noborder">
+                    <p:dataList value="#{studentCourseController.chapterByTopic(itopic)}" var="ichapiter" >  
+                #{ichapiter.chapterName}  
+            </p:dataList>
+        </div>
+    
+    </p:column>  
+    
+    <p:column>  
+                #{studentCourseController.updateDate(itopic.idCourse.launchDate , itopic.weekNumber )}  
+            </p:column>  
+    
+            <p:column>  
+                #{itopic.examList.get(0).deadline}  
+            </p:column> 
+        </p:dataTable>
+    
+    </h:form>
+    </p:tab>
+                -->
+            </p:tabView>
+
+            <style type="text/css">
+                .datalist-noborder .ui-widget-content {
+                    border: none;
+                    background-color: transparent;
+                }
+            </style>
+
+        </ui:define>
+
+
+    </ui:composition>

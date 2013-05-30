@@ -9,8 +9,7 @@
                     xmlns:p="http://primefaces.org/ui">
         <ui:param name="onload" value="#{loginController.security('dashboarduser')}"/>
 
-        <ui:define name="Content">
-        </ui:define>
+      
 
         <ui:define name="Menu">
             <p:panel header="#{loginController.account.username}">
@@ -27,11 +26,11 @@
             </p:panel>
         </ui:define>
         <ui:define name="TopBar">
-               <ul>
-                   <li><a href="../home.xhtml">Homepage</a></li>
-                            <li><a href="#">Courses</a></li>
-                            <li  class="current_page_item"><a href="">Dashboard</a></li>
-                        </ul>
+            <ul>
+                <li><a href="../home.xhtml">Homepage</a></li>
+                <li><a href="#">Courses</a></li>
+                <li  class="current_page_item"><a href="">Dashboard</a></li>
+            </ul>
             <h:panelGroup style="display:block; text-align:right">
                 <h:outputLink>Find Courses</h:outputLink>
             </h:panelGroup> 
@@ -39,21 +38,24 @@
 
         <ui:define name="Content">
             <h:form>
-                                <div style="margin-top: 10px">
+                <div style="margin-top: 10px">
 
-                <ui:repeat value="#{dashboardUser.listcourse}" var="course">
-                    <p:fieldset legend="#{course.courseName}">
-                        <h:panelGrid columns="2" cellpadding="10" >
-                            <p:graphicImage  width="200" height="150"  library="ContentFile" name="#{course.photo}"/>
-                            <h:outputText value="#{course.courseName}"/>
-                            <p:commandButton  value="Unsubscribe" action="#{dashboardUser.unsubscribe(course)}" style="margin-left: 40px"/>
-                        </h:panelGrid>
+                    <ui:repeat value="#{dashboardUser.listcourse}" var="course">
+                        <p:fieldset legend="#{course.courseName}">
+                            <h:panelGrid columns="2" cellpadding="10" >
+                                <h:link outcome="#{dashboardUser.redirect_toward_user_course()}">
+                                    <p:graphicImage  width="200" height="150"  library="ContentFile" name="#{course.photo}"/>
+                                    <f:param name="courseid" value="#{course.idCourse}"/>
+                                </h:link>
+                                <h:outputText value="#{course.courseName}"/>
+                                <p:commandButton  value="Unsubscribe" action="#{dashboardUser.unsubscribe(course)}" style="margin-left: 40px"/>
+                            </h:panelGrid>
 
-                    </p:fieldset>
-                    <br/>
-                </ui:repeat>
-                                </div>
+                        </p:fieldset>
+                        <br/>
+                    </ui:repeat>
+                </div>
             </h:form>
-            
+
         </ui:define>
     </ui:composition>
