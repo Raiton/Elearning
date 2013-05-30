@@ -7,6 +7,8 @@ package com.elearningproject.facades;
 import com.elearningproject.entities.Exam;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
 
 /**
@@ -26,5 +28,18 @@ public class ExamFacade extends AbstractFacade<Exam> {
     public ExamFacade() {
         super(Exam.class);
     }
+    
+        public Exam findByIdTopic(int idTopic) {
+        Exam exam = null;
+        try {
+            exam = (Exam) getEntityManager().createNamedQuery("Exam.findByIdTopic").setParameter("idTopic", idTopic).getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        } catch (NonUniqueResultException e) {
+            return null;
+        }
+        return exam;
+    }
+
     
 }

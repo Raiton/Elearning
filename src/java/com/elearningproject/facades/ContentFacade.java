@@ -5,8 +5,11 @@
 package com.elearningproject.facades;
 
 import com.elearningproject.entities.Content;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
 
 /**
@@ -25,6 +28,18 @@ public class ContentFacade extends AbstractFacade<Content> {
 
     public ContentFacade() {
         super(Content.class);
+    }
+    
+    public List<Content> findByIdChapter(int idChapter) {
+        List<Content> listContent = null;
+        try {
+            listContent = getEntityManager().createNamedQuery("Content.findByIdChapter").setParameter("idChapter", idChapter).getResultList();
+        } catch (NoResultException e) {
+            return null;
+        } catch (NonUniqueResultException e) {
+            return null;
+        }
+        return listContent;
     }
     
 }

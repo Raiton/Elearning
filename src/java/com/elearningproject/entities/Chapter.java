@@ -34,7 +34,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Chapter.findAll", query = "SELECT c FROM Chapter c"),
     @NamedQuery(name = "Chapter.findByIdChapter", query = "SELECT c FROM Chapter c WHERE c.idChapter = :idChapter"),
     @NamedQuery(name = "Chapter.findByChapterName", query = "SELECT c FROM Chapter c WHERE c.chapterName = :chapterName"),
-    @NamedQuery(name = "Chapter.findByChapterRank", query = "SELECT c FROM Chapter c WHERE c.chapterRank = :chapterRank")})
+    @NamedQuery(name = "Chapter.findByChapterRank", query = "SELECT c FROM Chapter c WHERE c.chapterRank = :chapterRank"),
+    @NamedQuery(name = "Chapter.findByIdTopic", query = "SELECT c FROM Chapter c WHERE c.idTopic.idTopic = :idTopic")})
 public class Chapter implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

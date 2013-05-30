@@ -34,8 +34,13 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Topic.findAll", query = "SELECT t FROM Topic t"),
     @NamedQuery(name = "Topic.findByIdTopic", query = "SELECT t FROM Topic t WHERE t.idTopic = :idTopic"),
     @NamedQuery(name = "Topic.findByNameTopic", query = "SELECT t FROM Topic t WHERE t.nameTopic = :nameTopic"),
-    @NamedQuery(name = "Topic.findByWeekNumber", query = "SELECT t FROM Topic t WHERE t.weekNumber = :weekNumber")})
+    @NamedQuery(name = "Topic.findByWeekNumber", query = "SELECT t FROM Topic t WHERE t.weekNumber = :weekNumber"),
+    @NamedQuery(name = "Topic.findByIdCourse", query = "SELECT t FROM Topic t WHERE t.idCourse.idCourse = :idCourse")})
+// To get an explanation for the "t.idCourse.idCourse", look at line 59. The t.idCourse is an Course Type.
+
+
 public class Topic implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -147,5 +152,4 @@ public class Topic implements Serializable {
     public String toString() {
         return "com.elearningproject.entities.Topic[ idTopic=" + idTopic + " ]";
     }
-    
 }

@@ -5,8 +5,11 @@
 package com.elearningproject.facades;
 
 import com.elearningproject.entities.Chapter;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
 
 /**
@@ -15,6 +18,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class ChapterFacade extends AbstractFacade<Chapter> {
+
     @PersistenceContext(unitName = "E-learning_projectPU")
     private EntityManager em;
 
@@ -26,5 +30,16 @@ public class ChapterFacade extends AbstractFacade<Chapter> {
     public ChapterFacade() {
         super(Chapter.class);
     }
-    
+
+    public List<Chapter> findByIdTopic(int idTopic) {
+        List<Chapter> listChapter = null;
+        try {
+            listChapter = getEntityManager().createNamedQuery("Chapter.findByIdTopic").setParameter("idTopic", idTopic).getResultList();
+        } catch (NoResultException e) {
+            return null;
+        } catch (NonUniqueResultException e) {
+            return null;
+        }
+        return listChapter;
+    }
 }

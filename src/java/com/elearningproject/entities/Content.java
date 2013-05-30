@@ -30,7 +30,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Content.findAll", query = "SELECT c FROM Content c"),
     @NamedQuery(name = "Content.findByIdContent", query = "SELECT c FROM Content c WHERE c.idContent = :idContent"),
     @NamedQuery(name = "Content.findByContentName", query = "SELECT c FROM Content c WHERE c.contentName = :contentName"),
-    @NamedQuery(name = "Content.findByContentUrl", query = "SELECT c FROM Content c WHERE c.contentUrl = :contentUrl")})
+    @NamedQuery(name = "Content.findByContentUrl", query = "SELECT c FROM Content c WHERE c.contentUrl = :contentUrl"),
+    @NamedQuery(name = "Content.findByIdChapter", query = "SELECT c FROM Content c WHERE c.idChapter.idChapter = :idChapter")})
 public class Content implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

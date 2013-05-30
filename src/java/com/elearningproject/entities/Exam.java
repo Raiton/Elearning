@@ -36,8 +36,10 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Exam.findByDeadline", query = "SELECT e FROM Exam e WHERE e.deadline = :deadline"),
     @NamedQuery(name = "Exam.findByExamContent", query = "SELECT e FROM Exam e WHERE e.examContent = :examContent"),
     @NamedQuery(name = "Exam.findByMark", query = "SELECT e FROM Exam e WHERE e.mark = :mark"),
+    @NamedQuery(name = "Exam.findByIdTopic", query = "SELECT e FROM Exam e WHERE e.idTopic.idTopic = :idTopic"),
     @NamedQuery(name = "Exam.findByResponse", query = "SELECT e FROM Exam e WHERE e.response = :response")})
 public class Exam implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -161,5 +163,4 @@ public class Exam implements Serializable {
     public String toString() {
         return "com.elearningproject.entities.Exam[ idExam=" + idExam + " ]";
     }
-    
 }
