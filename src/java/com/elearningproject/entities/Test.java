@@ -33,16 +33,17 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Test.findByTestName", query = "SELECT t FROM Test t WHERE t.testName = :testName")})
 public class Test implements Serializable {
     @Size(max = 2147483647)
-    @Column(name = "R1")
+    @Column(name = "r1")
     private String r1;
     @Size(max = 2147483647)
-    @Column(name = "R2")
+    @Column(name = "r2")
     private String r2;
     @Size(max = 2147483647)
-    @Column(name = "R3")
+    @Column(name = "r3")
     private String r3;
-    @Column(name = "R")
+    @Column(name = "r")
     private Integer r;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -154,5 +155,7 @@ public class Test implements Serializable {
     public void setR(Integer r) {
         this.r = r;
     }
+
+  
     
 }
