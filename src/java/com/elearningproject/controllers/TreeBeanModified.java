@@ -276,6 +276,9 @@ public class TreeBeanModified implements Serializable {
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
             return null;
+        } finally {
+            selectedNode.setData(course.getCourseName());
+            
         }
     }
 
@@ -296,6 +299,8 @@ public class TreeBeanModified implements Serializable {
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
             return null;
+        }finally {
+            selectedNode.setData(topic.getNameTopic());
         }
 
     }
@@ -316,6 +321,8 @@ public class TreeBeanModified implements Serializable {
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
             return null;
+        } finally {
+            selectedNode.setData(chapter.getChapterName());
         }
     }
 
@@ -336,6 +343,8 @@ public class TreeBeanModified implements Serializable {
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
             return null;
+        }finally {
+            selectedNode.setData(content.getContentName());
         }
 
     }

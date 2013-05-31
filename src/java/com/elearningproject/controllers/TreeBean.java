@@ -270,7 +270,7 @@ public class TreeBean implements Serializable {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
             return null;
         } finally {
-            selectedNode.setData(topic.getIdTopic());
+            selectedNode.setData(topic.getNameTopic());
         }
     }
 

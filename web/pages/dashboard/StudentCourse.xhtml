@@ -105,49 +105,46 @@
                     </h:form>
                 </p:tab>
 
-                <!--
-                            <p:tab title="Syllabus" disabled="false">
-                                <h:form>
-                
-                                    <p:dataTable id="salesTable" var="itopic" value="#{studentCourseController.listTopicByCourse}">  
-                
-                                        <p:columnGroup type="header">  
-                                            <p:row>  
-                                                <p:column rowspan="2" headerText="Topic" />  
-                                                <p:column rowspan="2" headerText="Chapter" />
-                                                <p:column rowspan="2" headerText="Start Date" />
-                                                <p:column rowspan="2" headerText="Due Date" />
-                                            </p:row>  
-                
-                
-                                        </p:columnGroup>  
-                
-                                        <p:column>  
-                #{itopic.nameTopic}  
-            </p:column>  
-    
-            <p:column >
-    
-                <div class="datalist-noborder">
-                    <p:dataList value="#{studentCourseController.chapterByTopic(itopic)}" var="ichapiter" >  
-                #{ichapiter.chapterName}  
-            </p:dataList>
-        </div>
-    
-    </p:column>  
-    
-    <p:column>  
-                #{studentCourseController.updateDate(itopic.idCourse.launchDate , itopic.weekNumber )}  
-            </p:column>  
-    
-            <p:column>  
-                #{itopic.examList.get(0).deadline}  
-            </p:column> 
-        </p:dataTable>
-    
-    </h:form>
-    </p:tab>
-                -->
+
+                <p:tab title="Syllabus" disabled="false">
+                    <h:form>
+
+                        <p:dataTable id="salesTable" var="itopic" value="#{studentCourseController.listTopicByCourse}">  
+
+                            <p:columnGroup type="header">  
+                                <p:row>  
+                                    <p:column rowspan="2" headerText="Topic" />  
+                                    <p:column rowspan="2" headerText="Chapter" />
+                                    <p:column rowspan="2" headerText="Start Date" />
+                                </p:row>  
+
+
+                            </p:columnGroup>  
+
+                            <p:column>  
+                                #{itopic.nameTopic}  
+                            </p:column>  
+
+                            <p:column >
+
+                                <div class="datalist-noborder">
+                                    <p:dataList value="#{studentCourseController.chapterByTopic(itopic)}" var="ichapiter" >  
+                                        #{ichapiter.chapterName}  
+                                    </p:dataList>
+                                </div>
+
+                            </p:column>  
+
+                            <p:column>  
+                                #{studentCourseController.updateDate(itopic.idCourse.launchDate , itopic.weekNumber )}  
+                            </p:column>  
+
+
+                        </p:dataTable>
+
+                    </h:form>
+                </p:tab>
+
             </p:tabView>
 
             <style type="text/css">
