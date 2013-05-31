@@ -98,7 +98,7 @@ public class GroupTable implements Serializable {
 
     @Override
     public String toString() {
-        return "com.elearningproject.entities.GroupTable[ idGroupTable=" + idGroupTable + " ]";
+        return groupName;
     }
     
 }

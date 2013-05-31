@@ -1,0 +1,75 @@
+
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <h:head>
+        <title>Title</title>
+
+    </h:head>
+    <h:body onload="#{onload}">
+        <h:outputStylesheet name="css/style_perso.css" />
+
+        <div id="wrapper">
+            <div id="header-wrapper">
+                <div id="header" class="container">
+
+                    <div id="menu">
+                        <ul>
+                            <li><a href="../home.xhtml">Homepage</a></li>
+                            <li><a href="../field/listefield.xhtml">Courses</a></li>
+                            <li><a href="../about.xhtml">About</a></li>
+                            <li><a href="../login/login.xhtml">Login</a></li>
+                            <li  class="current_page_item"><a href="#">Register Now</a></li>
+                        </ul>
+                    </div>
+
+                </div>
+
+
+            </div>
+            <!-- end #header -->
+
+            <div id="page" >
+                <div id="content" style="float: left;margin-left: 150px;width: 600px">
+                    <p:panel>
+                        <h:form >       
+                            <h:panelGrid columns="2" style="margin: auto">
+                                <p:outputLabel value="Name"/>
+                                <p:inputText id="nameUser" value="#{registerController.user.name}" required="true"></p:inputText>
+                                <p:outputLabel value="E-mail"/>
+                                <p:inputText id="emailUser" value="#{registerController.user.EMail}" required="true"></p:inputText>
+                                <p:outputLabel value="Groupe"/>
+                                <p:selectOneMenu id="idGroupTable" value="#{registerController.user.idGroupTable}" >
+                                    <f:selectItems value="#{groupTableController.itemsAvailableSelectOne}"/>
+                                </p:selectOneMenu>
+                                <p:outputLabel value="Login"/>
+                                <p:inputText id="loginUser" value="#{registerController.account.username}" required="true" ></p:inputText>
+                                <p:outputLabel value="Password"/>
+                                <p:password id="passwdUser" value="#{registerController.account.password}" required="true" />
+                                <p:outputLabel value="Verification password"/>
+                                <p:password id="verifPasswdUser" value="#{registerController.verifPassword}" required="true" />
+                                <br/>
+                                <p:commandButton actionListener="#{registerController.register()}" value="Sign-in" />
+                            </h:panelGrid>
+                        </h:form>
+                    </p:panel>
+                    <div style="clear: both;"></div>
+                </div>
+                <!-- end #content -->
+
+                <!-- end #sidebar -->
+                <div style="clear: both;"></div>
+            </div>
+            <!-- end #page --> 
+        </div>
+        <div id="footer">
+            <p>Copyright (c) 2013 Ecole Polytechnique de Tunisie  Authors : Mohamed Rafik Megdiche, Houcem Chammakhi, Mariam Nefzi</p>
+        </div>
+        <!-- end #footer -->
+    </h:body>
+</html>
