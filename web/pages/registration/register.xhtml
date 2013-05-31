@@ -54,7 +54,7 @@
                                 <p:outputLabel value="Verification password"/>
                                 <p:password id="verifPasswdUser" value="#{registerController.verifPassword}" required="true" />
                                 <br/>
-                                <p:commandButton actionListener="#{registerController.register()}" value="Sign-in" />
+                                <p:commandButton action="#{registerController.register()}" value="Sign-in" />
                             </h:panelGrid>
                         </h:form>
                     </p:panel>

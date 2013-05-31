@@ -81,12 +81,13 @@
 
                             <p:selectOneListbox id="contentlist" value="#{studentCourseController.selectedContent}">
                                 <f:selectItems value="#{studentCourseController.contentByChapter(studentCourseController.selectedChapter)}"/>
-                                <p:ajax oncomplete="fileDialog.show();" />
+                                <p:ajax update="FileDialog" oncomplete="fileDialog.show();" />
+
                             </p:selectOneListbox>
 
 
 
-                            <p:dialog id="FileDialog" header="Car Detail" showEffect="fade" hideEffect="fade" modal="true"  
+                            <p:dialog id="FileDialog" header="#{studentCourseController.selectedContent.contentName}" showEffect="fade" hideEffect="fade" modal="true"  
                                       widgetVar="fileDialog" style="text-align: center;"  >  
                                 <p:ajax event="close" update="FileDialog" />
                                 <p:outputPanel style="text-align:center; width:1000px; height:500px; " layout="block">  

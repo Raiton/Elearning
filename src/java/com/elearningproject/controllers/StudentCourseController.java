@@ -224,9 +224,11 @@ public class StudentCourseController implements Serializable {
     public void fullCourse() throws IOException {
         LoginController loginController = (LoginController) ManagedBeanRetriever.getManagedBean("loginController");
         loginController.security("coursedashboard");
-        try {
+        try{
+            
+        
             course = courseFacade.find(Integer.parseInt(courseIdPassed));
-            selectedContent = contentFacade.find(7);
+          //  selectedContent = contentFacade.find(1);
 
             listTopicByCourse = topicByCourse(course);
 
@@ -239,17 +241,17 @@ public class StudentCourseController implements Serializable {
 
 
 
-
-        } catch (Exception e) {
+   } catch (Exception e) {
             FacesContext.getCurrentInstance().getExternalContext().redirect("dashboarduser.xhtml");
 
         }
+       
 
     }
 
     public void resetSelected() {
         selectedChapter = new Chapter();
-        selectedContent = contentFacade.find(7);
+        selectedContent = contentFacade.find(1);
         System.out.println("Here");
     }
 
