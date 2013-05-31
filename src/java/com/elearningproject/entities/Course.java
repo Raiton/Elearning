@@ -203,7 +203,7 @@ public class Course implements Serializable {
 
     @Override
     public String toString() {
-        return "com.elearningproject.entities.Course[ idCourse=" + idCourse + " ]";
+        return courseName;
     }
 
     public String getCourseDescription() {

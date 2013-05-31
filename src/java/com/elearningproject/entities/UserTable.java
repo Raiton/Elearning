@@ -158,7 +158,7 @@ public class UserTable implements Serializable {
 
     @Override
     public String toString() {
-        return "com.elearningproject.entities.UserTable[ idUserTable=" + idUserTable + " ]";
+        return name;
     }
     
 }

@@ -161,6 +161,6 @@ public class Exam implements Serializable {
 
     @Override
     public String toString() {
-        return "com.elearningproject.entities.Exam[ idExam=" + idExam + " ]";
+        return examContent;
     }
 }

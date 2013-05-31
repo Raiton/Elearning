@@ -150,6 +150,6 @@ public class Topic implements Serializable {
 
     @Override
     public String toString() {
-        return "com.elearningproject.entities.Topic[ idTopic=" + idTopic + " ]";
+        return nameTopic;
     }
 }

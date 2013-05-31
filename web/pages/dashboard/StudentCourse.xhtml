@@ -11,6 +11,16 @@
             <f:viewParam name="courseid" value="#{studentCourseController.courseIdPassed}"/>
         </f:metadata>
         <ui:param name="onload" value="#{studentCourseController.fullCourse()}"/>
+        <ui:define name="TopBar">
+            <ul>
+                <li><a href="../home.xhtml">Homepage</a></li>
+                <li  class="current_page_item"><a href="">Course Page</a></li>
+                <li><a href="../dashboard/dashboarduser.xhtml">Dashboard</a></li>
+
+
+            </ul>
+
+        </ui:define>
         <ui:define name="Menu">
             <p:panel header="#{loginController.account.username}">
                 <h:outputText  value="Name: "/>        
@@ -33,7 +43,7 @@
                 -->
                 <p:tab title="Home" disabled="false">
                     <h:panelGrid columns="3" cellpadding="20">
-                        <p:graphicImage value="#{studentCourseController.course.photo}"/>
+                        <p:graphicImage value="/resources/ContentFile/#{studentCourseController.course.photo}" width="200" height="150"/>
                         <p:panelGrid id="Info" columns="2" >
                             <h:outputText value="Nom du cours" />
                             <h:outputText value="#{studentCourseController.course.courseName}" />
@@ -71,17 +81,16 @@
 
                             <p:selectOneListbox id="contentlist" value="#{studentCourseController.selectedContent}">
                                 <f:selectItems value="#{studentCourseController.contentByChapter(studentCourseController.selectedChapter)}"/>
-                                <p:ajax update="FileDialog test" oncomplete="fileDialog.show();" />
+                                <p:ajax oncomplete="fileDialog.show();" />
                             </p:selectOneListbox>
 
 
-                            <h:outputText id="test" value="/resources/Testing Files/#{studentCourseController.selectedContent.contentName}"/>
 
                             <p:dialog id="FileDialog" header="Car Detail" showEffect="fade" hideEffect="fade" modal="true"  
                                       widgetVar="fileDialog" style="text-align: center;"  >  
                                 <p:ajax event="close" update="FileDialog" />
                                 <p:outputPanel style="text-align:center; width:1000px; height:500px; " layout="block">  
-                                    <p:media value="/resources/Testing Files/#{studentCourseController.selectedContent.contentUrl}"  width="100%" height="100%">  
+                                    <p:media value="/resources/ContentFile/#{studentCourseController.selectedContent.contentUrl}"  width="100%" height="100%">  
                                         <f:param name="autoPlay" value="false" />
                                     </p:media>
 

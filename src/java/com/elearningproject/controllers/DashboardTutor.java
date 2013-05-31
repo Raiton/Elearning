@@ -90,9 +90,7 @@ public class DashboardTutor implements Serializable {
         Date currentDate = new Date();
         selectedCourse.setLaunchDate(currentDate);
         getCourseFacade().edit(selectedCourse);
-        RequestContext.getCurrentInstance().update("form:publish_button");
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, selectedCourse.getCourseName(), "Your course has been published");
-
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
 

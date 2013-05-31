@@ -124,7 +124,7 @@ public class Chapter implements Serializable {
 
     @Override
     public String toString() {
-        return "com.elearningproject.entities.Chapter[ idChapter=" + idChapter + " ]";
+        return chapterName;
     }
     
 }
