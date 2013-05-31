@@ -89,40 +89,42 @@ public class TreeBean implements Serializable {
     public void addNode() {
 
         if ("Course".equals(selectedNode.getNodetype())) {
-            if (getNumberWeeks() < course.getNbreWeeks().intValue()) {
-                // if (((Course) selectedNode.getEntity()).getIdCourse() != null) {
-                new PersonalisedNode("Topic", selectedNode, "Topic", new Topic(), selectedNode);
+            if (((Course) selectedNode.getEntity()).getIdCourse() != null) {
+                if (getNumberWeeks() < course.getNbreWeeks().intValue()) {
+                    new PersonalisedNode("Topic", selectedNode, "Topic", new Topic(), selectedNode);
+                } else {
+                    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Selected", "Maximum number of topics reached");
+
+                    FacesContext.getCurrentInstance().addMessage(null, message);
+                }
             } else {
-                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Selected", "Maximum number of topics reached");
+                 FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Selected", "Please save the course");
 
-                FacesContext.getCurrentInstance().addMessage(null, message);
+                 FacesContext.getCurrentInstance().addMessage(null, message);
+                 }
+            } else if ("Topic".equals(selectedNode.getNodetype())) {
+                  if (((Topic) selectedNode.getEntity()).getIdCourse() != null) {
+                new PersonalisedNode("Chapter", selectedNode, "Chapter", new Chapter(), selectedNode);
+                 } else {
+                 FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Selected", "Please save the topic");
+
+                 FacesContext.getCurrentInstance().addMessage(null, message);
+                 }
+
+
+            } else if ("Chapter".equals(selectedNode.getNodetype())) {
+                   if (((Chapter) selectedNode.getEntity()).getIdChapter() != null) {
+                new PersonalisedNode("Content", selectedNode, "Content", new Content(), selectedNode);
+                 } else {
+                 FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Selected", "Please save the chapter");
+
+                 FacesContext.getCurrentInstance().addMessage(null, message);
+                 }
             }
-            /*   } else {
-             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Selected", "Please save the course");
-
-             FacesContext.getCurrentInstance().addMessage(null, message);
-             }*/
-        } else if ("Topic".equals(selectedNode.getNodetype())) {
-            //   if (((Topic) selectedNode.getEntity()).getIdCourse() != null) {
-            new PersonalisedNode("Chapter", selectedNode, "Chapter", new Chapter(), selectedNode);
-            /*  } else {
-             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Selected", "Please save the topic");
-
-             FacesContext.getCurrentInstance().addMessage(null, message);
-             }*/
-
-
-        } else if ("Chapter".equals(selectedNode.getNodetype())) {
-            //   if (((Chapter) selectedNode.getEntity()).getIdChapter() != null) {
-            new PersonalisedNode("Content", selectedNode, "Content", new Content(), selectedNode);
-            /* } else {
-             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Selected", "Please save the chapter");
-
-             FacesContext.getCurrentInstance().addMessage(null, message);
-             }*/
+            selectedNode.setExpanded(true);
         }
-        selectedNode.setExpanded(true);
-    }
+
+    
 
     public TreeNode getRoot() {
         return root;

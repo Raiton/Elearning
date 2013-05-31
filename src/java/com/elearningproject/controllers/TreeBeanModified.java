@@ -70,8 +70,8 @@ public class TreeBeanModified implements Serializable {
     public void onload() {
         DashboardTutor dashboardTutor = (DashboardTutor) ManagedBeanRetriever.getManagedBean("dashboardTutor");
         course = dashboardTutor.getSelectedCourse();
-        
-        
+
+
         if (root == null) {
             initialize();
         }
@@ -81,7 +81,7 @@ public class TreeBeanModified implements Serializable {
         root = buildTree();
         if (selectedNode == null) {
             selectedNode = node0;
-           
+
         }
         selectedNode.setSelected(true);
 
@@ -127,33 +127,34 @@ public class TreeBeanModified implements Serializable {
     public void addNode() {
 
         if ("Course".equals(selectedNode.getNodetype())) {
-              if (getNumberWeeks() < course.getNbreWeeks().intValue()) {
-            //  if (((Course) selectedNode.getEntity()).getIdCourse() != null) {
-            new PersonalisedNode("Topic", selectedNode, "Topic", new Topic(), selectedNode);
-              }
-            /*   } else {
-             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Selected", "Please save the course");
+            if (((Course) selectedNode.getEntity()).getIdCourse() != null) {
 
-             FacesContext.getCurrentInstance().addMessage(null, message);
-             }*/
+                if (getNumberWeeks() < course.getNbreWeeks().intValue()) {
+                    new PersonalisedNode("Topic", selectedNode, "Topic", new Topic(), selectedNode);
+                }
+            } else {
+                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Selected", "Please save the course");
+
+                FacesContext.getCurrentInstance().addMessage(null, message);
+            }
         } else if ("Topic".equals(selectedNode.getNodetype())) {
-            //   if (((Topic) selectedNode.getEntity()).getIdCourse() != null) {
-            new PersonalisedNode("Chapter", selectedNode, "Chapter", new Chapter(), selectedNode);
-            /*  } else {
-             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Selected", "Please save the topic");
+            if (((Topic) selectedNode.getEntity()).getIdCourse() != null) {
+                new PersonalisedNode("Chapter", selectedNode, "Chapter", new Chapter(), selectedNode);
+            } else {
+                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Selected", "Please save the topic");
 
-             FacesContext.getCurrentInstance().addMessage(null, message);
-             }*/
+                FacesContext.getCurrentInstance().addMessage(null, message);
+            }
 
 
         } else if ("Chapter".equals(selectedNode.getNodetype())) {
-            //   if (((Chapter) selectedNode.getEntity()).getIdChapter() != null) {
-            PersonalisedNode temp = new PersonalisedNode("Content", selectedNode, "Content", new Content(), selectedNode);
-            ((Content) temp.getEntity()).setContentUrl("default.jpg");
-            /* } else {
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Selected", "Please save the chapter");
-            FacesContext.getCurrentInstance().addMessage(null, message);
-            }*/
+            if (((Chapter) selectedNode.getEntity()).getIdChapter() != null) {
+                PersonalisedNode temp = new PersonalisedNode("Content", selectedNode, "Content", new Content(), selectedNode);
+                ((Content) temp.getEntity()).setContentUrl("default.jpg");
+            } else {
+                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Selected", "Please save the chapter");
+                FacesContext.getCurrentInstance().addMessage(null, message);
+            }
         }
         selectedNode.setExpanded(true);
     }

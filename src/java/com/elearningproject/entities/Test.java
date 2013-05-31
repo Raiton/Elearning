@@ -32,6 +32,17 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Test.findByTestContent", query = "SELECT t FROM Test t WHERE t.testContent = :testContent"),
     @NamedQuery(name = "Test.findByTestName", query = "SELECT t FROM Test t WHERE t.testName = :testName")})
 public class Test implements Serializable {
+    @Size(max = 2147483647)
+    @Column(name = "R1")
+    private String r1;
+    @Size(max = 2147483647)
+    @Column(name = "R2")
+    private String r2;
+    @Size(max = 2147483647)
+    @Column(name = "R3")
+    private String r3;
+    @Column(name = "R")
+    private Integer r;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -110,6 +121,38 @@ public class Test implements Serializable {
     @Override
     public String toString() {
         return "com.elearningproject.entities.Test[ idTest=" + idTest + " ]";
+    }
+
+    public String getR1() {
+        return r1;
+    }
+
+    public void setR1(String r1) {
+        this.r1 = r1;
+    }
+
+    public String getR2() {
+        return r2;
+    }
+
+    public void setR2(String r2) {
+        this.r2 = r2;
+    }
+
+    public String getR3() {
+        return r3;
+    }
+
+    public void setR3(String r3) {
+        this.r3 = r3;
+    }
+
+    public Integer getR() {
+        return r;
+    }
+
+    public void setR(Integer r) {
+        this.r = r;
     }
     
 }
