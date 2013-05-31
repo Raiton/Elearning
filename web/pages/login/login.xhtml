@@ -36,18 +36,29 @@
 
             <div id="page" >
                 <div id="content" style="float: left">
+
                     <p:panel style="height: 1024px;padding: 100px" >
-                        <h:form>       
-                            <p:panelGrid columns="2" style="margin: auto">
-                                <h:outputLabel value="login"/>
-                                <p:inputText value="#{loginController.account.username}" required="true"></p:inputText>
-                                <h:outputLabel value="password"/>
-                                <h:inputSecret value="#{loginController.account.password}"  required="true"/>
-                                <p:commandButton action="#{loginController.login}" value="Login" />
+                                            <h1>Login</h1>
+
+                        <h:form>
+                            <div style="margin-top: 30px">
+                                <h:panelGrid columns="2" style="margin: auto">
+                                    <p:outputLabel value="Login" for="login" />
+                                    <p:inputText id="login" value="#{loginController.account.username}" title="Login" required="true" />
+                                    <p:outputLabel value="Password" for="passwd" />
+                                    <p:password id="passwd" value="#{loginController.account.password}" title="Password" required="true" />
+                                    <br />
+                                    <h:commandLink action="#{loginController.login()}" value="Login" />
+                                    <br />
+                                </h:panelGrid>
 
 
-                            </p:panelGrid>
+
+
+                            </div>
+                            <p:growl id="messages" showDetail="true"/>
                         </h:form>
+
                     </p:panel>
                     <div style="clear: both;"></div>
                 </div>

@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -85,6 +86,11 @@ public class LoginController implements Serializable {
 
             }
         }
+        if (result == null) {
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Selected", "Login incorrect");
+
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        }
         return result;
     }
 
@@ -111,14 +117,12 @@ public class LoginController implements Serializable {
         } else {
             FacesContext fc = FacesContext.getCurrentInstance();
             if ("user".equals(this.usertable.getIdGroupTable().getGroupName())) {
-                if (("dashboardtutor".equals(page)) || ("addcourse".equals(page)) || ("editcourse".equals(page))){
-                FacesContext.getCurrentInstance().getExternalContext().redirect("dashboarduser.xhtml");
+                if (("dashboardtutor".equals(page)) || ("addcourse".equals(page)) || ("editcourse".equals(page))) {
+                    FacesContext.getCurrentInstance().getExternalContext().redirect("dashboarduser.xhtml");
                 }
-            }
-            else if ("tutor".equals(this.usertable.getIdGroupTable().getGroupName()))
-            {
-                if (("dashboarduser".equals(page)) ||("coursedashboard".equals(page))||("listecours".equals(page)) ){
-                FacesContext.getCurrentInstance().getExternalContext().redirect("../dashboard/dashboardtutor.xhtml");
+            } else if ("tutor".equals(this.usertable.getIdGroupTable().getGroupName())) {
+                if (("dashboarduser".equals(page)) || ("coursedashboard".equals(page)) || ("listecours".equals(page))) {
+                    FacesContext.getCurrentInstance().getExternalContext().redirect("../dashboard/dashboardtutor.xhtml");
                 }
             }
 

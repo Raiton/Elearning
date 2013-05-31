@@ -25,6 +25,14 @@
                     <h:selectOneMenu id="idTopic" value="#{testController.selected.idTopic}" title="#{bundle.CreateTestTitle_idTopic}" >
                         <f:selectItems value="#{topicController.itemsAvailableSelectOne}"/>
                     </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.CreateTestLabel_r1}" for="r1" />
+                    <h:inputText id="r1" value="#{testController.selected.r1}" title="#{bundle.CreateTestTitle_r1}" />
+                    <h:outputLabel value="#{bundle.CreateTestLabel_r2}" for="r2" />
+                    <h:inputText id="r2" value="#{testController.selected.r2}" title="#{bundle.CreateTestTitle_r2}" />
+                    <h:outputLabel value="#{bundle.CreateTestLabel_r3}" for="r3" />
+                    <h:inputText id="r3" value="#{testController.selected.r3}" title="#{bundle.CreateTestTitle_r3}" />
+                    <h:outputLabel value="#{bundle.CreateTestLabel_r}" for="r" />
+                    <h:inputText id="r" value="#{testController.selected.r}" title="#{bundle.CreateTestTitle_r}" />
                 </h:panelGrid>
                 <br />
                 <h:commandLink action="#{testController.create}" value="#{bundle.CreateTestSaveLink}" />

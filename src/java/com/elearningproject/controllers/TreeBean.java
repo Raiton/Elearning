@@ -252,6 +252,7 @@ public class TreeBean implements Serializable {
             return null;
         } finally {
             selectedNode.setData(course.getCourseName());
+            
         }
     }
 
@@ -263,7 +264,7 @@ public class TreeBean implements Serializable {
             } else {
                 getTopicFacade().edit(topic);
             }
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("CourseCreated"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("TopicCreated"));
             return null;
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));

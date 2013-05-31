@@ -3,6 +3,7 @@ package com.elearningproject.controllers;
 import com.elearningproject.entities.Test;
 import com.elearningproject.controllers.util.JsfUtil;
 import com.elearningproject.controllers.util.PaginationHelper;
+import com.elearningproject.entities.Topic;
 import com.elearningproject.facades.TestFacade;
 
 import java.io.Serializable;
@@ -28,8 +29,18 @@ public class TestController implements Serializable {
     private com.elearningproject.facades.TestFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
+    private Topic idTopic;
+
+    public Topic getIdTopic() {
+        return idTopic;
+    }
+
+    public void setIdTopic(Topic idTopic) {
+        this.idTopic = idTopic;
+    }
 
     public TestController() {
+        
     }
 
     public Test getSelected() {
@@ -75,12 +86,14 @@ public class TestController implements Serializable {
     public String prepareCreate() {
         current = new Test();
         selectedItemIndex = -1;
-        return "Create";
+        return "Create_Perso";
     }
 
     public String create() {
         try {
+            current.setIdTopic(idTopic);
             getFacade().create(current);
+            
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("TestCreated"));
             return prepareCreate();
         } catch (Exception e) {
@@ -152,6 +165,11 @@ public class TestController implements Serializable {
         }
     }
 
+    public String redirect(Topic topic){
+           this.idTopic=topic;
+        return "../test/Create_Perso.xhtml?faces-redirect=true";
+        
+    }
     public DataModel getItems() {
         if (items == null) {
             items = getPagination().createPageDataModel();
@@ -222,5 +240,9 @@ public class TestController implements Serializable {
                 throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + Test.class.getName());
             }
         }
+    }
+    
+    public String redirect_return(){
+        return "../course/bb.xhtml?faces-redirect=true";
     }
 }

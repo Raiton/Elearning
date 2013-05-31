@@ -1,0 +1,71 @@
+
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <h:head>
+        <title>Title</title>
+
+    </h:head>
+    <h:body onload="#{onload}">
+        <h:outputStylesheet name="css/style_perso.css" />
+
+        <div id="wrapper">
+            <div id="header-wrapper">
+                <div id="header" class="container">
+
+                    <div id="menu">
+                        <ul>
+                            <li class="current_page_item"><a href="pages/home.xhtml">Homepage</a></li>
+                            <li><a href="pages/field/listefield.xhtml">Courses</a></li>
+                            <li><a href="pages/about.xhtml">About</a></li>
+                            <li><a href="pages/login/login.xhtml">Login</a></li>
+                            <li><a href="pages/registration/register.xhtml">Register Now</a></li>
+                        </ul>
+                    </div>
+
+                </div>
+                <div id="banner">
+                    <div class="content"><img src="#{resource['banner-elearning.jpg']}" width="1000" height="300" alt="" /></div>
+                </div>
+
+            </div>
+            <!-- end #header -->
+
+            <div id="page" >
+                <div id="content" style="float: left">
+                    <p:panel style="height: 1024px;padding: 100px" >
+                        Study, have fun, and uncover a new passion or learn skills that just may change your life.
+
+                        E-learning refers to the use of technology in learning and education. There are several aspects to describing the intellectual and technical development of e-learning, which can be categorized into discrete areas. These are addressed in turn in the sections of this article:
+                        e-learning as an educational approach or tool that supports traditional subjects;
+                        e-learning as a technological medium that assists in the communication of knowledge, and its development and exchange;
+                        e-learning itself as an educational subject; such courses may be called "Computer Studies" or "Information and Communication Technology (ICT)";
+                        e-learning administrative tools such as education management information systems (EMIS).
+                        <br/>
+                        <br/>
+                        <div style="text-align: center">
+                            <h:form>
+                                <p:commandButton value="Register Now" action="/pages/registration/register.xhtml?faces-redirect=true" />
+
+                            </h:form></div>
+                    </p:panel>
+                    <div style="clear: both;"></div>
+                </div>
+                <!-- end #content -->
+
+                <!-- end #sidebar -->
+                <div style="clear: both;"></div>
+            </div>
+            <!-- end #page --> 
+        </div>
+        <div id="footer">
+            <p>Copyright (c) 2013 Ecole Polytechnique de Tunisie  Authors : Mohamed Rafik Megdiche, Houcem Chammakhi, Mariam Nefzi</p>
+        </div>
+        <!-- end #footer -->
+    </h:body>
+</html>

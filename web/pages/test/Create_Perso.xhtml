@@ -1,0 +1,71 @@
+
+<!DOCTYPE html  [
+    <!ENTITY nbsp "&#160;">]>
+    <ui:composition template="/layout_dashboard.xhtml"
+                    xmlns="http://www.w3.org/1999/xhtml"
+                    xmlns:f="http://java.sun.com/jsf/core"
+                    xmlns:h="http://java.sun.com/jsf/html"
+                    xmlns:ui="http://java.sun.com/jsf/facelets"
+                    xmlns:p="http://primefaces.org/ui">
+
+        <ui:define name="Menu">
+            <p:panel header="#{loginController.account.username}">
+                <h:outputText  value="Name: "/>        
+                <h:outputText  value="#{loginController.userdata.name}"  />
+                <br/>
+                <h:outputText  value="Email:"/>        
+                <h:outputText  value=" #{loginController.userdata.EMail}"  />
+                <br/>
+                <br/>
+                <div style="text-align: center">
+                    <p:commandButton action="#{loginController.logout()}" value="Logout"/>
+                </div>
+            </p:panel>
+        </ui:define>
+        <ui:define name="TopBar">
+            <ul>
+                <li><a href="../home.xhtml">Homepage</a></li>
+                <li  class="current_page_item"><a href="">Dashboard</a></li>
+                <li><h:form><h:commandLink value="Add Course" action="#{treeBean.clear()}"/></h:form>
+                </li>
+
+            </ul>
+
+        </ui:define>
+
+        <ui:define name="Content">
+
+            <h:form>
+                <div style="margin-top: 30px">
+                    <p:panel header="Test Add">
+                        <h:panelGrid columns="2">
+                            <p:outputLabel value="#{bundle.CreateTestLabel_testContent}" for="testContent" />
+                            <p:inputText id="testContent" value="#{testController.selected.testContent}" title="#{bundle.CreateTestTitle_testContent}" required="true" />
+                            <p:outputLabel value="#{bundle.CreateTestLabel_testName}" for="testName" />
+                            <p:inputText id="testName" value="#{testController.selected.testName}" title="#{bundle.CreateTestTitle_testName}"  required="true"/>
+
+                            <p:outputLabel value="Response 1" for="r1" />
+                            <p:inputText id="r1" value="#{testController.selected.r1}" title="#{bundle.CreateTestTitle_r1}" required="true" />
+                            <p:outputLabel value="Response 2" for="r2" />
+                            <p:inputText id="r2" value="#{testController.selected.r2}" title="#{bundle.CreateTestTitle_r2}" required="true" />
+                            <p:outputLabel value="Response 3" for="r3" />
+                            <p:inputText id="r3" value="#{testController.selected.r3}" title="#{bundle.CreateTestTitle_r3}" required="true"/>
+                            <p:outputLabel value="Correct Response" for="r" />
+                            <p:inputText id="r" value="#{testController.selected.r}" title="#{bundle.CreateTestTitle_r}" required="true" />
+                        </h:panelGrid>
+                        <br />
+                        <h:commandLink action="#{testController.create}" value="#{bundle.CreateTestSaveLink}" />
+                        <br />
+
+
+                    </p:panel>
+
+                </div>
+                <p:growl id="messages" showDetail="true"/>
+            </h:form>
+            <h:form>
+                <p:commandButton action="#{testController.redirect_return()}" value="Return" />
+            </h:form>
+
+        </ui:define>
+    </ui:composition>

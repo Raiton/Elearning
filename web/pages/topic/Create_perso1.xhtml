@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 
     <ui:composition template="/template.xhtml">
         <ui:define name="title">
@@ -15,15 +16,19 @@
             </h:panelGroup>
             <h:form>
                 <h:panelGrid columns="2">
-                   <h:outputLabel value="#{bundle.CreateTopicLabel_nameTopic}" for="nameTopic" />
-                   <h:inputText id="nameTopic" value="#{treeBeanModified.selectedNode.entity.nameTopic}" title="#{bundle.CreateTopicTitle_nameTopic}" />
-                    <h:outputLabel value="#{bundle.CreateTopicLabel_weekNumber}" for="weekNumber" />
-                    <h:inputText id="weekNumber" value="#{treeBeanModified.selectedNode.entity.weekNumber}" title="#{bundle.CreateTopicTitle_weekNumber}" />
+                   <p:outputLabel value="#{bundle.CreateTopicLabel_nameTopic}" for="nameTopic" />
+                   <p:inputText id="nameTopic" value="#{treeBeanModified.selectedNode.entity.nameTopic}" title="#{bundle.CreateTopicTitle_nameTopic}" />
+                    <p:outputLabel value="#{bundle.CreateTopicLabel_weekNumber}" for="weekNumber" />
+                    <p:inputText id="weekNumber" value="#{treeBeanModified.selectedNode.entity.weekNumber}" title="#{bundle.CreateTopicTitle_weekNumber}" />
                
                 </h:panelGrid>
                 <br />
                 <h:commandLink action="#{treeBeanModified.createtopic()}" value="#{bundle.CreateTopicSaveLink}" />
                
+            </h:form>
+            <h:form>
+                <p:commandButton action="#{testController.redirect(treeBeanModified.selectedNode.entity)}" value=" Add Test "/>
+                
             </h:form>
         </ui:define>
     </ui:composition>

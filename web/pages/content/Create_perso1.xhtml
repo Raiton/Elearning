@@ -29,12 +29,12 @@
             </h:form>
             <h:form>
                 <h:panelGrid columns="2">
-                    <h:outputLabel value="#{bundle.CreateContentLabel_contentName}" for="contentName" />
-                    <h:inputText id="contentName" value="#{treeBeanModified.selectedNode.entity.contentName}" title="#{bundle.CreateContentTitle_contentName}" />
-                    <h:outputLabel value="#{bundle.CreateContentLabel_idForm}" for="idForm" />
-                    <h:selectOneMenu id="idForm" value="#{treeBeanModified.selectedNode.entity.idForm}" title="#{bundle.CreateContentTitle_idForm}" required="true" requiredMessage="#{bundle.CreateContentRequiredMessage_idForm}">
+                    <p:outputLabel value="#{bundle.CreateContentLabel_contentName}" for="contentName" />
+                    <p:inputText id="contentName" value="#{treeBeanModified.selectedNode.entity.contentName}" title="#{bundle.CreateContentTitle_contentName}" />
+                    <p:outputLabel value="#{bundle.CreateContentLabel_idForm}" for="idForm" />
+                    <p:selectOneMenu id="idForm" value="#{treeBeanModified.selectedNode.entity.idForm}" required="true" requiredMessage="#{bundle.CreateContentRequiredMessage_idForm}">
                         <f:selectItems value="#{formController.itemsAvailableSelectOne}"/>
-                    </h:selectOneMenu>
+                    </p:selectOneMenu>
                  
                 </h:panelGrid>
                 <br />

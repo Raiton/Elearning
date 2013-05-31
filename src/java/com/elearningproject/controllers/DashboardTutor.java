@@ -76,8 +76,9 @@ public class DashboardTutor implements Serializable {
     }
 
     public String gotoEditCourse(Course course) {
-        this.selectedCourse = course;
+
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("treeBeanModified");
+        this.selectedCourse = course;
 
         return "../course/bb.xhtml?faces-redirect=true";
 
@@ -94,10 +95,11 @@ public class DashboardTutor implements Serializable {
 
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
-    public boolean isNotPublished(Course course){
+
+    public boolean isNotPublished(Course course) {
         boolean result = true;
-        if ("Published".equals(course.getStatus())){
-            result=false;
+        if ("Published".equals(course.getStatus())) {
+            result = false;
         }
         return result;
     }

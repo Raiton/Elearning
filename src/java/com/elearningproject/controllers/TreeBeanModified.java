@@ -71,7 +71,6 @@ public class TreeBeanModified implements Serializable {
         DashboardTutor dashboardTutor = (DashboardTutor) ManagedBeanRetriever.getManagedBean("dashboardTutor");
         course = dashboardTutor.getSelectedCourse();
 
-
         if (root == null) {
             initialize();
         }
@@ -262,6 +261,8 @@ public class TreeBeanModified implements Serializable {
                 LoginController loginController = (LoginController) ManagedBeanRetriever.getManagedBean("loginController");
                 userHasCourse.setIdUserTable(loginController.getUsertable());
                 getUserHasCourseFacade().create(userHasCourse);
+                selectedNode.setData(course.getCourseName());
+
 
             } else {
                 getCourseFacade().edit(course);
@@ -283,6 +284,8 @@ public class TreeBeanModified implements Serializable {
             topicPreparation();
             if (topic.getIdTopic() == null) {
                 getTopicFacade().create(topic);
+                selectedNode.setData(topic.getNameTopic());
+
             } else {
                 getTopicFacade().edit(topic);
                 selectedNode.setData(topic.getNameTopic());
@@ -302,6 +305,8 @@ public class TreeBeanModified implements Serializable {
             chapterPreparation();
             if (chapter.getIdChapter() == null) {
                 getChapterFacade().create(chapter);
+                selectedNode.setData(chapter.getChapterName());
+
             } else {
                 getChapterFacade().edit(chapter);
                 selectedNode.setData(chapter.getChapterName());
@@ -319,6 +324,8 @@ public class TreeBeanModified implements Serializable {
         try {
             if (content.getIdContent() == null) {
                 getContentFacade().create(content);
+                selectedNode.setData(content.getContentName());
+
             } else {
                 getContentFacade().edit(content);
                 selectedNode.setData(content.getContentName());
