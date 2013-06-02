@@ -98,6 +98,8 @@ public class LoginController implements Serializable {
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         return "../login/login.xhtml?faces-redirect=true";
     }
+    
+ 
 
     public UserTable getUserdata() {
         UserTable inspecting = null;

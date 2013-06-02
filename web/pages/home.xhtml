@@ -23,8 +23,15 @@
                             <li class="current_page_item"><a href="home.xhtml">Homepage</a></li>
                             <li><a href="../pages/field/listefield.xhtml">Courses</a></li>
                             <li><a href="about.xhtml">About</a></li>
-                            <li><a href="login/login.xhtml">Login</a></li>
-                            <li><a href="../pages/registration/register.xhtml">Register Now</a></li>
+                            <c:if test="#{loginController.usertable eq null}">
+                                <li><a href="login/login.xhtml">Login</a></li>
+                                <li><a href="../pages/registration/register.xhtml">Register Now</a></li>
+                            </c:if>
+                            <c:if test="#{loginController.usertable ne null}">
+                                <li><a href="dashboard/dashboarduser.xhtml">[#{loginController.account.username}] Dasboard</a></li>
+                                <li><h:form><h:commandLink action="#{loginController.logout()}" value="Logout"/></h:form>    </li>
+                            </c:if>
+
                         </ul>
                     </div>
 
