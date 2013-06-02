@@ -43,7 +43,7 @@ public class DashboardTutor implements Serializable {
 
     public List<Course> getListcourse() {
         LoginController loginController = (LoginController) ManagedBeanRetriever.getManagedBean("loginController");
-        listcourse = userHasCourseFacade.findCourseByUserTable(loginController.getUsertable());
+        listcourse = getUserHasCourseFacade().findCourseByUserTable(loginController.getUsertable());
 
         return listcourse;
     }

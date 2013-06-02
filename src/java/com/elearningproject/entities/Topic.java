@@ -8,8 +8,10 @@ import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -57,7 +59,7 @@ public class Topic implements Serializable {
     private Course idCourse;
     @OneToMany(mappedBy = "idTopic")
     private List<Test> testList;
-    @OneToMany(mappedBy = "idTopic")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTopic",fetch=FetchType.EAGER)
     private List<Chapter> chapterList;
     @OneToMany(mappedBy = "idTopic")
     private List<Exam> examList;

@@ -52,9 +52,9 @@
 
                                 <h:outputText value="#{course.courseCreationDate}" />
                                 <h:outputText id="course_status" value="#{course.status}" />
-
-                                <p:commandButton id="publish_button" value="Publish" action="#{dashboardTutor.publish(course)}" update="messages,course_status"  rendered="#{dashboardTutor.isNotPublished(course)}"/>
-
+                                <h:panelGroup id="publish_button">
+                                    <p:commandButton  value="Publish" action="#{dashboardTutor.publish(course)}" update="messages,course_status,publish_button"  rendered="#{dashboardTutor.isNotPublished(course)}"/>
+                                </h:panelGroup>
                                 <p:commandButton value="Edit" action="#{dashboardTutor.gotoEditCourse(course)}" />
                                 <p:growl id="messages" showDetail="true"/>
 

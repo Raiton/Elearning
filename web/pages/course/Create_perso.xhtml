@@ -17,13 +17,13 @@
             <h:form>
                 <h:panelGrid columns="2">
                     <p:outputLabel value="#{bundle.CreateCourseLabel_courseName}" for="courseName" />
-                    <p:inputText id="courseName" value="#{treeBean.selectedNode.entity.courseName}" title="#{bundle.CreateCourseTitle_courseName}" onchange=""/>
+                    <p:inputText id="courseName" value="#{treeBean.selectedNode.entity.courseName}" title="#{bundle.CreateCourseTitle_courseName}" required="true"/>
 
                      <p:outputLabel value="Course Description" for="courseDescription" />
                     <p:inputTextarea rows="7" cols="33" id="courseDescription" value="#{treeBean.selectedNode.entity.courseDescription}" title="Course Description" onchange=""/>
 
                     <p:outputLabel value="#{bundle.CreateCourseLabel_nbreWeeks}" for="nbreWeeks" />
-                    <p:inputText id="nbreWeeks" value="#{treeBean.selectedNode.entity.nbreWeeks}" title="#{bundle.CreateCourseTitle_nbreWeeks}" />
+                    <p:inputText id="nbreWeeks" value="#{treeBean.selectedNode.entity.nbreWeeks}" title="#{bundle.CreateCourseTitle_nbreWeeks}" required="true" />
 
                     <h:outputLabel value="#{bundle.CreateCourseLabel_idField}" for="idField" />
                     <p:selectOneMenu id="iField" value="#{treeBean.selectedNode.entity.idField}"  required="true" requiredMessage="#{bundle.CreateCourseRequiredMessage_idField}" onchange="">

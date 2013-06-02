@@ -29,6 +29,8 @@ import org.primefaces.model.DefaultTreeNode;
 import org.primefaces.model.TreeNode;
 import com.elearningproject.facades.UserHasCourseFacade;
 import com.elearningproject.personalisedclasses.ManagedBeanRetriever;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -98,33 +100,31 @@ public class TreeBean implements Serializable {
                     FacesContext.getCurrentInstance().addMessage(null, message);
                 }
             } else {
-                 FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Selected", "Please save the course");
+                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Selected", "Please save the course");
 
-                 FacesContext.getCurrentInstance().addMessage(null, message);
-                 }
-            } else if ("Topic".equals(selectedNode.getNodetype())) {
-                  if (((Topic) selectedNode.getEntity()).getIdCourse() != null) {
-                new PersonalisedNode("Chapter", selectedNode, "Chapter", new Chapter(), selectedNode);
-                 } else {
-                 FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Selected", "Please save the topic");
-
-                 FacesContext.getCurrentInstance().addMessage(null, message);
-                 }
-
-
-            } else if ("Chapter".equals(selectedNode.getNodetype())) {
-                   if (((Chapter) selectedNode.getEntity()).getIdChapter() != null) {
-                new PersonalisedNode("Content", selectedNode, "Content", new Content(), selectedNode);
-                 } else {
-                 FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Selected", "Please save the chapter");
-
-                 FacesContext.getCurrentInstance().addMessage(null, message);
-                 }
+                FacesContext.getCurrentInstance().addMessage(null, message);
             }
-            selectedNode.setExpanded(true);
-        }
+        } else if ("Topic".equals(selectedNode.getNodetype())) {
+            if (((Topic) selectedNode.getEntity()).getIdCourse() != null) {
+                new PersonalisedNode("Chapter", selectedNode, "Chapter", new Chapter(), selectedNode);
+            } else {
+                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Selected", "Please save the topic");
 
-    
+                FacesContext.getCurrentInstance().addMessage(null, message);
+            }
+
+
+        } else if ("Chapter".equals(selectedNode.getNodetype())) {
+            if (((Chapter) selectedNode.getEntity()).getIdChapter() != null) {
+                new PersonalisedNode("Content", selectedNode, "Content", new Content(), selectedNode);
+            } else {
+                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Selected", "Please save the chapter");
+
+                FacesContext.getCurrentInstance().addMessage(null, message);
+            }
+        }
+        selectedNode.setExpanded(true);
+    }
 
     public TreeNode getRoot() {
         return root;
@@ -226,7 +226,6 @@ public class TreeBean implements Serializable {
     public void contentPreparation() {
         content = (Content) selectedNode.getEntity();
         content.setIdChapter((Chapter) selectedNode.getParentPerso().getEntity());
-        content.setContentUrl(pageToInclude);
 
 
     }
@@ -252,7 +251,7 @@ public class TreeBean implements Serializable {
             return null;
         } finally {
             selectedNode.setData(course.getCourseName());
-            
+
         }
     }
 
@@ -260,13 +259,25 @@ public class TreeBean implements Serializable {
         try {
             topicPreparation();
             if (topic.getIdTopic() == null) {
+                course = (Course) selectedNode.getParentPerso().getEntity();
                 getTopicFacade().create(topic);
+                List<Topic> listTopic = new ArrayList<Topic>();
+                if (course.getTopicList() != null) {
+
+                    listTopic = course.getTopicList();
+
+                }
+                listTopic.add(topic);
+                course.setTopicList(listTopic);
+                getCourseFacade().edit(course);
+
             } else {
                 getTopicFacade().edit(topic);
             }
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("TopicCreated"));
             return null;
         } catch (Exception e) {
+            e.printStackTrace();
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
             return null;
         } finally {
@@ -279,12 +290,24 @@ public class TreeBean implements Serializable {
             chapterPreparation();
             if (chapter.getIdChapter() == null) {
                 getChapterFacade().create(chapter);
+                topic = (Topic) selectedNode.getParentPerso().getEntity();
+                List<Chapter> listChapter = new ArrayList<Chapter>();
+                if (topic.getChapterList() != null) {
+                    listChapter = topic.getChapterList();
+
+                }
+                listChapter.add(chapter);
+                topic.setChapterList(listChapter);
+                getTopicFacade().edit(topic);
+                selectedNode.setData(chapter.getChapterName());
             } else {
                 getChapterFacade().edit(chapter);
             }
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ChapterCreated"));
             return null;
         } catch (Exception e) {
+            e.printStackTrace();
+
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
             return null;
         } finally {
@@ -297,6 +320,16 @@ public class TreeBean implements Serializable {
         try {
             if (content.getIdContent() == null) {
                 getContentFacade().create(content);
+                chapter = (Chapter) selectedNode.getParentPerso().getEntity();
+                List<Content> listContent = new ArrayList<Content>();
+                if (chapter.getContentList() != null) {
+                    listContent = chapter.getContentList();
+                }
+                listContent.add(content);
+                chapter.setContentList(listContent);
+                getChapterFacade().edit(chapter);
+                selectedNode.setData(content.getContentName());
+
             } else {
                 getContentFacade().edit(content);
             }

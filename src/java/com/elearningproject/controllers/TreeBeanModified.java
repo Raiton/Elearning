@@ -29,6 +29,8 @@ import org.primefaces.model.DefaultTreeNode;
 import org.primefaces.model.TreeNode;
 import com.elearningproject.facades.UserHasCourseFacade;
 import com.elearningproject.personalisedclasses.ManagedBeanRetriever;
+import java.util.ArrayList;
+import java.util.List;
 import javax.faces.event.ActionListener;
 
 /**
@@ -130,6 +132,7 @@ public class TreeBeanModified implements Serializable {
 
                 if (getNumberWeeks() < course.getNbreWeeks().intValue()) {
                     new PersonalisedNode("Topic", selectedNode, "Topic", new Topic(), selectedNode);
+
                 }
             } else {
                 FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Selected", "Please save the course");
@@ -278,16 +281,25 @@ public class TreeBeanModified implements Serializable {
             return null;
         } finally {
             selectedNode.setData(course.getCourseName());
-            
+
         }
     }
 
     public String createtopic() {
         try {
-            topicPreparation();
+                topicPreparation();
             if (topic.getIdTopic() == null) {
+                course = (Course) selectedNode.getParentPerso().getEntity();
                 getTopicFacade().create(topic);
-                selectedNode.setData(topic.getNameTopic());
+                List<Topic> listTopic = new ArrayList<Topic>();
+                if (course.getTopicList() != null) {
+
+                    listTopic = course.getTopicList();
+
+                }
+                listTopic.add(topic);
+                course.setTopicList(listTopic);
+                getCourseFacade().edit(course);
 
             } else {
                 getTopicFacade().edit(topic);
@@ -299,7 +311,7 @@ public class TreeBeanModified implements Serializable {
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
             return null;
-        }finally {
+        } finally {
             selectedNode.setData(topic.getNameTopic());
         }
 
@@ -310,6 +322,15 @@ public class TreeBeanModified implements Serializable {
             chapterPreparation();
             if (chapter.getIdChapter() == null) {
                 getChapterFacade().create(chapter);
+                topic = (Topic) selectedNode.getParentPerso().getEntity();
+                List<Chapter> listChapter = new ArrayList<Chapter>();
+                if (topic.getChapterList() != null) {
+                    listChapter = topic.getChapterList();
+
+                }
+                listChapter.add(chapter);
+                topic.setChapterList(listChapter);
+                getTopicFacade().edit(topic);
                 selectedNode.setData(chapter.getChapterName());
 
             } else {
@@ -329,9 +350,18 @@ public class TreeBeanModified implements Serializable {
     public String createcontent() {
         contentPreparation();
         try {
-            if (content.getIdContent() == null) {
+           if (content.getIdContent() == null) {
                 getContentFacade().create(content);
+                chapter = (Chapter) selectedNode.getParentPerso().getEntity();
+                List<Content> listContent = new ArrayList<Content>();
+                if (chapter.getContentList() != null) {
+                    listContent = chapter.getContentList();
+                }
+                listContent.add(content);
+                chapter.setContentList(listContent);
+                getChapterFacade().edit(chapter);
                 selectedNode.setData(content.getContentName());
+
 
             } else {
                 getContentFacade().edit(content);
@@ -343,7 +373,7 @@ public class TreeBeanModified implements Serializable {
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
             return null;
-        }finally {
+        } finally {
             selectedNode.setData(content.getContentName());
         }
 

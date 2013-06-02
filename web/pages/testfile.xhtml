@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Repeat Test Demo</title>
+    </h:head>
+    <h:body>
+
+        <h:form id="repeatForm">
+
+            <ui:repeat value="#{myBean.llist}" var="list" varStatus="current" id="repeat">
+                <h:selectOneRadio value="#{myBean.resultArray[current.index]}" id="chooseOne" layout="pageDirection" >
+                    <f:selectItems value="#{list}" />
+                </h:selectOneRadio>
+                <h:panelGroup id="outText" rendered="#{myBean.bool}">
+                    <h:outputText value="Correct "  rendered="#{myBean.resultArray[current.index] eq myBean.reponseArray[current.index]}"/>
+                    <p:graphicImage  width="25" height="20"  library="ContentFile" name="correct.png"  rendered="#{myBean.resultArray[current.index] eq myBean.reponseArray[current.index]}"/>
+                    <h:outputText value="Incorrect " rendered="#{myBean.resultArray[current.index] ne myBean.reponseArray[current.index]}"/>
+                    <p:graphicImage  width="25" height="20"  library="ContentFile" name="incorrect.png"  rendered="#{myBean.resultArray[current.index] ne  myBean.reponseArray[current.index]}"/>
+
+                </h:panelGroup>
+                <br/>
+            </ui:repeat>
+
+            <p:commandButton value="submit" action="#{myBean.submit()}" update="@(form)"/>
+        </h:form>
+    </h:body>
+</html>
