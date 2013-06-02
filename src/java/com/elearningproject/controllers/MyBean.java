@@ -17,7 +17,7 @@ public class MyBean {
     private List<List<String>> llist;
     private String[] resultArray = {"two", "four", "nine"};
     private String[] reponseArray = {"two", "six", "nine"};
-    private Boolean bool; 
+    private Boolean bool;
 
     public MyBean() {
         List<String> slist = Arrays.asList(sarray);
@@ -28,7 +28,7 @@ public class MyBean {
         llist.add(slist);
         llist.add(slist2);
         llist.add(slist3);
-        bool=false;
+        bool = false;
 
     }
 
@@ -55,7 +55,8 @@ public class MyBean {
     public String[] getReponseArray() {
         return reponseArray;
     }
-        public String getReponseArray(int i) {
+
+    public String getReponseArray(int i) {
         return resultArray[i];
     }
 
@@ -69,15 +70,19 @@ public class MyBean {
 
     public void submit() {
         int score = 0;
-        
+
         for (int i = 0; i < reponseArray.length; i++) {
             if (reponseArray[i].equals(resultArray[i])) {
                 score += 10;
             }
 
         }
-        System.out.println("score is "+score);
-        bool=true;
+        System.out.println("score is " + score);
+        bool = true;
+
+        String string = "rafik,master,hunter,";
+        String[] parts = string.split(",");
+    
 
     }
 
@@ -88,6 +93,4 @@ public class MyBean {
     public void setBool(Boolean bool) {
         this.bool = bool;
     }
-    
-    
 }
