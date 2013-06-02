@@ -37,25 +37,31 @@
             <div id="page" >
                 <div id="content" style="float: left;margin-left: 150px;width: 600px">
                     <p:panel>
-                        <h:form >       
-                            <h:panelGrid columns="2" style="margin: auto">
-                                <p:outputLabel value="Name"/>
-                                <p:inputText id="nameUser" value="#{registerController.user.name}" required="true"></p:inputText>
-                                <p:outputLabel value="E-mail"/>
-                                <p:inputText id="emailUser" value="#{registerController.user.EMail}" required="true"></p:inputText>
-                                <p:outputLabel value="Groupe"/>
-                                <p:selectOneMenu id="idGroupTable" value="#{registerController.user.idGroupTable}" >
-                                    <f:selectItems value="#{groupTableController.itemsAvailableSelectOne}"/>
-                                </p:selectOneMenu>
-                                <p:outputLabel value="Login"/>
-                                <p:inputText id="loginUser" value="#{registerController.account.username}" required="true" ></p:inputText>
-                                <p:outputLabel value="Password"/>
-                                <p:password id="passwdUser" value="#{registerController.account.password}" required="true" />
-                                <p:outputLabel value="Verification password"/>
-                                <p:password id="verifPasswdUser" value="#{registerController.verifPassword}" required="true" />
-                                <br/>
-                                <p:commandButton action="#{registerController.register()}" value="Sign-in" />
-                            </h:panelGrid>
+                        <h:form id="form" > 
+                                <p:messages id="msgs"/>  
+                                <h:panelGrid columns="2" style="margin: auto">
+                                    <p:outputLabel value="Name" for="nameUser"/>
+                                    <p:inputText id="nameUser" value="#{registerController.user.name}" required="true"></p:inputText>
+                                    <p:outputLabel value="E-mail" for="emailUser"/>
+                                    <p:inputText id="emailUser" value="#{registerController.user.EMail}" required="true" requiredMessage="Please enter your email address."
+                                                 validatorMessage="Invalid email format">
+
+                                        <f:validateRegex
+                                            pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                                    </p:inputText>
+                                    <p:outputLabel value="Groupe" for="idGroupTable"/>
+                                    <p:selectOneMenu id="idGroupTable" value="#{registerController.user.idGroupTable}" required="True">
+                                        <f:selectItems value="#{groupTableController.itemsAvailableSelectOne}"/>
+                                    </p:selectOneMenu>
+                                    <p:outputLabel value="Login" for="loginUser"/>
+                                    <p:inputText id="loginUser" value="#{registerController.account.username}" required="true" ></p:inputText>
+                                    <p:outputLabel value="Password" for="passwdUser"/>
+                                    <p:password id="passwdUser" value="#{registerController.account.password}" required="true" />
+                                    <p:outputLabel value="Verification password" for="verifPasswdUser"/>
+                                    <p:password id="verifPasswdUser" value="#{registerController.verifPassword}" required="true" />
+                                    <br/>
+                                    <h:commandLink action="#{registerController.register()}" value="Sign-in"/>
+                                </h:panelGrid>
                         </h:form>
                     </p:panel>
                     <div style="clear: both;"></div>

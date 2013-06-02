@@ -12,6 +12,7 @@ import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -70,6 +71,8 @@ public class RegisterController implements Serializable {
     }
 
     public String register() {
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+
         String result = null;
         if (this.verifPassword.equals(this.account.getPassword())) {
             account.setIdUserTable(user);
