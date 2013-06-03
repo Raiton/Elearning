@@ -45,13 +45,13 @@ public class TagCloudBean implements Serializable {
     @PostConstruct
     public void init() {
         model = new DefaultTagCloudModel();
-        listeCourse = courseFacade.findAll();
+        listeCourse = courseFacade.findAllPublished();
         for (Course course : listeCourse) {
             Random rd = new Random();
             int randomInt = rd.nextInt(10) + 1;
 
 
-            model.addTag(new DefaultTagCloudItem(course.getCourseName(), randomInt));
+            model.addTag(new DefaultTagCloudItem(course.getCourseName(),"/pages/course/courseinfo.xhtml?courseid="+course.getIdCourse(), randomInt));
 
         }
     }

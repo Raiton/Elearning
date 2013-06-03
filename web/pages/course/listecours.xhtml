@@ -49,10 +49,15 @@
 
                         <p:panel header="#{course.courseName}" style="text-align:center">  
                             <h:panelGrid columns="1" style="width:100%;text-align: center">  
-                                <p:graphicImage  width="200" height="150"  library="ContentFile" name="#{course.photo}"/>
+                                <h:link outcome="#{listecoursController.redirect()}" >
+                                    <f:param name="courseid" value="#{course.idCourse}"/>
+                                    <p:graphicImage  width="200" height="150"  library="ContentFile" name="#{course.photo}"></p:graphicImage>
+                                </h:link>
+                                             
 
                                 <h:outputText value="#{course.launchDate}" />  
                                 <p:commandButton value="#{listecoursController.nameSubscribe(course)}" action="#{listecoursController.subscribe(course)}"/>
+                                
 
                             </h:panelGrid>  
                         </p:panel>  

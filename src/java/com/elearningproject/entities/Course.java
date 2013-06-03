@@ -45,9 +45,11 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Course.findByPhoto", query = "SELECT c FROM Course c WHERE c.photo = :photo"),
     @NamedQuery(name = "Course.findByStatus", query = "SELECT c FROM Course c WHERE c.status = :status"),
     @NamedQuery(name = "Course.findByUpdateDate", query = "SELECT c FROM Course c WHERE c.updateDate = :updateDate"),
+    @NamedQuery(name = "Course.findAllPublished", query = "SELECT c FROM Course c WHERE  c.status = :published"),
+    @NamedQuery(name = "Course.findByIdCoursePublished", query = "SELECT c FROM Course c WHERE c.idCourse = :idCourse AND c.status = :published"),
     @NamedQuery(name = "Course.findByIdField", query = "SELECT c FROM Course c WHERE c.idField.idField = :idField AND c.status = :published")})
-
 public class Course implements Serializable {
+
     @Column(name = "course_description")
     private String courseDescription;
     private static final long serialVersionUID = 1L;
@@ -76,7 +78,7 @@ public class Course implements Serializable {
     @Column(name = "update_date")
     @Temporal(TemporalType.DATE)
     private Date updateDate;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCourse",fetch=FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCourse", fetch = FetchType.EAGER)
     private List<Topic> topicList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCourse")
     private List<UserHasCourse> userHasCourseList;
@@ -213,5 +215,4 @@ public class Course implements Serializable {
     public void setCourseDescription(String courseDescription) {
         this.courseDescription = courseDescription;
     }
-    
 }

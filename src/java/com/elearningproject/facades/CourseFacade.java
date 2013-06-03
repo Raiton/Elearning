@@ -42,4 +42,27 @@ public class CourseFacade extends AbstractFacade<Course> {
         }
         return listCourse;
     }
+    public List<Course> findByIdCourse(int idCourse) {
+        List<Course> listCourse = null;
+        try {
+            listCourse = getEntityManager().createNamedQuery("Course.findByIdCoursePublished").setParameter("idCourse", idCourse).setParameter("published","Published").getResultList();
+        } catch (NoResultException e) {
+            return null;
+        } catch (NonUniqueResultException e) {
+            return null;
+        }
+        return listCourse;
+    }
+    
+        public List<Course> findAllPublished() {
+        List<Course> listCourse = null;
+        try {
+            listCourse = getEntityManager().createNamedQuery("Course.findAllPublished").setParameter("published","Published").getResultList();
+        } catch (NoResultException e) {
+            return null;
+        } catch (NonUniqueResultException e) {
+            return null;
+        }
+        return listCourse;
+    }
 }

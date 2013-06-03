@@ -105,7 +105,7 @@ public class listecoursController implements Serializable {
 
     public String redirect() throws IOException {
 
-        String result = "../testAB/testB.xhtml?faces-redirect=true&includeViewParams=true";
+        String result = "courseinfo.xhtml?faces-redirect=true&includeViewParams=true";
 
         return result;
     }

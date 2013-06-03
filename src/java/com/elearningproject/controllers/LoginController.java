@@ -123,7 +123,7 @@ public class LoginController implements Serializable {
                     FacesContext.getCurrentInstance().getExternalContext().redirect("dashboarduser.xhtml");
                 }
             } else if ("tutor".equals(this.usertable.getIdGroupTable().getGroupName())) {
-                if (("dashboarduser".equals(page)) || ("coursedashboard".equals(page)) || ("listecours".equals(page))) {
+                if (("dashboarduser".equals(page)) || ("coursedashboard".equals(page)) || ("listecours".equals(page)) || ("courseinfo".equals(page))) {
                     FacesContext.getCurrentInstance().getExternalContext().redirect("../dashboard/dashboardtutor.xhtml");
                 }
             }

@@ -13,12 +13,9 @@
     <h:body>
 
         <h:form>
-                
-    <p:growl id="msg" showDetail="true" />
+            <p:tagCloud model="#{tagCloudBean.model}">
+            </p:tagCloud>
 
-    <p:tagCloud model="#{tagCloudBean.model}">
-    </p:tagCloud>
-
-</h:form>
+        </h:form>
     </h:body>
 </html>

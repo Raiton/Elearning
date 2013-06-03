@@ -1,0 +1,105 @@
+
+
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <f:metadata>
+        <f:viewParam name="courseid" value="#{courseinfo.idCourse}" />
+    </f:metadata>
+
+    <h:head>
+        <title>Course Info</title>
+
+
+    </h:head>
+    <style type="text/css">
+        .ui-datagrid-no-border>.ui-datagrid-content {
+            border: none;
+
+
+        }      
+    </style>
+    <h:body onload="#{loginController.security('courseinfo')}">
+        <h:outputStylesheet name="css/style_perso.css" />
+
+        <div id="wrapper">
+            <div id="header-wrapper">
+                <div id="header" class="container">
+
+                    <div id="menu">
+                        <ul>
+                            <li><a href="../home.xhtml">Homepage</a></li>
+                            <li><a href="../field/listefield.xhtml">Courses</a></li>
+                            <li  class="current_page_item"><a href="#">About</a></li>
+                            <c:if test="#{loginController.usertable eq null}">
+                                <li><a href="../login/login.xhtml">Login</a></li>
+                                <li><a href="../registration/register.xhtml">Register Now</a></li>
+                            </c:if>
+                            <c:if test="#{loginController.usertable ne null}">
+                                <li><a href="../dashboard/dashboarduser.xhtml">[#{loginController.account.username}] Dasboard</a></li>
+                                <li><h:form><h:commandLink action="#{loginController.logout()}" value="Logout"/></h:form>    </li>
+                            </c:if>
+                        </ul>
+                    </div>
+
+                </div>
+                <div id="banner">
+                    <div class="content"><img src="#{resource['banner-elearning.jpg']}" width="1000" height="300" alt="" /></div>
+                </div>
+
+            </div>
+            <!-- end #header -->
+
+            <div id="page" >
+                <div id="content" style="float: left">
+                    <p:panel style="height: 800px; width: 800px; padding: 100px" >
+                        <h:form id="form">  
+                            <h1>Course Info</h1>
+                            <br/><br/>
+                            <p:dataGrid var="course" value="#{courseinfo.courseByIDCourse}" styleClass="ui-datagrid-no-border" >  
+
+                                <p:graphicImage value="/resources/ContentFile/#{course.photo}" width="600" height="250"/>  
+                                <br/><br/><br/><br/>
+                                <h:panelGrid columns="2" cellpadding="10px" >
+
+                                    <h:outputText value="Nom du cours:" style="font-weight: 600" />
+                                    <h:outputText value="#{course.courseName}" />
+                                    <h:outputText value="Date de lancement:" style="font-weight: 600" />
+                                    <h:outputText value="#{course.launchDate}" />
+                                    <h:outputText value="Statut:" style="font-weight: 600" />
+                                    <h:outputText value="#{course.status}" />
+                                    <h:outputText value="Course Description:" style="font-weight: 600" /> 
+                                    <h:outputText value="#{course.courseDescription}" />  
+                                </h:panelGrid>
+
+                            </p:dataGrid>  
+                            <br/>
+                            <br/>
+                            <br/>
+
+                            <p:commandButton value="#{listecoursController.nameSubscribe(course)}" action="#{listecoursController.subscribe(course)}"/>
+
+                        </h:form> 
+
+                    </p:panel>
+
+                    <div style="clear: both;"></div>
+                </div>
+                <!-- end #content -->
+
+                <!-- end #sidebar -->
+                <div style="clear: both;"></div>
+            </div>
+            <!-- end #page --> 
+        </div>
+        <div id="footer">
+            <p>Copyright (c) 2013 Ecole Polytechnique de Tunisie  Authors : Mohamed Rafik Megdiche, Houcem Chammakhi, Mariam Nefzi</p>
+        </div>
+        <!-- end #footer -->
+    </h:body>
+</html>
