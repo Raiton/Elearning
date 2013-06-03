@@ -22,12 +22,21 @@
     font-weight: 400;
     src: local('Open Sans'), local('OpenSans'), url(https://themes.googleusercontent.com/static/fonts/opensans/v6/cJZKeOuBrn4kERxqtaUH3T8E0i7KZn-EPnyo3HZu7kw.woff) format('woff');
 }
-table,a,div {
+
+table,div { 
+
     font-family: 'Open Sans', sans-serif;
     font-size: 14px;
     font-weight: 300;
 }
+a{
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 300;
 
+}
+.ui-tagcloud{
+    width: 500px
+}
 
 body {
     margin: 0;
@@ -194,7 +203,7 @@ a:hover {
 
 #menu {
     float: left;
-  
+
     height: 90px;
     margin: 0 auto;
     padding: 0;
