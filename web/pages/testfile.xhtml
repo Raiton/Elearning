@@ -13,6 +13,7 @@
         <h:form id="repeatForm">
 
             <ui:repeat value="#{myBean.llist}" var="list" varStatus="current" id="repeat">
+                 
                 <h:selectOneRadio value="#{myBean.resultArray[current.index]}" id="chooseOne" layout="pageDirection" >
                     <f:selectItems value="#{list}" />
                 </h:selectOneRadio>
@@ -21,7 +22,7 @@
                     <p:graphicImage  width="25" height="20"  library="ContentFile" name="correct.png"  rendered="#{myBean.resultArray[current.index] eq myBean.reponseArray[current.index]}"/>
                     <h:outputText value="Incorrect " rendered="#{myBean.resultArray[current.index] ne myBean.reponseArray[current.index]}"/>
                     <p:graphicImage  width="25" height="20"  library="ContentFile" name="incorrect.png"  rendered="#{myBean.resultArray[current.index] ne  myBean.reponseArray[current.index]}"/>
-
+                    
                 </h:panelGroup>
                 <br/>
             </ui:repeat>
