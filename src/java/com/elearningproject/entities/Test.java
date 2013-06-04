@@ -24,14 +24,18 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author raiton
  */
 @Entity
-@Table(name = "test")
-@XmlRootElement
-@NamedQueries({
+        @Table(name = "test")
+        @XmlRootElement
+        @NamedQueries({
     @NamedQuery(name = "Test.findAll", query = "SELECT t FROM Test t"),
     @NamedQuery(name = "Test.findByIdTest", query = "SELECT t FROM Test t WHERE t.idTest = :idTest"),
     @NamedQuery(name = "Test.findByTestContent", query = "SELECT t FROM Test t WHERE t.testContent = :testContent"),
-    @NamedQuery(name = "Test.findByTestName", query = "SELECT t FROM Test t WHERE t.testName = :testName")})
+    @NamedQuery(name = "Test.findByIdTopic", query = "SELECT t FROM Test t WHERE t.idTopic.idTopic = :idTopic"),    
+        @NamedQuery(name = "Test.findByTestName", query = "SELECT t FROM Test t WHERE t.testName = :testName")
+
+})
 public class Test implements Serializable {
+
     @Size(max = 2147483647)
     @Column(name = "r1")
     private String r1;
@@ -43,7 +47,6 @@ public class Test implements Serializable {
     private String r3;
     @Column(name = "r")
     private Integer r;
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -155,7 +158,4 @@ public class Test implements Serializable {
     public void setR(Integer r) {
         this.r = r;
     }
-
-  
-    
 }

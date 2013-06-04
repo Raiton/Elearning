@@ -26,6 +26,10 @@
                 <h:commandLink action="#{treeBean.createtopic()}" value="#{bundle.CreateTopicSaveLink}" />
                
             </h:form>
+              <h:form>
+                <p:commandButton action="#{testController.redirect(treeBeanModified.selectedNode.entity)}" value=" Add Test "/>
+                
+            </h:form>
         </ui:define>
     </ui:composition>
 

@@ -5,6 +5,8 @@
 package com.elearningproject.facades;
 
 import com.elearningproject.entities.Exam;
+import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -30,16 +32,28 @@ public class ExamFacade extends AbstractFacade<Exam> {
     }
     
         public Exam findByIdTopic(int idTopic) {
-        Exam exam = null;
+        List<Exam> exam = null;
         try {
-            exam = (Exam) getEntityManager().createNamedQuery("Exam.findByIdTopic").setParameter("idTopic", idTopic).getSingleResult();
+            exam = getEntityManager().createNamedQuery("Exam.findByIdTopic").setParameter("idTopic", idTopic).getResultList();
         } catch (NoResultException e) {
             return null;
         } catch (NonUniqueResultException e) {
             return null;
         }
-        return exam;
+        return exam.get(0);
     }
+        
+         public Exam findByIdTopicAndIdUser(int idTopic, int idUserTable) {
+        List<Exam> exam = new ArrayList<Exam>();
+        try {
+            exam = getEntityManager().createNamedQuery("Exam.findByIdTopicAndIdUser").setParameter("idTopic", idTopic).setParameter("idUserTable", idUserTable).getResultList();
+        } catch (NoResultException e) {
+            return null;
+        } catch (NonUniqueResultException e) {
+            return null;
+        }
+        return exam.get(exam.size()-1);
+    } 
 
     
 }

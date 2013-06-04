@@ -1,18 +1,26 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.elearningproject.controllers;
 
 import com.elearningproject.entities.Course;
+import com.elearningproject.entities.Exam;
+import com.elearningproject.entities.Test;
+import com.elearningproject.entities.Topic;
 import com.elearningproject.entities.UserHasCourse;
 import com.elearningproject.entities.UserTable;
 import com.elearningproject.facades.CourseFacade;
+import com.elearningproject.facades.ExamFacade;
+import com.elearningproject.facades.TestFacade;
+import com.elearningproject.facades.TopicFacade;
 import com.elearningproject.facades.UserHasCourseFacade;
 import com.elearningproject.personalisedclasses.ManagedBeanRetriever;
 import java.io.IOException;
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -65,12 +73,42 @@ public class listecoursController implements Serializable {
         return userHasCourseFacade;
     }
 
+    public ExamFacade getExamFacade() {
+        return examFacade;
+    }
+
+    public void setExamFacade(ExamFacade examFacade) {
+        this.examFacade = examFacade;
+    }
+    @EJB
+    private TestFacade testFacade;
+
+    public TestFacade getTestFacade() {
+        return testFacade;
+    }
+
+    public void setTestFacade(TestFacade testFacade) {
+        this.testFacade = testFacade;
+    }
+    @EJB
+    private ExamFacade examFacade;
+
     public void setUserHasCourseFacade(UserHasCourseFacade userHasCourseFacade) {
         this.userHasCourseFacade = userHasCourseFacade;
     }
 
     public void setCourseFacade(CourseFacade courseFacade) {
         this.courseFacade = courseFacade;
+    }
+    @EJB
+    private TopicFacade topicFacade;
+
+    public TopicFacade getTopicFacade() {
+        return topicFacade;
+    }
+
+    public void setTopicFacade(TopicFacade topicFacade) {
+        this.topicFacade = topicFacade;
     }
 
     public List<Course> getListCourseByIdField() {
@@ -105,24 +143,35 @@ public class listecoursController implements Serializable {
 
     public String redirect() throws IOException {
 
-        String result = "courseinfo.xhtml?faces-redirect=true&includeViewParams=true";
+        String result = "../testAB/testB.xhtml?faces-redirect=true&includeViewParams=true";
 
         return result;
     }
 
-    public String subscribe(Course course) {
+    public String subscribe(Course course) throws ParseException {
         LoginController loginController = (LoginController) ManagedBeanRetriever.getManagedBean("loginController");
         if (loginController.getUserdata() != null) {
             if ("Subscribe".equals(nameSubscribe(course))) {
                 UserHasCourse userHasCourse = new UserHasCourse();
                 userHasCourse.setIdCourse(course);
                 userHasCourse.setIdUserTable(loginController.getUsertable());
+                //loginController.getUsertable();
                 getUserHasCourseFacade().create(userHasCourse);
+                createExams(course, loginController.getUsertable());
+
             } else {
                 UserHasCourse userHasCourse = getUserHasCourseFacade().findCourseByIdCourseAndIdUserTable(course, loginController.getUsertable());
                 getUserHasCourseFacade().remove(userHasCourse);
+                for (Topic topic : course.getTopicList()) {
+                    Exam iexam = getExamFacade().findByIdTopicAndIdUser(topic.getIdTopic(), loginController.getUsertable().getIdUserTable());
+                    getExamFacade().remove(iexam);
+                }
+
+
             }
+
             return "listecours.xhtml?faces-redirect=true";
+
         } else {
             return "../login/login.xhtml?faces-redirect=true";
 
@@ -130,6 +179,71 @@ public class listecoursController implements Serializable {
 
 
     }
+
+    public List<Test> testsByTopic(Topic topic) {
+        List<Test> result = null;
+        try {
+            result = testFacade.findByIdTopic(topic.getIdTopic());
+        } catch (NullPointerException e) {
+            result = null;
+        }
+        return result;
+    }
+
+    public Date updateDate(Date date, int num) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        c.add(Calendar.DATE, 7 * (num - 1));  // number of days to add
+        String dt = sdf.format(c.getTime());  // dt is now the new date
+
+        //return dt;
+        return c.getTime();
+
+    }
+
+    public List<Topic> topicByCourse(Course course) {
+        List<Topic> result = null;
+        try {
+            result = topicFacade.findByIdCourse(course.getIdCourse());
+        } catch (NullPointerException e) {
+            result = null;
+        }
+        return result;
+    }
+
+   public void createExams(Course course, UserTable user) throws ParseException {
+        String str;
+
+        List<Topic> listTopic = topicFacade.findByIdCourse(course.getIdCourse());
+        for (Topic iTopic : listTopic) {
+            List<Test> listTest = testFacade.findByIdTopic(iTopic.getIdTopic());
+            Random rand = new Random();
+            Date beginDate = updateDate(course.getLaunchDate(), iTopic.getWeekNumber().intValue());
+            Date deadLine = updateDate(beginDate, 2);
+            str = new String();
+
+            for (int i = 0; i < 3; i++) {
+                int j = rand.nextInt(listTest.size());
+                Test test = listTest.get(j);
+                listTest.remove(test);
+                str=str.concat(test.getIdTest().toString());
+                str=str.concat(",");
+
+            }
+
+            Exam exam = new Exam();
+            exam.setExamContent(str);
+            exam.setBeginingDate(beginDate);
+            exam.setDeadline(deadLine);
+            exam.setIdTopic(iTopic);
+            exam.setMark(null);
+            exam.setResponse(null);
+            exam.setIdUserTable(user);
+            examFacade.create(exam);
+        }
+
+    } 
 
     public String nameSubscribe(Course course) {
         String name = "Subscribe";

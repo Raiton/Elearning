@@ -1,4 +1,4 @@
-/*
+  /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
@@ -8,12 +8,14 @@ import com.elearningproject.entities.Chapter;
 import com.elearningproject.entities.Content;
 import com.elearningproject.entities.Course;
 import com.elearningproject.entities.Exam;
+import com.elearningproject.entities.Test;
 import com.elearningproject.entities.Topic;
 import com.elearningproject.entities.UserTable;
 import com.elearningproject.facades.ChapterFacade;
 import com.elearningproject.facades.ContentFacade;
 import com.elearningproject.facades.CourseFacade;
 import com.elearningproject.facades.ExamFacade;
+import com.elearningproject.facades.TestFacade;
 import com.elearningproject.facades.TopicFacade;
 import com.elearningproject.personalisedclasses.ManagedBeanRetriever;
 import java.io.IOException;
@@ -42,6 +44,16 @@ public class StudentCourseController implements Serializable {
 
     public UserTable getUser() {
         return user;
+    }
+
+    private int currentIndex;
+
+    public int getCurrentIndex() {
+        return currentIndex;
+    }
+
+    public void setCurrentIndex(int currentIndex) {
+        this.currentIndex = currentIndex;
     }
 
     public void setUser(UserTable user) {
@@ -115,6 +127,48 @@ public class StudentCourseController implements Serializable {
     public void setCourseIdPassed(String courseIdPassed) {
         this.courseIdPassed = courseIdPassed;
     }
+    private String[] resultArray = {"correct", "result", "default"};
+
+    public String[] getResultArray() {
+        return resultArray;
+    }
+
+    public void setResultArray(String[] resultArray) {
+        this.resultArray = resultArray;
+    }
+
+    public String getResultArray(int i) {
+        return resultArray[i];
+    }
+
+    public void setResultArray(int i, String value) {
+        resultArray[i] = value;
+    }
+
+    public Boolean getBool() {
+        return bool;
+    }
+
+    public void setBool(Boolean bool) {
+        this.bool = bool;
+    }
+    private String[] reponseArray = {"response", "user", "default"};
+
+    public String[] getReponseArray() {
+        return reponseArray;
+    }
+
+    public void setReponseArray(String[] reponseArray) {
+        this.reponseArray = reponseArray;
+    }
+
+    public String getReponseArray(int i) {
+        return resultArray[i];
+    }
+
+    public void setReponseArray(int i, String value) {
+        resultArray[i] = value;
+    }
     @EJB
     private CourseFacade courseFacade;
 
@@ -165,6 +219,16 @@ public class StudentCourseController implements Serializable {
     public void setContentFacade(ContentFacade contentFacade) {
         this.contentFacade = contentFacade;
     }
+    @EJB
+    private TestFacade testFacade;
+
+    public TestFacade getTestFacade() {
+        return testFacade;
+    }
+
+    public void setTestFacade(TestFacade testFacade) {
+        this.testFacade = testFacade;
+    }
 
     public List<Topic> topicByCourse(Course course) {
         List<Topic> result = null;
@@ -182,9 +246,9 @@ public class StudentCourseController implements Serializable {
         for (Topic iTopic : listTopicByCourse) {
 
             try {
-                result.add(examFacade.findByIdTopic(iTopic.getIdTopic()));
+result.add(examFacade.findByIdTopicAndIdUser(iTopic.getIdTopic(), user.getIdUserTable()) );
             } catch (NullPointerException e) {
-                result = (List<Exam>) examFacade.findByIdTopic(iTopic.getIdTopic());
+                result = (List<Exam>) examFacade.findByIdTopicAndIdUser(iTopic.getIdTopic(), user.getIdUserTable());
             }
 
         }
@@ -194,7 +258,7 @@ public class StudentCourseController implements Serializable {
     public Exam examByTopic(Topic topic) {
         Exam result = null;
         try {
-            result = examFacade.findByIdTopic(topic.getIdTopic());
+            result = examFacade.findByIdTopicAndIdUser(topic.getIdTopic(), user.getIdUserTable());
         } catch (NullPointerException e) {
             result = null;
         }
@@ -221,31 +285,55 @@ public class StudentCourseController implements Serializable {
         return result;
     }
 
+    public void setExamPassed(Exam exam) {
+        entry=false;
+        currentIndex = 3;
+        selectedExam = exam;
+        bool = false;
+        resultArray = new String[3];
+        reponseArray = resultByExam(selectedExam).toArray(reponseArray);
+            if (selectedExam.getResponse() != null) {
+                resultArray = selectedExam.getResponse().split(",");
+                bool = true;
+                passed = true;
+            } else{
+                passed = false;
+            }
+    }
+
     public void fullCourse() throws IOException {
         LoginController loginController = (LoginController) ManagedBeanRetriever.getManagedBean("loginController");
         loginController.security("coursedashboard");
-        try{
-            
-        
+        try {
+            user = loginController.getUsertable();
+
+
             course = courseFacade.find(Integer.parseInt(courseIdPassed));
-          //  selectedContent = contentFacade.find(1);
+            //  selectedContent = contentFacade.find(1);
 
             listTopicByCourse = topicByCourse(course);
-
             selectedTopic = listTopicByCourse.get(0);
 
-//        listExamByTopic = examFacade.findByIdTopic(4);
+
+            selectedExam = examByTopic(listTopicByCourse.get(0));
+
+            reponseArray = resultByExam(selectedExam).toArray(reponseArray);
+            if (selectedExam.getResponse() != null) {
+                resultArray = selectedExam.getResponse().split(",");
+                bool = true;
+            }
+
+            //listExamByTopic = examFacade.findByIdTopicAndIdUser(4);
             //listExamByTopic = examByTopic(topic);
 
             listExamByCourse = examByCourse(course);
 
 
-
-   } catch (Exception e) {
-            FacesContext.getCurrentInstance().getExternalContext().redirect("dashboarduser.xhtml");
+        } catch (Exception e) {
+FacesContext.getCurrentInstance().getExternalContext().redirect("dashboarduser.xhtml");
 
         }
-       
+
 
     }
 
@@ -265,29 +353,126 @@ public class StudentCourseController implements Serializable {
         return dt;
 
     }
-}
 
-/*
- * public void menuBean() {
- model = new DefaultMenuModel();
+    public List<Test> testByExam(Exam exam) {
+        String[] parts = exam.getExamContent().split(",");
+        List<Test> result = new ArrayList<Test>();
+        for (String s : parts) {
+            int i = Integer.parseInt(s);
+            result.add(testFacade.find(i));
+        }
+        return result;
+    }
 
- for (Chapter iChapter : chapterByTopic(selectedTopic)) {
- Submenu submenu = new Submenu();
- submenu.setLabel(iChapter.getChapterName());           
- try {
- for (Content iContent : contentByChapter(iChapter)) {
- MenuItem item = new MenuItem();
- item.setValue(iContent.getContentName());
- item.setOnclick(item.getTitle());
- submenu.getChildren().add(item);
+    public List<String> questionByExam(Exam exam) {
+        List<String> result = new ArrayList<String>();
+        List<Test> listTest = testByExam(exam);
+        for (Test iTest : listTest) {
+            result.add(iTest.getTestContent());
+        }
+        return result;
+    }
 
- }
- } catch (NullPointerException e) {
- MenuItem item = new MenuItem();
- item.setValue("No Content Available");
- }
- model.addSubmenu(submenu);
- }
+    public List<List<String>> responseByExam(Exam exam) {
+        List<Test> listTest = testByExam(exam);
+        List<List<String>> result = new ArrayList<List<String>>();
 
- }
- */
+        for (Test iTest : listTest) {
+            List<String> strList = new ArrayList<String>();
+            strList.add(iTest.getR1());
+            strList.add(iTest.getR2());
+            strList.add(iTest.getR3());
+            result.add(strList);
+        }
+        return result;
+    }
+
+    public List<String> resultByExam(Exam exam) {
+        List<String> result = new ArrayList<String>();
+        List<Test> listTest = testByExam(exam);
+        for (Test iTest : listTest) {
+            switch (iTest.getR()) {
+                case 1:
+                    result.add(iTest.getR1());
+                    break;
+                case 2:
+                    result.add(iTest.getR2());
+                    break;
+                case 3:
+                    result.add(iTest.getR3());
+                    break;
+            }
+        }
+        return result;
+    }
+    private Boolean entry = true;
+
+    public Boolean getEntry() {
+        return entry;
+    }
+
+    public void setEntry(Boolean entry) {
+        this.entry = entry;
+    }
+
+    public void submit() {
+
+        if (selectedExam.getResponse() == null) {
+            Double score = 0.0;
+
+            for (int i = 0; i < reponseArray.length; i++) {
+                if (reponseArray[i].equals(resultArray[i])) {
+                    score += 10;
+                }
+
+            }
+            System.out.println("score is " + score);
+            selectedExam.setMark(score);
+            String str = new String();
+            str = (resultArray[0].toString() + "," + resultArray[1].toString() + "," + resultArray[2].toString());
+            selectedExam.setResponse(str);
+            examFacade.edit(selectedExam);
+            bool = true;
+            setExamPassed(selectedExam);
+        }
+
+    }
+
+    private Boolean passed;
+        public Boolean getPassed() {
+        return passed;
+    }
+    public void setPassed(Boolean passed) {
+        this.passed = passed;
+    }
+
+
+    public List<String> test() {
+        List<String> list = new ArrayList<String>();
+        list.add("aroua");
+        list.add("7amdi");
+        list.add("Mariem");
+        list.add("Fat7iza");
+        System.out.println(list.size());
+        return list;
+    }
+    private Boolean bool;
+    private String str;
+
+    public String getStr() {
+        return str;
+    }
+
+    public void setStr(String str) {
+        this.str = str;
+    }
+    private Exam selectedExam;
+
+    public Exam getSelectedExam() {
+        return selectedExam;
+    }
+
+    public void setSelectedExam(Exam selectedExam) {
+        this.selectedExam = selectedExam;
+    }
+} 

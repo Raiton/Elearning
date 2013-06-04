@@ -23,10 +23,10 @@
         </ui:define>
         <ui:define name="Menu">
             <p:panel header="#{loginController.account.username}">
-                <h:outputText  value="Name: "/>        
-                <h:outputText  value="#{loginController.userdata.name}"  />
+                <h:outputText  value="Name: "/>
+                <h:outputText value="#{loginController.userdata.name}"  />
                 <br/>
-                <h:outputText  value="Email:"/>        
+                <h:outputText  value="Email:"/>
                 <h:outputText  value=" #{loginController.userdata.EMail}"  />
                 <br/>
                 <br/>
@@ -36,10 +36,10 @@
             </p:panel>
         </ui:define>
         <ui:define name="Content">
-            <p:tabView id="tabView" orientation="top"  effect="fade" effectDuration="normal" >
+            <p:tabView id="tabView" orientation="top" effect="fade" effectDuration="normal" activeIndex="#{studentCourseController.currentIndex}" >
                 <!--
                         orientation = "top", "bottom", "right", "left"
-                        effect = "fade", "slide", "blind", "clip", "drop", "explode", "fold", "puff", "scale" 
+                        effect = "fade", "slide", "blind", "clip", "drop", "explode", "fold", "puff", "scale"
                 -->
                 <p:tab title="Home" disabled="false">
                     <h:panelGrid columns="3" cellpadding="20">
@@ -54,18 +54,17 @@
                         </p:panelGrid>
                         <p:dataList id="deadlines" value="#{studentCourseController.listExamByCourse}" var="exam" type="definition">
                             <p:panelGrid columns="2">
-                                <h:outputText value="Exam: #{exam.idTopic.nameTopic}" />
-                                <h:outputText value="Deadline: #{exam.deadline}" />
+                                <h:form>
+                                    <p:commandLink value="Exam: #{exam.idTopic.nameTopic}" action="#{studentCourseController.setExamPassed(exam)}" update=":tabView"/>
+                                </h:form>
+                                <h:outputText value="Deadline: #{exam.deadline}"/>
                             </p:panelGrid>
-                        </p:dataList>        
+                        </p:dataList>
                     </h:panelGrid>
                 </p:tab>
 
                 <p:tab title="Courseware" disabled="false" >
-
-
-
-                    <h:form >
+                    <h:form>
                         <h:panelGrid columns="3" cellpadding="10">
 
 
@@ -87,17 +86,17 @@
 
 
 
-                            <p:dialog id="FileDialog" header="#{studentCourseController.selectedContent.contentName}" showEffect="fade" hideEffect="fade" modal="true"  
-                                      widgetVar="fileDialog" style="text-align: center;"  >  
+                            <p:dialog id="FileDialog" header="#{studentCourseController.selectedContent.contentName}" showEffect="fade" hideEffect="fade" modal="true"
+                                      widgetVar="fileDialog" style="text-align: center;"  >
                                 <p:ajax event="close" update="FileDialog" />
-                                <p:outputPanel style="text-align:center; width:1000px; height:500px; " layout="block">  
-                                    <p:media value="/resources/ContentFile/#{studentCourseController.selectedContent.contentUrl}"  width="100%" height="100%">  
+                                <p:outputPanel style="text-align:center; width:1000px; height:500px; " layout="block">
+                                    <p:media value="/resources/ContentFile/#{studentCourseController.selectedContent.contentUrl}" width="100%" height="100%">
                                         <f:param name="autoPlay" value="false" />
                                     </p:media>
 
-                                </p:outputPanel>  
+                                </p:outputPanel>
 
-                            </p:dialog> 
+                            </p:dialog>
 
 
 
@@ -109,43 +108,71 @@
                 <p:tab title="Syllabus" disabled="false">
                     <h:form>
 
-                        <p:dataTable id="salesTable" var="itopic" value="#{studentCourseController.listTopicByCourse}">  
+                        <p:dataTable id="salesTable" var="itopic" value="#{studentCourseController.listTopicByCourse}">
 
-                            <p:columnGroup type="header">  
-                                <p:row>  
-                                    <p:column rowspan="2" headerText="Topic" />  
+                            <p:columnGroup type="header">
+                                <p:row>
+                                    <p:column rowspan="2" headerText="Topic" />
                                     <p:column rowspan="2" headerText="Chapter" />
                                     <p:column rowspan="2" headerText="Start Date" />
-                                </p:row>  
+                                    <p:column rowspan="2" headerText="Due Date" />
+                                </p:row>
 
 
-                            </p:columnGroup>  
+                            </p:columnGroup>
 
-                            <p:column>  
-                                #{itopic.nameTopic}  
-                            </p:column>  
+                            <p:column>
+                                #{itopic.nameTopic}
+                            </p:column>
 
                             <p:column >
 
                                 <div class="datalist-noborder">
-                                    <p:dataList value="#{studentCourseController.chapterByTopic(itopic)}" var="ichapiter" >  
-                                        #{ichapiter.chapterName}  
+                                    <p:dataList value="#{studentCourseController.chapterByTopic(itopic)}" var="ichapiter" >
+                                        #{ichapiter.chapterName}
                                     </p:dataList>
                                 </div>
 
-                            </p:column>  
+                            </p:column>
 
-                            <p:column>  
-                                #{studentCourseController.updateDate(itopic.idCourse.launchDate , itopic.weekNumber )}  
-                            </p:column>  
+                            <p:column>
+#{studentCourseController.updateDate(itopic.idCourse.launchDate , itopic.weekNumber )}
+                            </p:column>
 
-
+                            <p:column>
+                                #{itopic.examList.get(0).deadline}
+                            </p:column>
                         </p:dataTable>
 
                     </h:form>
                 </p:tab>
 
+
+                <p:tab title="Exams" disabled="#{studentCourseController.entry}">
+
+                    <h:form id="examPass">
+
+                        <ui:repeat value="#{studentCourseController.responseByExam(studentCourseController.selectedExam)}" var="list" varStatus="current" id="repeat">
+                            <h:outputText value="#{studentCourseController.questionByExam(studentCourseController.selectedExam)[current.index]}"/>
+                            <h:selectOneRadio value="#{studentCourseController.resultArray[current.index]}" id="chooseOne" layout="pageDirection" disabled="#{studentCourseController.passed}" >
+                                <f:selectItems value="#{list}" />
+                            </h:selectOneRadio>
+                            <h:panelGroup id="outText" rendered="#{studentCourseController.bool}">
+                                <h:outputText value="Correct " rendered="#{studentCourseController.resultArray[current.index] eq studentCourseController.reponseArray[current.index]}"/>
+                                <p:graphicImage  width="25" height="20"  library="ContentFile" name="correct.png" rendered="#{studentCourseController.resultArray[current.index] eq studentCourseController.reponseArray[current.index]}"/>
+                                <h:outputText value="Incorrect " rendered="#{studentCourseController.resultArray[current.index] ne studentCourseController.reponseArray[current.index]}"/>
+                                <p:graphicImage  width="25" height="20"  library="ContentFile" name="incorrect.png" rendered="#{studentCourseController.resultArray[current.index] ne studentCourseController.reponseArray[current.index]}"/>
+
+                            </h:panelGroup>
+                            <br/>
+                        </ui:repeat>
+
+                        <p:commandButton value="submit" action="#{studentCourseController.submit()}" update="@(form)"/>
+                    </h:form>
+                </p:tab>
+
             </p:tabView>
+
 
             <style type="text/css">
                 .datalist-noborder .ui-widget-content {
