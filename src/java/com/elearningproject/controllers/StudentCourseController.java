@@ -45,7 +45,6 @@ public class StudentCourseController implements Serializable {
     public UserTable getUser() {
         return user;
     }
-
     private int currentIndex;
 
     public int getCurrentIndex() {
@@ -246,7 +245,7 @@ public class StudentCourseController implements Serializable {
         for (Topic iTopic : listTopicByCourse) {
 
             try {
-result.add(examFacade.findByIdTopicAndIdUser(iTopic.getIdTopic(), user.getIdUserTable()) );
+                result.add(examFacade.findByIdTopicAndIdUser(iTopic.getIdTopic(), user.getIdUserTable()));
             } catch (NullPointerException e) {
                 result = (List<Exam>) examFacade.findByIdTopicAndIdUser(iTopic.getIdTopic(), user.getIdUserTable());
             }
@@ -286,19 +285,19 @@ result.add(examFacade.findByIdTopicAndIdUser(iTopic.getIdTopic(), user.getIdUser
     }
 
     public void setExamPassed(Exam exam) {
-        entry=false;
+        entry = false;
         currentIndex = 3;
         selectedExam = exam;
         bool = false;
         resultArray = new String[3];
         reponseArray = resultByExam(selectedExam).toArray(reponseArray);
-            if (selectedExam.getResponse() != null) {
-                resultArray = selectedExam.getResponse().split(",");
-                bool = true;
-                passed = true;
-            } else{
-                passed = false;
-            }
+        if (selectedExam.getResponse() != null) {
+            resultArray = selectedExam.getResponse().split(",");
+            bool = true;
+            passed = true;
+        } else {
+            passed = false;
+        }
     }
 
     public void fullCourse() throws IOException {
@@ -330,7 +329,7 @@ result.add(examFacade.findByIdTopicAndIdUser(iTopic.getIdTopic(), user.getIdUser
 
 
         } catch (Exception e) {
-FacesContext.getCurrentInstance().getExternalContext().redirect("dashboarduser.xhtml");
+            FacesContext.getCurrentInstance().getExternalContext().redirect("dashboarduser.xhtml");
 
         }
 
@@ -437,15 +436,15 @@ FacesContext.getCurrentInstance().getExternalContext().redirect("dashboarduser.x
         }
 
     }
-
     private Boolean passed;
-        public Boolean getPassed() {
+
+    public Boolean getPassed() {
         return passed;
     }
+
     public void setPassed(Boolean passed) {
         this.passed = passed;
     }
-
 
     public List<String> test() {
         List<String> list = new ArrayList<String>();
@@ -475,4 +474,4 @@ FacesContext.getCurrentInstance().getExternalContext().redirect("dashboarduser.x
     public void setSelectedExam(Exam selectedExam) {
         this.selectedExam = selectedExam;
     }
-} 
+}

@@ -20,6 +20,7 @@ import javax.faces.model.SelectItem;
 
 @ManagedBean(name = "accountController")
 @SessionScoped
+
 public class AccountController implements Serializable {
 
     private Account current;

@@ -170,6 +170,12 @@ public class TestController implements Serializable {
         return "../test/Create_Perso.xhtml?faces-redirect=true";
         
     }
+    
+      public String redirectm(Topic topic){
+           this.idTopic=topic;
+        return "../test/Create_Perso1.xhtml?faces-redirect=true";
+        
+    }
     public DataModel getItems() {
         if (items == null) {
             items = getPagination().createPageDataModel();
@@ -243,6 +249,9 @@ public class TestController implements Serializable {
     }
     
     public String redirect_return(){
+        return "../course/aa.xhtml?faces-redirect=true";
+    }
+    public String redirect_return1(){
         return "../course/bb.xhtml?faces-redirect=true";
     }
 }
