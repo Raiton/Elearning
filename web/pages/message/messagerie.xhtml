@@ -1,0 +1,103 @@
+
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <h:head>
+        <title>About me</title>
+
+    </h:head>
+    <h:body onload="#{onload}">
+        <h:outputStylesheet name="css/style_perso.css" />
+
+        <div id="wrapper">
+            <div id="header-wrapper">
+                <div id="header" class="container">
+
+                    <div id="menu">
+                        <ul>
+                            <li><a href="home.xhtml">Homepage</a></li>
+                            <li><a href="../pages/field/listefield.xhtml">Courses</a></li>
+                            <li  class="current_page_item"><a href="#">About</a></li>
+                            <c:if test="#{loginController.usertable eq null}">
+                                <li><a href="login/login.xhtml">Login</a></li>
+                                <li><a href="../pages/registration/register.xhtml">Register Now</a></li>
+                            </c:if>
+                            <c:if test="#{loginController.usertable ne null}">
+                                <li><a href="dashboard/dashboarduser.xhtml">[#{loginController.account.username}] Dasboard</a></li>
+                                <li><h:form><h:commandLink action="#{loginController.logout()}" value="Logout"/></h:form>    </li>
+                            </c:if>
+                        </ul>
+                    </div>
+
+                </div>
+                <div id="banner">
+                    <div class="content"><img src="#{resource['banner-elearning.jpg']}" width="1000" height="300" alt="" /></div>
+                </div>
+
+            </div>
+            <!-- end #header -->
+
+            <div id="page" >
+                <div id="content" style="float: left">
+                    <p:panel style="height: 800px;padding: 100px" >
+                        <h:form id="form">
+
+
+
+                            <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5"
+                                         columnClasses="label, column">
+
+                                <h:outputText id="aaaaa" value="#{messagerieController.selectedUser}" />
+                                <p:selectOneListbox id="scroll" value="#{messagerieController.selectedUser}" onchange="#{messagerieController.findIdUserSelected()}">
+                                    <f:selectItems value="#{messagerieController.findUsers()}"  />
+                                    <p:ajax update="aaaaa"/>
+
+                                </p:selectOneListbox>
+                            </h:panelGrid>
+
+
+                        </h:form>
+
+                        <p:panel rendered="#{messagerieController.selectedUser ne null}">
+
+                            <h:form>
+                                <h:outputText value="Advanced" />
+                                <p:selectOneListbox id="scroll"  style="height:200px">
+                                    <f:selectItems value="#{messagerieController.findMessages()}" />
+
+
+                                </p:selectOneListbox>
+                                <h:panelGrid columns="2" >
+                                    <div id="message">
+                                        <textarea rows="2" cols="34">
+leave a comment
+                                        </textarea>
+                                    </div>
+                                    <p:commandButton value="post">
+
+                                    </p:commandButton>
+                                </h:panelGrid>
+                            </h:form>
+                        </p:panel>
+                    </p:panel>
+
+                    <div style="clear: both;"></div>
+                </div>
+                <!-- end #content -->
+
+                <!-- end #sidebar -->
+                <div style="clear: both;"></div>
+            </div>
+            <!-- end #page --> 
+        </div>
+        <div id="footer">
+            <p>Copyright (c) 2013 Ecole Polytechnique de Tunisie  Authors : Mohamed Rafik Megdiche, Houcem Chammakhi, Mariam Nefzi</p>
+        </div>
+        <!-- end #footer -->
+    </h:body>
+</html>

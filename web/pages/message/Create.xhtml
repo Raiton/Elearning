@@ -23,6 +23,8 @@
                     </h:inputText>
                     <h:outputLabel value="#{bundle.CreateMessageLabel_messageContent}" for="messageContent" />
                     <h:inputText id="messageContent" value="#{messageController.selected.messageContent}" title="#{bundle.CreateMessageTitle_messageContent}" />
+                     <h:outputLabel value="id_user_receiver" for="id_user_receiver" />
+                     <h:inputText id="id_user_receiver" value="#{messageController.selected.id_user_receiver}"/>
                     <h:outputLabel value="#{bundle.CreateMessageLabel_idUserTable}" for="idUserTable" />
                     <h:selectOneMenu id="idUserTable" value="#{messageController.selected.idUserTable}" title="#{bundle.CreateMessageTitle_idUserTable}" >
                         <f:selectItems value="#{userTableController.itemsAvailableSelectOne}"/>

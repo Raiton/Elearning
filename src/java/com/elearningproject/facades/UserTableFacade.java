@@ -4,9 +4,13 @@
  */
 package com.elearningproject.facades;
 
+import com.elearningproject.entities.Message;
 import com.elearningproject.entities.UserTable;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
 
 /**
@@ -26,5 +30,18 @@ public class UserTableFacade extends AbstractFacade<UserTable> {
     public UserTableFacade() {
         super(UserTable.class);
     }
+    
+         public UserTable findByUserName (String username) {
+       UserTable userTable;
+        try {
+            userTable = (UserTable) getEntityManager().createNamedQuery("UserTable.findByName").setParameter("name", username).getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        } catch (NonUniqueResultException e) {
+            return null;
+        }
+        return userTable;
+    }
+    
     
 }

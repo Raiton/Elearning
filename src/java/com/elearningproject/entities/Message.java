@@ -32,9 +32,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Message.findAll", query = "SELECT m FROM Message m"),
     @NamedQuery(name = "Message.findByIdMessage", query = "SELECT m FROM Message m WHERE m.idMessage = :idMessage"),
+    @NamedQuery(name = "Message.findByIdUserReceiver", query = "SELECT m FROM Message m WHERE m.id_user_receiver = :id_user_receiver"),
+    @NamedQuery(name = "Message.findByIdUserTable", query = "SELECT m FROM Message m WHERE m.idUserTable.idUserTable= :idUserTable"),
+    @NamedQuery(name = "Message.findByIdUserTableIdUserReceiver", query = "SELECT m FROM Message m WHERE (m.idUserTable.idUserTable= :idUserTable AND m.id_user_receiver = :id_user_receiver)"),
     @NamedQuery(name = "Message.findByDate", query = "SELECT m FROM Message m WHERE m.date = :date"),
     @NamedQuery(name = "Message.findByMessageContent", query = "SELECT m FROM Message m WHERE m.messageContent = :messageContent")})
 public class Message implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,6 +51,8 @@ public class Message implements Serializable {
     @Size(max = 255)
     @Column(name = "message_content")
     private String messageContent;
+    @Column(name = "id_user_receiver")
+    private int id_user_receiver;
     @JoinColumn(name = "id_user_table", referencedColumnName = "id_user_table")
     @ManyToOne
     private UserTable idUserTable;
@@ -90,6 +96,15 @@ public class Message implements Serializable {
         this.idUserTable = idUserTable;
     }
 
+    public int getId_user_receiver() {
+        return id_user_receiver;
+    }
+
+    public void setId_user_receiver(int id_user_receiver) {
+        this.id_user_receiver = id_user_receiver;
+    }
+    
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -114,5 +129,4 @@ public class Message implements Serializable {
     public String toString() {
         return "com.elearningproject.entities.Message[ idMessage=" + idMessage + " ]";
     }
-    
 }
