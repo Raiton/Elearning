@@ -179,6 +179,38 @@ public class listecoursController implements Serializable {
 
 
     }
+      public String subscribe2(Course course) throws ParseException {
+        LoginController loginController = (LoginController) ManagedBeanRetriever.getManagedBean("loginController");
+        if (loginController.getUserdata() != null) {
+            if ("Subscribe".equals(nameSubscribe(course))) {
+                UserHasCourse userHasCourse = new UserHasCourse();
+                userHasCourse.setIdCourse(course);
+                userHasCourse.setIdUserTable(loginController.getUsertable());
+                //loginController.getUsertable();
+                getUserHasCourseFacade().create(userHasCourse);
+                createExams(course, loginController.getUsertable());
+
+            } else {
+                UserHasCourse userHasCourse = getUserHasCourseFacade().findCourseByIdCourseAndIdUserTable(course, loginController.getUsertable());
+                getUserHasCourseFacade().remove(userHasCourse);
+                for (Topic topic : course.getTopicList()) {
+                    Exam iexam = getExamFacade().findByIdTopicAndIdUser(topic.getIdTopic(), loginController.getUsertable().getIdUserTable());
+                    getExamFacade().remove(iexam);
+                }
+
+
+            }
+
+            return "../dashboard/dashboarduser.xhtml?faces-redirect=true";
+
+        } else {
+            return "../login/login.xhtml?faces-redirect=true";
+
+        }
+
+
+    }
+
 
     public List<Test> testsByTopic(Topic topic) {
         List<Test> result = null;

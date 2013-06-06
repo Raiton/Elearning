@@ -36,6 +36,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Field.findByFieldCreationDate", query = "SELECT f FROM Field f WHERE f.fieldCreationDate = :fieldCreationDate"),
     @NamedQuery(name = "Field.findByFieldName", query = "SELECT f FROM Field f WHERE f.fieldName = :fieldName")})
 public class Field implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -82,6 +83,9 @@ public class Field implements Serializable {
         this.fieldName = fieldName;
     }
 
+
+    
+
     @XmlTransient
     public List<Course> getCourseList() {
         return courseList;
@@ -115,5 +119,4 @@ public class Field implements Serializable {
     public String toString() {
         return fieldName;
     }
-    
 }
